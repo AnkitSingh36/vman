@@ -1,0 +1,2139 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Mark-1 public contract",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "security": [
+    {
+      "sessionCookie": []
+    }
+  ],
+  "paths": {
+    "/v1/sessions": {
+      "post": {
+        "operationId": "post__v1_sessions",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSession"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sessions/{id}": {
+      "get": {
+        "operationId": "get__v1_sessions_session",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sessions/{id}/identity-candidates": {
+      "post": {
+        "operationId": "post__v1_sessions_session_identity-candidates",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted / pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdentityCandidates"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sessions/{id}/identity-confirmation": {
+      "post": {
+        "operationId": "post__v1_sessions_session_identity-confirmation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted / pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmIdentity"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sessions/{id}/observations": {
+      "post": {
+        "operationId": "post__v1_sessions_session_observations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted / pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Observation"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sessions/{id}/outcome": {
+      "post": {
+        "operationId": "post__v1_sessions_session_outcome",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted / pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Outcome"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sessions/{id}/stop": {
+      "post": {
+        "operationId": "post__v1_sessions_session_stop",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted / pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Stop"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sessions/{id}/hazards": {
+      "post": {
+        "operationId": "post__v1_sessions_session_hazards",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted / pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Hazard"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sessions/{id}/images": {
+      "post": {
+        "operationId": "post__v1_sessions_session_images",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImageReceipt"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "expected_revision": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "purpose": {
+                    "const": "identity"
+                  }
+                },
+                "required": [
+                  "file",
+                  "expected_revision",
+                  "purpose"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sessions/{id}/events": {
+      "get": {
+        "operationId": "get__v1_sessions_session_events",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventPage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sessions/{id}/commands/{command_id}": {
+      "get": {
+        "operationId": "get_command_receipt",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "command_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Command receipt",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized or not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Not authorized or not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not authorized or not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "sessionCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "mark1_session"
+      }
+    },
+    "schemas": {
+      "Session": {
+        "$ref": "session.schema.json"
+      },
+      "CreateSession": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "symptom_code": {
+            "const": "NO_POWER"
+          },
+          "symptom_text": {
+            "type": "string",
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "workflow_id",
+          "symptom_code"
+        ]
+      },
+      "IdentityCandidates": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "image_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "manual_label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        },
+        "required": [
+          "expected_revision"
+        ],
+        "anyOf": [
+          {
+            "required": [
+              "image_id"
+            ]
+          },
+          {
+            "required": [
+              "manual_label"
+            ]
+          }
+        ]
+      },
+      "ConfirmIdentity": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "model_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "configuration_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "serial": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "human_confirmed": {
+            "const": true
+          }
+        },
+        "required": [
+          "expected_revision",
+          "model_id",
+          "configuration_id",
+          "human_confirmed"
+        ]
+      },
+      "Observation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "check_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "check_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "observation_code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {
+            "type": "string",
+            "minLength": 1
+          },
+          "image_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "human_confirmed": {
+            "const": true
+          }
+        },
+        "required": [
+          "expected_revision",
+          "check_id",
+          "check_version",
+          "observation_code",
+          "value",
+          "human_confirmed"
+        ]
+      },
+      "Outcome": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "human_reported_outcome": {
+            "enum": [
+              "RESOLVED",
+              "UNRESOLVED"
+            ]
+          },
+          "human_confirmed": {
+            "const": true
+          }
+        },
+        "required": [
+          "expected_revision",
+          "human_reported_outcome",
+          "human_confirmed"
+        ]
+      },
+      "Stop": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "reason_code": {
+            "enum": [
+              "USER_STOP",
+              "UNSUPPORTED",
+              "OTHER"
+            ]
+          }
+        },
+        "required": [
+          "expected_revision",
+          "reason_code"
+        ]
+      },
+      "Hazard": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "hazard_code": {
+            "enum": [
+              "DAMAGE",
+              "LIQUID",
+              "SWELLING",
+              "HEAT_OR_SMELL",
+              "UNSURE"
+            ]
+          }
+        },
+        "required": [
+          "expected_revision",
+          "hazard_code"
+        ]
+      },
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "request_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "current_revision": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "request_id",
+          "retryable"
+        ]
+      },
+      "ImageReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "image_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "status": {
+            "const": "STORED"
+          }
+        },
+        "required": [
+          "image_id",
+          "session_id",
+          "revision",
+          "status"
+        ]
+      },
+      "Event": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "record_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "human_assertion": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_refs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "source_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "locator": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "source_id",
+                "version",
+                "locator"
+              ]
+            }
+          }
+        },
+        "required": [
+          "record_id",
+          "session_id",
+          "event_type",
+          "created_at",
+          "human_assertion",
+          "source_refs"
+        ]
+      },
+      "EventPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            }
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "events",
+          "next_cursor"
+        ]
+      },
+      "CommandReceipt": {
+        "$ref": "session.schema.json#/$defs/receipt"
+      }
+    }
+  }
+}

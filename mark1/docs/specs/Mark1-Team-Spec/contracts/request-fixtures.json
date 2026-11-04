@@ -1,0 +1,167 @@
+{
+  "catalog": {
+    "catalog_version": "demo-1",
+    "checks": [
+      {
+        "check_id": "DEMO-PREFLIGHT",
+        "version": "1",
+        "kind": "PREFLIGHT",
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "workflow_id": "demo-laptop-no-power",
+        "instruction": "Synthetic demo preflight; select the supplied fictional hazard status.",
+        "safety_notice": "Demo only.",
+        "stop_conditions": [
+          "Any reported hazard or uncertainty stops the session."
+        ],
+        "observation_code": "DEMO_HAZARD",
+        "options": [
+          "CLEAR",
+          "HAZARD",
+          "UNSURE"
+        ],
+        "stop_values": [
+          "HAZARD",
+          "UNSURE"
+        ],
+        "prerequisites": [],
+        "source": {
+          "source_id": "DEMO-GUIDE",
+          "version": "1",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "title": "Synthetic demo guide",
+          "locator": "demo preflight",
+          "rights_record_id": "synthetic-rights"
+        },
+        "state": "Approved",
+        "approval_record_id": "demo-approval"
+      }
+    ]
+  },
+  "identify_request": {
+    "contract_version": "1.0",
+    "request_id": "req-demo",
+    "session_id": "demo-session-1",
+    "based_on_revision": 1,
+    "context_hash": "3d50fc96c4eb7a47ac36f4b945fe863849aa38a976c4230635ead238d7979ca7",
+    "mode": "IDENTIFY",
+    "workflow_id": "demo-laptop-no-power",
+    "confirmed_identity": null,
+    "manual_label": "DEMO-LAPTOP",
+    "cleared_images": [],
+    "approved_catalog": {
+      "catalog_version": "demo-1",
+      "checks": [
+        {
+          "check_id": "DEMO-PREFLIGHT",
+          "version": "1",
+          "kind": "PREFLIGHT",
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "instruction": "Synthetic demo preflight; select the supplied fictional hazard status.",
+          "safety_notice": "Demo only.",
+          "stop_conditions": [
+            "Any reported hazard or uncertainty stops the session."
+          ],
+          "observation_code": "DEMO_HAZARD",
+          "options": [
+            "CLEAR",
+            "HAZARD",
+            "UNSURE"
+          ],
+          "stop_values": [
+            "HAZARD",
+            "UNSURE"
+          ],
+          "prerequisites": [],
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "title": "Synthetic demo guide",
+            "locator": "demo preflight",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "demo-approval"
+        }
+      ]
+    },
+    "observations": [],
+    "completed_check_ids": [],
+    "remaining_budgets": {
+      "turns": 8,
+      "calls": 16,
+      "deadline_at": "2026-11-04T12:01:00Z"
+    },
+    "model_config_version": "demo-model-1",
+    "prompt_version": "demo-prompt-1",
+    "catalog_version": "demo-1"
+  },
+  "next_check_request": {
+    "contract_version": "1.0",
+    "request_id": "req-demo",
+    "session_id": "demo-session-1",
+    "based_on_revision": 1,
+    "context_hash": "b09945e883fc947adbb1dea4e2564cc312fe6077a58aeeb86f5a151f084e356e",
+    "mode": "NEXT_CHECK",
+    "workflow_id": "demo-laptop-no-power",
+    "confirmed_identity": {
+      "model_id": "DEMO-LAPTOP",
+      "configuration_id": "DEMO-C1",
+      "human_confirmed": true
+    },
+    "manual_label": "DEMO-LAPTOP",
+    "cleared_images": [],
+    "approved_catalog": {
+      "catalog_version": "demo-1",
+      "checks": [
+        {
+          "check_id": "DEMO-PREFLIGHT",
+          "version": "1",
+          "kind": "PREFLIGHT",
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "instruction": "Synthetic demo preflight; select the supplied fictional hazard status.",
+          "safety_notice": "Demo only.",
+          "stop_conditions": [
+            "Any reported hazard or uncertainty stops the session."
+          ],
+          "observation_code": "DEMO_HAZARD",
+          "options": [
+            "CLEAR",
+            "HAZARD",
+            "UNSURE"
+          ],
+          "stop_values": [
+            "HAZARD",
+            "UNSURE"
+          ],
+          "prerequisites": [],
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "title": "Synthetic demo guide",
+            "locator": "demo preflight",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "demo-approval"
+        }
+      ]
+    },
+    "observations": [],
+    "completed_check_ids": [],
+    "remaining_budgets": {
+      "turns": 8,
+      "calls": 16,
+      "deadline_at": "2026-11-04T12:01:00Z"
+    },
+    "model_config_version": "demo-model-1",
+    "prompt_version": "demo-prompt-1",
+    "catalog_version": "demo-1"
+  }
+}

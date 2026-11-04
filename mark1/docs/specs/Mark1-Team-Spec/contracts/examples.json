@@ -1,0 +1,81 @@
+{
+  "note": "Synthetic contract fixtures, not repair instructions or implementation evidence.",
+  "ready_session": {
+    "contract_version": "1.0",
+    "session_id": "demo-session-1",
+    "revision": 4,
+    "status": "READY",
+    "workflow_id": "demo-laptop-no-power",
+    "identity": {
+      "model_id": "DEMO-LAPTOP",
+      "configuration_id": "DEMO-C1",
+      "human_confirmed": true
+    },
+    "identity_candidates": [],
+    "current_check": {
+      "check_id": "DEMO-OBSERVE",
+      "version": "1",
+      "instruction": "Demo only: record the supplied fictional indicator observation.",
+      "observation_code": "DEMO_INDICATOR",
+      "options": [
+        "ON",
+        "OFF",
+        "UNSURE"
+      ],
+      "source": {
+        "source_id": "DEMO-GUIDE",
+        "version": "1",
+        "locator": "demo section 1"
+      },
+      "policy_checked_at": "2026-11-04T12:00:00Z",
+      "safety_notice": "Synthetic demo only; no physical repair instruction.",
+      "stop_conditions": [
+        "Stop if uncertain."
+      ],
+      "guidance_valid_until": "2026-11-04T12:00:15Z"
+    },
+    "receipt": null,
+    "human_reported_outcome": null,
+    "reason_code": null
+  },
+  "pending_session": {
+    "contract_version": "1.0",
+    "session_id": "demo-session-1",
+    "revision": 5,
+    "status": "RECORD_PENDING",
+    "workflow_id": "demo-laptop-no-power",
+    "identity": {
+      "model_id": "DEMO-LAPTOP",
+      "configuration_id": "DEMO-C1",
+      "human_confirmed": true
+    },
+    "identity_candidates": [],
+    "current_check": null,
+    "receipt": {
+      "command_id": "cmd-demo-1",
+      "state": "PENDING",
+      "record_id": null
+    },
+    "human_reported_outcome": null,
+    "reason_code": "EVIDENCE_PENDING"
+  },
+  "engine_proposal": {
+    "contract_version": "1.0",
+    "request_id": "inference-demo-1",
+    "session_id": "demo-session-1",
+    "based_on_revision": 3,
+    "context_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "kind": "PROPOSE_CHECK",
+    "payload": {
+      "check_id": "DEMO-OBSERVE",
+      "check_version": "1",
+      "sources": [
+        {
+          "source_id": "DEMO-GUIDE",
+          "version": "1",
+          "locator": "demo section 1"
+        }
+      ]
+    }
+  }
+}

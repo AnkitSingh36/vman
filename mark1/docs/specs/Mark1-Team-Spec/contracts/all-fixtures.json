@@ -1,0 +1,291 @@
+{
+  "sessions": {
+    "AWAITING_IDENTITY": {
+      "contract_version": "1.0",
+      "session_id": "demo-session-1",
+      "revision": 4,
+      "status": "AWAITING_IDENTITY",
+      "workflow_id": "demo-laptop-no-power",
+      "identity": null,
+      "identity_candidates": [],
+      "current_check": null,
+      "receipt": null,
+      "human_reported_outcome": null,
+      "reason_code": null
+    },
+    "EVALUATING": {
+      "contract_version": "1.0",
+      "session_id": "demo-session-1",
+      "revision": 4,
+      "status": "EVALUATING",
+      "workflow_id": "demo-laptop-no-power",
+      "identity": {
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "human_confirmed": true
+      },
+      "identity_candidates": [],
+      "current_check": null,
+      "receipt": null,
+      "human_reported_outcome": null,
+      "reason_code": null
+    },
+    "READY": {
+      "contract_version": "1.0",
+      "session_id": "demo-session-1",
+      "revision": 4,
+      "status": "READY",
+      "workflow_id": "demo-laptop-no-power",
+      "identity": {
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "human_confirmed": true
+      },
+      "identity_candidates": [],
+      "current_check": {
+        "check_id": "DEMO-OBSERVE",
+        "version": "1",
+        "instruction": "Demo only: record the supplied fictional indicator observation.",
+        "observation_code": "DEMO_INDICATOR",
+        "options": [
+          "ON",
+          "OFF",
+          "UNSURE"
+        ],
+        "source": {
+          "source_id": "DEMO-GUIDE",
+          "version": "1",
+          "locator": "demo section 1"
+        },
+        "policy_checked_at": "2026-11-04T12:00:00Z",
+        "safety_notice": "Synthetic demo only; no physical repair instruction.",
+        "stop_conditions": [
+          "Stop if uncertain."
+        ],
+        "guidance_valid_until": "2026-11-04T12:00:15Z"
+      },
+      "receipt": null,
+      "human_reported_outcome": null,
+      "reason_code": null
+    },
+    "RECORD_PENDING": {
+      "contract_version": "1.0",
+      "session_id": "demo-session-1",
+      "revision": 5,
+      "status": "RECORD_PENDING",
+      "workflow_id": "demo-laptop-no-power",
+      "identity": {
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "human_confirmed": true
+      },
+      "identity_candidates": [],
+      "current_check": null,
+      "receipt": {
+        "command_id": "cmd-demo-1",
+        "state": "PENDING",
+        "record_id": null
+      },
+      "human_reported_outcome": null,
+      "reason_code": "EVIDENCE_PENDING"
+    },
+    "BLOCKED": {
+      "contract_version": "1.0",
+      "session_id": "demo-session-1",
+      "revision": 4,
+      "status": "BLOCKED",
+      "workflow_id": "demo-laptop-no-power",
+      "identity": {
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "human_confirmed": true
+      },
+      "identity_candidates": [],
+      "current_check": null,
+      "receipt": null,
+      "human_reported_outcome": null,
+      "reason_code": "DEMO_STOP"
+    },
+    "UNKNOWN": {
+      "contract_version": "1.0",
+      "session_id": "demo-session-1",
+      "revision": 4,
+      "status": "UNKNOWN",
+      "workflow_id": "demo-laptop-no-power",
+      "identity": {
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "human_confirmed": true
+      },
+      "identity_candidates": [],
+      "current_check": null,
+      "receipt": null,
+      "human_reported_outcome": null,
+      "reason_code": "DEMO_STOP"
+    },
+    "ESCALATED": {
+      "contract_version": "1.0",
+      "session_id": "demo-session-1",
+      "revision": 4,
+      "status": "ESCALATED",
+      "workflow_id": "demo-laptop-no-power",
+      "identity": {
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "human_confirmed": true
+      },
+      "identity_candidates": [],
+      "current_check": null,
+      "receipt": null,
+      "human_reported_outcome": null,
+      "reason_code": "DEMO_STOP"
+    },
+    "COMPLETED": {
+      "contract_version": "1.0",
+      "session_id": "demo-session-1",
+      "revision": 4,
+      "status": "COMPLETED",
+      "workflow_id": "demo-laptop-no-power",
+      "identity": {
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "human_confirmed": true
+      },
+      "identity_candidates": [],
+      "current_check": null,
+      "receipt": {
+        "command_id": "cmd-outcome",
+        "state": "PERSISTED",
+        "record_id": "record-outcome"
+      },
+      "human_reported_outcome": "RESOLVED",
+      "reason_code": null
+    }
+  },
+  "engine_proposals": {
+    "PROPOSE_CHECK": {
+      "contract_version": "1.0",
+      "request_id": "inference-demo-1",
+      "session_id": "demo-session-1",
+      "based_on_revision": 3,
+      "context_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "kind": "PROPOSE_CHECK",
+      "payload": {
+        "check_id": "DEMO-OBSERVE",
+        "check_version": "1",
+        "sources": [
+          {
+            "source_id": "DEMO-GUIDE",
+            "version": "1",
+            "locator": "demo section 1"
+          }
+        ]
+      }
+    },
+    "IDENTITY_CANDIDATES": {
+      "contract_version": "1.0",
+      "request_id": "inference-demo-1",
+      "session_id": "demo-session-1",
+      "based_on_revision": 3,
+      "context_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "kind": "IDENTITY_CANDIDATES",
+      "payload": {
+        "candidates": [
+          {
+            "model_id": "DEMO-LAPTOP",
+            "configuration_id": "DEMO-C1",
+            "label_excerpt": "DEMO",
+            "basis": "IMAGE"
+          }
+        ]
+      }
+    },
+    "ASK_OBSERVATION": {
+      "contract_version": "1.0",
+      "request_id": "inference-demo-1",
+      "session_id": "demo-session-1",
+      "based_on_revision": 3,
+      "context_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "kind": "ASK_OBSERVATION",
+      "payload": {
+        "check_id": "DEMO-OBSERVE",
+        "check_version": "1",
+        "observation_code": "DEMO_INDICATOR",
+        "sources": [
+          {
+            "source_id": "DEMO-GUIDE",
+            "version": "1",
+            "locator": "demo section 1"
+          }
+        ]
+      }
+    },
+    "ESCALATE": {
+      "contract_version": "1.0",
+      "request_id": "inference-demo-1",
+      "session_id": "demo-session-1",
+      "based_on_revision": 3,
+      "context_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "kind": "ESCALATE",
+      "payload": {
+        "reason_code": "INSUFFICIENT_EVIDENCE"
+      }
+    }
+  },
+  "errors": {
+    "401": {
+      "code": "UNAUTHENTICATED",
+      "message": "Synthetic user-safe example.",
+      "request_id": "request-demo",
+      "retryable": false
+    },
+    "403": {
+      "code": "UNAUTHORIZED",
+      "message": "Synthetic user-safe example.",
+      "request_id": "request-demo",
+      "retryable": false
+    },
+    "404": {
+      "code": "NOT_FOUND",
+      "message": "Synthetic user-safe example.",
+      "request_id": "request-demo",
+      "retryable": false
+    },
+    "409": {
+      "code": "CONFLICT",
+      "message": "Synthetic user-safe example.",
+      "request_id": "request-demo",
+      "retryable": false
+    },
+    "413": {
+      "code": "TOO_LARGE",
+      "message": "Synthetic user-safe example.",
+      "request_id": "request-demo",
+      "retryable": false
+    },
+    "415": {
+      "code": "UNSUPPORTED_MEDIA",
+      "message": "Synthetic user-safe example.",
+      "request_id": "request-demo",
+      "retryable": false
+    },
+    "422": {
+      "code": "INVALID_INPUT",
+      "message": "Synthetic user-safe example.",
+      "request_id": "request-demo",
+      "retryable": false
+    },
+    "429": {
+      "code": "BUDGET_EXCEEDED",
+      "message": "Synthetic user-safe example.",
+      "request_id": "request-demo",
+      "retryable": true
+    },
+    "503": {
+      "code": "SERVICE_UNAVAILABLE",
+      "message": "Synthetic user-safe example.",
+      "request_id": "request-demo",
+      "retryable": true
+    }
+  }
+}
