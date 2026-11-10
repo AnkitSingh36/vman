@@ -19,6 +19,7 @@ R0 must demonstrate this investigation experience, not merely a sequential check
 7. `07-VALIDATION-AND-RELEASE.md`: evaluation and evidence gates.
 8. `08-DELIVERY-AND-OPERATIONS.md`, `09-BACKLOG.csv`: delivery order and tickets.
 9. `10-ELEPHANT-GOLDFISH-REVIEW.md`, `11-GATE-AND-DECISION-REGISTER.md`: review status and decisions.
+10. [12-ARCHITECTURE-EXPLAINED-AND-OPEN-GAPS.md](12-ARCHITECTURE-EXPLAINED-AND-OPEN-GAPS.md): architecture diagram, design patterns and open refinements before implementation freeze.
 
 Split files and machine-readable contracts are authoritative. The combined sibling document is a distribution copy assembled from these Markdown files.
 
