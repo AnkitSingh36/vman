@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:mark1:session:1.0",
+  "$id": "https://schemas.mark1.invalid/v2/session.schema.json",
   "title": "Session",
   "type": "object",
   "additionalProperties": false,
@@ -15,11 +15,12 @@
     "current_check",
     "receipt",
     "human_reported_outcome",
-    "reason_code"
+    "reason_code",
+    "interaction"
   ],
   "properties": {
     "contract_version": {
-      "const": "1.0"
+      "const": "2.0"
     },
     "session_id": {
       "type": "string",
@@ -38,7 +39,10 @@
         "BLOCKED",
         "UNKNOWN",
         "ESCALATED",
-        "COMPLETED"
+        "COMPLETED",
+        "AWAITING_VIEW",
+        "AWAITING_ANSWER",
+        "EXPLAINING"
       ]
     },
     "workflow_id": {
@@ -120,6 +124,16 @@
       "type": [
         "string",
         "null"
+      ]
+    },
+    "interaction": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "investigation.schema.json#/$defs/interaction"
+        }
       ]
     }
   },
@@ -426,6 +440,214 @@
                 ]
               }
             ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "AWAITING_VIEW"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "interaction": {
+            "allOf": [
+              {
+                "$ref": "investigation.schema.json#/$defs/interaction"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "VIEW"
+                  }
+                }
+              }
+            ]
+          },
+          "receipt": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/receipt"
+                  },
+                  {
+                    "properties": {
+                      "state": {
+                        "const": "PERSISTED"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "AWAITING_ANSWER"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "interaction": {
+            "allOf": [
+              {
+                "$ref": "investigation.schema.json#/$defs/interaction"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "QUESTION"
+                  }
+                }
+              }
+            ]
+          },
+          "receipt": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/receipt"
+                  },
+                  {
+                    "properties": {
+                      "state": {
+                        "const": "PERSISTED"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "EXPLAINING"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "interaction": {
+            "allOf": [
+              {
+                "$ref": "investigation.schema.json#/$defs/interaction"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "EXPLANATION"
+                  }
+                }
+              }
+            ]
+          },
+          "receipt": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/receipt"
+                  },
+                  {
+                    "properties": {
+                      "state": {
+                        "const": "PERSISTED"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "not": {
+              "enum": [
+                "AWAITING_VIEW",
+                "AWAITING_ANSWER",
+                "EXPLAINING"
+              ]
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "interaction": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "AWAITING_ANSWER",
+              "EXPLAINING"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "identity": {
+            "$ref": "#/$defs/identity"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "AWAITING_VIEW"
+          },
+          "identity": {
+            "type": "null"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "interaction": {
+            "properties": {
+              "purpose": {
+                "const": "IDENTITY"
+              }
+            }
           }
         }
       }

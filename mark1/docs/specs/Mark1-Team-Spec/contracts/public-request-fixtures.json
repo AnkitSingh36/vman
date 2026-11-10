@@ -1,0 +1,170 @@
+{
+  "positive": {
+    "CreateSession": {
+      "workflow_id": "demo-laptop-no-power",
+      "symptom_code": "NO_POWER"
+    },
+    "IdentityCandidates": {
+      "expected_revision": 0,
+      "manual_label": "DEMO-LAPTOP"
+    },
+    "ConfirmIdentity": {
+      "expected_revision": 1,
+      "model_id": "DEMO-LAPTOP",
+      "configuration_id": "DEMO-C1",
+      "human_confirmed": true
+    },
+    "Observation": {
+      "expected_revision": 7,
+      "check_id": "DEMO-OBSERVE",
+      "check_version": "1",
+      "observation_code": "DEMO_INDICATOR",
+      "value": "OFF",
+      "human_confirmed": true
+    },
+    "Outcome": {
+      "expected_revision": 9,
+      "human_reported_outcome": "RESOLVED",
+      "human_confirmed": true
+    },
+    "Stop": {
+      "expected_revision": 7,
+      "reason_code": "USER_STOP"
+    },
+    "Hazard": {
+      "expected_revision": 7,
+      "hazard_code": "UNSURE"
+    },
+    "ImageReceipt": {
+      "image_id": "image-demo",
+      "session_id": "demo-session-1",
+      "revision": 8,
+      "status": "STORED"
+    },
+    "ViewResponse": {
+      "expected_revision": 7,
+      "interaction_id": "interaction-view",
+      "template_id": "DEMO-OVERVIEW",
+      "template_version": "1",
+      "result": "IMAGE",
+      "image_id": "image-demo",
+      "human_confirmed": true
+    },
+    "Answer": {
+      "expected_revision": 7,
+      "interaction_id": "interaction-question",
+      "template_id": "DEMO-QUESTION",
+      "template_version": "1",
+      "value": "NO",
+      "human_confirmed": true
+    },
+    "Message": {
+      "expected_revision": 7,
+      "text": "Please explain the fictional power flow.",
+      "channel": "CHAT",
+      "human_confirmed": true
+    },
+    "ExplanationAck": {
+      "expected_revision": 7,
+      "interaction_id": "interaction-explanation",
+      "template_id": "DEMO-FLOW",
+      "template_version": "1",
+      "acknowledged": true
+    }
+  },
+  "variants": [
+    {
+      "schema": "ViewResponse",
+      "payload": {
+        "expected_revision": 7,
+        "interaction_id": "interaction-view",
+        "template_id": "DEMO-OVERVIEW",
+        "template_version": "1",
+        "result": "UNAVAILABLE",
+        "image_id": null,
+        "human_confirmed": true
+      }
+    },
+    {
+      "schema": "Message",
+      "payload": {
+        "expected_revision": 7,
+        "text": "Please explain the fictional power flow.",
+        "channel": "VOICE_TRANSCRIPT",
+        "human_confirmed": true
+      }
+    }
+  ],
+  "negative": [
+    {
+      "schema": "IdentityCandidates",
+      "payload": {
+        "expected_revision": 1
+      }
+    },
+    {
+      "schema": "ViewResponse",
+      "payload": {
+        "expected_revision": 7,
+        "interaction_id": "interaction-view",
+        "template_id": "DEMO-OVERVIEW",
+        "template_version": "1",
+        "result": "IMAGE",
+        "image_id": null,
+        "human_confirmed": true
+      }
+    },
+    {
+      "schema": "ViewResponse",
+      "payload": {
+        "expected_revision": 7,
+        "interaction_id": "interaction-view",
+        "template_id": "DEMO-OVERVIEW",
+        "template_version": "1",
+        "result": "UNAVAILABLE",
+        "image_id": "image-demo",
+        "human_confirmed": true
+      }
+    },
+    {
+      "schema": "Message",
+      "payload": {
+        "expected_revision": 7,
+        "text": "Please explain the fictional power flow.",
+        "channel": "CHAT",
+        "human_confirmed": true,
+        "audio_url": "https://untrusted.invalid/audio"
+      }
+    },
+    {
+      "schema": "Message",
+      "payload": {
+        "expected_revision": 7,
+        "text": "",
+        "channel": "CHAT",
+        "human_confirmed": true
+      }
+    },
+    {
+      "schema": "Answer",
+      "payload": {
+        "expected_revision": 7,
+        "interaction_id": "interaction-question",
+        "template_id": "DEMO-QUESTION",
+        "template_version": "1",
+        "value": "NO",
+        "human_confirmed": false
+      }
+    },
+    {
+      "schema": "ExplanationAck",
+      "payload": {
+        "expected_revision": 7,
+        "interaction_id": "interaction-explanation",
+        "template_id": "DEMO-FLOW",
+        "template_version": "1",
+        "acknowledged": false
+      }
+    }
+  ]
+}

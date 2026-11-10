@@ -1,25 +1,29 @@
 ticket,owner,title,depends_on,deliverable,acceptance_evidence,release
-A-01,A,Freeze baseline and runtime,,mark1/docs/product/baseline-and-decisions.md,Fresh commit and reusable code mapped; scope and dependency decisions recorded,R0
-A-02,A,Publish v1 contracts and all-state fakes,A-01,mark1/contracts/,Schemas plus full operation definition plus every UI state/error fixture; J and V reviews,R0
-V-01,V,Prepare synthetic supported catalog,A-01,mark1/knowledge/,Versioned sources checks prerequisites observations rights and SME-review fields; no invented repair facts,R0
-J-01,J,Map screens and statuses,A-02,mark1/docs/ux/,Every status and error mapped; phone layout and manual fallback shown,R0
-A-03,A,Implement session auth and durable state,A-02,mark1/server/,Tenant actor revision isolation and restart tests pass,R0
-A-04,A,Enforce policy and catalog lifecycle,A-03;V-01,mark1/server/,Skipped blocker obsolete fallback hidden restriction and cross-asset tests pass,R0
-A-05,A,Implement idempotent evidence,A-03,mark1/server/,Duplicate mismatch timeout concurrency and restart tests pass,R0
-V-02,V,Implement bounded identity perception,A-02;V-01,mark1/ai/,Candidates from allowed family; ambiguity unknown and malicious image tests pass,R0
-V-03,V,Implement scoped retrieval,A-02;V-01,mark1/ai/,Only supplied approved authorized sources used; missing or conflicting sources escalate,R0
-V-04,V,Implement next-check engine,A-02;V-03,mark1/ai/,Valid check or observation IDs; no raw instructions; no loops or unsafe expansion,R0
-V-05,V,Implement model adapter and fake,A-02,mark1/ai/,Cancellation deadline bounded retries structured validation and offline fake demonstrated,R0
-J-02,J,Implement capture and identity confirmation,J-01,mark1/web/,Camera denial retake upload manual input and human comparison work,R0
-J-03,J,Implement check and observation screens,J-01,mark1/web/,Canonical source/check display plus blocked unknown and escalation states,R0
-J-04,J,Implement retry and recovery,J-03,mark1/web/,Double tap lost response reload and conflict never display false saved state,R0
-J-05,J,Implement summary and UI checks,J-02;J-04,mark1/web/,Human outcome vs persisted evidence clear; keyboard and mobile checks pass,R0
-A-06,A,Integrate AI and frontend,A-04;A-05;V-02;V-04;V-05;J-05,mark1/tests/integration/,Happy path plus rejection and failure branches pass with sanitized trace,R0
-V-06,V,Run held-out perception and engine evaluation,V-02;V-04;V-05,mark1/ai/evals/,Frozen cases raw and post-confirmation results refusal coverage costs and latency published,G2
-A-07,A,Harden pilot environment and recovery,A-06,mark1/docs/product/operations.md,Authorization provider terms file limits kill switch backup restore retention and deletion evidence,G3
-A-08,A,Assemble controlled-check pilot release evidence,A-07;V-06,mark1/docs/product/gates.md,G0-G3 accepted by named SME admin customer and independent reviewer; otherwise demo only,R1
-V-07,V,Specify and evaluate optional hypotheses,V-06,mark1/docs/ai/hypotheses.md,Predeclared SME sample targets labels contract-change request and held-out results; no production display,G4
-A-09,A,Gate and integrate diagnostic increment,A-08;V-07,mark1/contracts/,Amended schema and policy plus G4 evidence; explicit feature flag remains off until accepted,R1-optional
-J-06,J,Render optional advisory hypotheses,A-09,mark1/web/,Labels sources uncertainty and separation from approved checks verified,R1-optional
-A-10,A,Measure value and economics,A-08,mark1/docs/product/pilot-results.md,30 matched pairs all attempts support costs tail errors and uncertainty recorded,G5
-A-11,A,Validate buying commitments,A-01,mark1/docs/product/commercial-evidence.md,5 qualified interviews across 3 organizations; 2 independent commitments and 1 actual payment or amber,G6
+A-01,A,Freeze baseline scope runtime package layout,,mark1/docs/product/baseline-and-decisions.md,Record existing tests; resolve old scope; select demo auth limits target browsers and hours,R0
+A-02,A,Publish v2 contracts fixtures and engine stub,A-01,mark1/contracts/,V/J review; all states and new interactions; runnable fake-engine port,R0
+V-01,V,Author synthetic source templates diagrams and scenario set,A-01;A-02,mark1/knowledge/,Source hashes rights applicability and claim rules; no real repair content,R0
+J-01,J,Map phone journey and all v2 states,A-02,mark1/docs/ux/,Camera chat voice cutaway pending stop and fallback wireframes,R0
+A-03,A,Implement auth durable sessions and command ledger,A-02,mark1/server/,Tenant actor revisions concurrency restart and idempotency tests,R0
+A-04,A,Implement mock bridge catalog lifecycle and publication,A-03,mark1/server/,Synthetic test catalog; user+agent scope; withdrawal hidden restrictions graph integrity,R0
+A-05,A,Implement human response and evidence commands,A-03,mark1/server/,Messages answers views acknowledgements observations saved once; pending blocks inference,R0
+A-06,A,Implement media context hashing and budgets,A-03,mark1/server/,Cleared frames; transcript human-report provenance; cancellation and bounded inference,R0
+A-07,A,Enforce interaction claim diagram and freshness policy,A-04;A-05;A-06,mark1/server/,Preflight cannot be skipped; forged evidence stale graph and model prose rejected; local stub demo,R0
+V-02,V,Implement identity and frame perception,V-01,mark1/ai/,Glare unknown wrong-valid and injected frame handling; manual confirmation,R0
+V-03,V,Implement scoped read-only retrieval,V-01,mark1/ai/,Only A-provided subset; missing coverage and contradictions escalate,R0
+V-04,V,Implement contextual investigation loop,V-02;V-03;V-05,mark1/ai/,Useful safe view questions and checks; attempts and no-progress bounded,R0
+V-05,V,Implement provider adapter parsing cancellation and fakes,A-02,mark1/ai/,Strict proposal schema; retries inside deadline; no silent provider fallback,R0
+V-06,V,Implement source-grounded explanation proposal selection,V-01;V-04,mark1/ai/,Approved template nodes and matching evidence; suspected not verified; absent diagram fallback,R0
+J-02,J,Implement capture identity and view responses,J-01,mark1/web/,Manual fallback retake unavailable and explicit selected-frame send,R0
+J-03,J,Implement chat questions and approved checks,J-01,mark1/web/,Canonical text source labels; transcript is not confirmed physical evidence,R0
+J-04,J,Implement speech input and authorized read-aloud,J-03,mark1/web/,Consent editable transcript mute stop and target browser fallback,R0
+J-05,J,Implement cutaway graph and advisory highlights,J-01,mark1/web/,Source/version nodes evidence uncertainty and no arbitrary markup,R0
+J-06,J,Implement retry freshness and local stop,J-02;J-03;J-04;J-05,mark1/web/,Double tap offline reload expired speech and stop during pending response,R0
+J-07,J,Complete summary accessibility and UI integration,J-06,mark1/web/,Fake backend complete journey; keyboard phone screen-reader and no false saved,R0
+A-08,A,Integrate real investigator and frontend,A-07;V-06;J-07,mark1/tests/integration/,Full image retrieval question diagram check outcome and failure traces,R0
+A-09,A,Document run recovery and harden pilot operations,A-08,mark1/docs/product/operations.md,Reproducible demo backup restore kill switch retention deletion; pilot controls separate,R0
+V-07,V,Evaluate held-out visual investigator,V-06,mark1/ai/evals/,Frozen cases raw/final identity useful views grounding escalation latency actual costs,G2
+A-10,A,Assemble supervised pilot gate evidence,A-09;V-07,mark1/docs/product/gates.md,G0-G3 and named external roles; otherwise synthetic demo only,R1
+V-08,V,Prepare real content and diagnostic evaluation proposal,V-07,mark1/docs/ai/diagnostic-pilot.md,SME rights and predeclared causal/next-check criteria; no automatic display,G4
+A-11,A,Gate real advisory diagnosis,A-10;V-08,mark1/docs/product/gates.md,G4 accepted; explicit real diagnosis flag; impacted contract/client review,R1-optional
+A-12,A,Measure user value and economics,A-10,mark1/docs/product/pilot-results.md,30 matched pairs all attempts total support/model cost uncertainty,G5
+A-13,A,Validate buyer commitments,A-01,mark1/docs/product/commercial-evidence.md,5 interviews 3 organizations 2 commitments 1 payment or unknown,G6

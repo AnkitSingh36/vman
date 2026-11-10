@@ -1,0 +1,107 @@
+{
+  "contract_version": "2.0",
+  "note": "Test plans only, not executed runtime traces. EVALUATING/RECORD_PENDING may be asynchronous. Each path must be implemented by its owner.",
+  "scenarios": [
+    {
+      "id": "visual-investigation",
+      "expected_states": [
+        "AWAITING_IDENTITY",
+        "EVALUATING",
+        "AWAITING_IDENTITY",
+        "EVALUATING",
+        "READY",
+        "EVALUATING",
+        "AWAITING_VIEW",
+        "EVALUATING",
+        "AWAITING_ANSWER",
+        "EVALUATING",
+        "READY",
+        "EVALUATING",
+        "EXPLAINING",
+        "EVALUATING",
+        "ESCALATED"
+      ],
+      "required_evidence": [
+        "human identity confirmation",
+        "preflight CLEAR saved",
+        "selected overview frame and view response saved",
+        "enum question answer saved",
+        "indicator OFF confirmed and saved",
+        "source-grounded advisory diagram explanation",
+        "explanation acknowledgement saved"
+      ],
+      "expected_result": "No cause verified; supported checks exhausted -> escalation. A separate resolved branch needs explicit human outcome."
+    },
+    {
+      "id": "unreadable-label",
+      "expected_states": [
+        "AWAITING_IDENTITY",
+        "EVALUATING",
+        "AWAITING_VIEW",
+        "EVALUATING",
+        "AWAITING_IDENTITY"
+      ],
+      "required_evidence": [
+        "identity-purpose view only before confirmation"
+      ],
+      "expected_result": "Ask for clearer label or manual entry; no closest-valid guess."
+    },
+    {
+      "id": "hazard",
+      "expected_states": [
+        "READY",
+        "ESCALATED"
+      ],
+      "required_evidence": [
+        "preflight HAZARD or UNSURE"
+      ],
+      "expected_result": "No subsequent prompt, diagram or speech."
+    },
+    {
+      "id": "diagram-unavailable",
+      "expected_states": [
+        "EXPLAINING"
+      ],
+      "required_evidence": [
+        "supported explanation but missing authorized diagram"
+      ],
+      "expected_result": "Text remains advisory; diagram null, highlights empty."
+    },
+    {
+      "id": "contradiction-or-exhausted-views",
+      "expected_states": [
+        "AWAITING_VIEW",
+        "EVALUATING",
+        "AWAITING_ANSWER",
+        "EVALUATING",
+        "ESCALATED"
+      ],
+      "required_evidence": [
+        "conflicting reports or view retry cap reached"
+      ],
+      "expected_result": "Clarify while budget remains; escalate without invented diagnosis."
+    },
+    {
+      "id": "offline-speech",
+      "expected_states": [
+        "EXPLAINING"
+      ],
+      "required_evidence": [
+        "client loses connectivity or lease expires"
+      ],
+      "expected_result": "Local hide/cancel speech immediately; no new server status invented; revalidate on resume."
+    },
+    {
+      "id": "human-resolved",
+      "expected_states": [
+        "READY",
+        "COMPLETED"
+      ],
+      "required_evidence": [
+        "at least one durably confirmed check",
+        "explicit human RESOLVED outcome persisted"
+      ],
+      "expected_result": "Human-reported resolution; no verified repair claim."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:mark1:engine-proposal:1.0",
+  "$id": "https://schemas.mark1.invalid/v2/engine-proposal.schema.json",
   "title": "EngineProposal",
   "type": "object",
   "additionalProperties": false,
@@ -15,7 +15,7 @@
   ],
   "properties": {
     "contract_version": {
-      "const": "1.0"
+      "const": "2.0"
     },
     "request_id": {
       "type": "string",
@@ -38,7 +38,10 @@
         "IDENTITY_CANDIDATES",
         "PROPOSE_CHECK",
         "ASK_OBSERVATION",
-        "ESCALATE"
+        "ESCALATE",
+        "REQUEST_VIEW",
+        "ASK_QUESTION",
+        "EXPLAIN"
       ]
     },
     "payload": {
@@ -235,6 +238,130 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "REQUEST_VIEW"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "view_template_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "template_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sources": {
+                "$ref": "#/$defs/sources"
+              }
+            },
+            "required": [
+              "view_template_id",
+              "template_version",
+              "sources"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "ASK_QUESTION"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "question_template_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "template_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sources": {
+                "$ref": "#/$defs/sources"
+              }
+            },
+            "required": [
+              "question_template_id",
+              "template_version",
+              "sources"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "EXPLAIN"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "explanation_template_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "template_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sources": {
+                "$ref": "#/$defs/sources"
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "highlight_node_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "explanation_template_id",
+              "template_version",
+              "sources",
+              "evidence_ids",
+              "highlight_node_ids"
+            ]
           }
         }
       }

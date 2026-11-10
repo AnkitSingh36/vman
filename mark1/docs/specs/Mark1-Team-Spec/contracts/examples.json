@@ -1,7 +1,7 @@
 {
-  "note": "Synthetic contract fixtures, not repair instructions or implementation evidence.",
+  "note": "Independent synthetic payload examples, not a chronological transcript, live leases, repairs or passed product tests.",
   "ready_session": {
-    "contract_version": "1.0",
+    "contract_version": "2.0",
     "session_id": "demo-session-1",
     "revision": 4,
     "status": "READY",
@@ -24,22 +24,198 @@
       ],
       "source": {
         "source_id": "DEMO-GUIDE",
-        "version": "1",
-        "locator": "demo section 1"
+        "version": "2",
+        "locator": "Indicator"
       },
-      "policy_checked_at": "2026-11-04T12:00:00Z",
-      "safety_notice": "Synthetic demo only; no physical repair instruction.",
+      "policy_checked_at": "2026-11-10T12:00:00Z",
+      "safety_notice": "Demo only.",
       "stop_conditions": [
-        "Stop if uncertain."
+        "Any reported hazard or uncertainty stops the session."
       ],
-      "guidance_valid_until": "2026-11-04T12:00:15Z"
+      "guidance_valid_until": "2026-11-10T12:00:15Z"
     },
     "receipt": null,
     "human_reported_outcome": null,
-    "reason_code": null
+    "reason_code": null,
+    "interaction": null
+  },
+  "view_session": {
+    "contract_version": "2.0",
+    "session_id": "demo-session-1",
+    "revision": 7,
+    "status": "AWAITING_VIEW",
+    "workflow_id": "demo-laptop-no-power",
+    "identity": {
+      "model_id": "DEMO-LAPTOP",
+      "configuration_id": "DEMO-C1",
+      "human_confirmed": true
+    },
+    "identity_candidates": [],
+    "current_check": null,
+    "receipt": null,
+    "human_reported_outcome": null,
+    "reason_code": null,
+    "interaction": {
+      "template_id": "DEMO-OVERVIEW",
+      "text": "Show the supplied fictional exterior overview image from a wider angle.",
+      "safety_notice": "Demo only.",
+      "stop_conditions": [
+        "Any reported hazard or uncertainty stops the session."
+      ],
+      "interaction_id": "interaction-view",
+      "template_version": "1",
+      "kind": "VIEW",
+      "source": {
+        "source_id": "DEMO-GUIDE",
+        "version": "2",
+        "locator": "Views"
+      },
+      "policy_checked_at": "2026-11-10T12:00:00Z",
+      "guidance_valid_until": "2026-11-10T12:00:15Z",
+      "purpose": "INVESTIGATION",
+      "target_node_id": "INPUT"
+    }
+  },
+  "question_session": {
+    "contract_version": "2.0",
+    "session_id": "demo-session-1",
+    "revision": 7,
+    "status": "AWAITING_ANSWER",
+    "workflow_id": "demo-laptop-no-power",
+    "identity": {
+      "model_id": "DEMO-LAPTOP",
+      "configuration_id": "DEMO-C1",
+      "human_confirmed": true
+    },
+    "identity_candidates": [],
+    "current_check": null,
+    "receipt": null,
+    "human_reported_outcome": null,
+    "reason_code": null,
+    "interaction": {
+      "template_id": "DEMO-QUESTION",
+      "text": "In the supplied fictional scene, was an indicator previously reported?",
+      "safety_notice": "Demo only.",
+      "stop_conditions": [
+        "Any reported hazard or uncertainty stops the session."
+      ],
+      "interaction_id": "interaction-question",
+      "template_version": "1",
+      "kind": "QUESTION",
+      "source": {
+        "source_id": "DEMO-GUIDE",
+        "version": "2",
+        "locator": "Indicator"
+      },
+      "policy_checked_at": "2026-11-10T12:00:00Z",
+      "guidance_valid_until": "2026-11-10T12:00:15Z",
+      "options": [
+        "YES",
+        "NO",
+        "UNSURE"
+      ]
+    }
+  },
+  "explanation_session": {
+    "contract_version": "2.0",
+    "session_id": "demo-session-1",
+    "revision": 7,
+    "status": "EXPLAINING",
+    "workflow_id": "demo-laptop-no-power",
+    "identity": {
+      "model_id": "DEMO-LAPTOP",
+      "configuration_id": "DEMO-C1",
+      "human_confirmed": true
+    },
+    "identity_candidates": [],
+    "current_check": null,
+    "receipt": null,
+    "human_reported_outcome": null,
+    "reason_code": null,
+    "interaction": {
+      "template_id": "DEMO-FLOW",
+      "text": "Synthetic flow: INPUT feeds CONTROL, then DISPLAY. The supplied OFF observation suggests inspecting the input stage; the cause is unconfirmed.",
+      "safety_notice": "Demo only.",
+      "stop_conditions": [
+        "Any reported hazard or uncertainty stops the session."
+      ],
+      "interaction_id": "interaction-explanation",
+      "template_version": "1",
+      "kind": "EXPLANATION",
+      "source": {
+        "source_id": "DEMO-GUIDE",
+        "version": "2",
+        "locator": "Advisory"
+      },
+      "policy_checked_at": "2026-11-10T12:00:00Z",
+      "guidance_valid_until": "2026-11-10T12:00:15Z",
+      "advisory": true,
+      "claims": [
+        {
+          "label": "SUSPECTED",
+          "text": "Synthetic suspected input stage; cause unconfirmed.",
+          "evidence_ids": [
+            "ev-indicator"
+          ]
+        }
+      ],
+      "diagram": {
+        "diagram_id": "DEMO-POWER-FLOW",
+        "version": "1",
+        "title": "Fictional power flow - authored diagram, not camera internal vision",
+        "nodes": [
+          {
+            "node_id": "INPUT",
+            "label": "Input",
+            "x": 100,
+            "y": 500
+          },
+          {
+            "node_id": "CONTROL",
+            "label": "Control",
+            "x": 500,
+            "y": 500
+          },
+          {
+            "node_id": "DISPLAY",
+            "label": "Display",
+            "x": 900,
+            "y": 500
+          }
+        ],
+        "edges": [
+          {
+            "edge_id": "E1",
+            "from_node_id": "INPUT",
+            "to_node_id": "CONTROL",
+            "label": "authored flow"
+          },
+          {
+            "edge_id": "E2",
+            "from_node_id": "CONTROL",
+            "to_node_id": "DISPLAY",
+            "label": "authored flow"
+          }
+        ],
+        "source": {
+          "source_id": "DEMO-GUIDE",
+          "version": "2",
+          "locator": "Flow"
+        }
+      },
+      "highlights": [
+        {
+          "node_id": "INPUT",
+          "label": "SUSPECTED",
+          "evidence_ids": [
+            "ev-indicator"
+          ]
+        }
+      ]
+    }
   },
   "pending_session": {
-    "contract_version": "1.0",
+    "contract_version": "2.0",
     "session_id": "demo-session-1",
     "revision": 5,
     "status": "RECORD_PENDING",
@@ -57,24 +233,31 @@
       "record_id": null
     },
     "human_reported_outcome": null,
-    "reason_code": "EVIDENCE_PENDING"
+    "reason_code": "EVIDENCE_PENDING",
+    "interaction": null
   },
   "engine_proposal": {
-    "contract_version": "1.0",
-    "request_id": "inference-demo-1",
+    "contract_version": "2.0",
+    "request_id": "req-demo",
     "session_id": "demo-session-1",
-    "based_on_revision": 3,
-    "context_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "kind": "PROPOSE_CHECK",
+    "based_on_revision": 6,
+    "context_hash": "3f8e37d5ecc22f1ecdd0bbf9797fabfd5f1c73aafef0c4617342ee7514f58e87",
+    "kind": "EXPLAIN",
     "payload": {
-      "check_id": "DEMO-OBSERVE",
-      "check_version": "1",
+      "explanation_template_id": "DEMO-FLOW",
+      "template_version": "1",
       "sources": [
         {
           "source_id": "DEMO-GUIDE",
-          "version": "1",
-          "locator": "demo section 1"
+          "version": "2",
+          "locator": "Advisory"
         }
+      ],
+      "evidence_ids": [
+        "ev-indicator"
+      ],
+      "highlight_node_ids": [
+        "INPUT"
       ]
     }
   }

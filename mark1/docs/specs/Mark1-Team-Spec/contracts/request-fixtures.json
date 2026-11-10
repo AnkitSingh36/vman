@@ -1,6 +1,6 @@
 {
   "catalog": {
-    "catalog_version": "demo-1",
+    "catalog_version": "demo-2",
     "checks": [
       {
         "check_id": "DEMO-PREFLIGHT",
@@ -27,30 +27,244 @@
         "prerequisites": [],
         "source": {
           "source_id": "DEMO-GUIDE",
-          "version": "1",
-          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "title": "Synthetic demo guide",
-          "locator": "demo preflight",
+          "version": "2",
+          "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+          "title": "Synthetic DEMO-GUIDE",
+          "locator": "Preflight",
           "rights_record_id": "synthetic-rights"
         },
         "state": "Approved",
-        "approval_record_id": "demo-approval"
+        "approval_record_id": "synthetic-demo-approval"
+      },
+      {
+        "check_id": "DEMO-OBSERVE",
+        "version": "1",
+        "kind": "OBSERVATION",
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "workflow_id": "demo-laptop-no-power",
+        "instruction": "Demo only: record the supplied fictional indicator observation.",
+        "safety_notice": "Demo only.",
+        "stop_conditions": [
+          "Any reported hazard or uncertainty stops the session."
+        ],
+        "observation_code": "DEMO_INDICATOR",
+        "options": [
+          "ON",
+          "OFF",
+          "UNSURE"
+        ],
+        "stop_values": [
+          "UNSURE"
+        ],
+        "prerequisites": [
+          {
+            "check_id": "DEMO-PREFLIGHT",
+            "check_version": "1",
+            "observation_code": "DEMO_HAZARD",
+            "allowed_values": [
+              "CLEAR"
+            ]
+          }
+        ],
+        "source": {
+          "source_id": "DEMO-GUIDE",
+          "version": "2",
+          "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+          "title": "Synthetic DEMO-GUIDE",
+          "locator": "Indicator",
+          "rights_record_id": "synthetic-rights"
+        },
+        "state": "Approved",
+        "approval_record_id": "synthetic-demo-approval"
+      }
+    ],
+    "view_templates": [
+      {
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "workflow_id": "demo-laptop-no-power",
+        "source": {
+          "source_id": "DEMO-GUIDE",
+          "version": "2",
+          "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+          "title": "Synthetic DEMO-GUIDE",
+          "locator": "Identity",
+          "rights_record_id": "synthetic-rights"
+        },
+        "state": "Approved",
+        "approval_record_id": "synthetic-demo-approval",
+        "safety_notice": "Demo only.",
+        "stop_conditions": [
+          "Any reported hazard or uncertainty stops the session."
+        ],
+        "version": "1",
+        "template_id": "DEMO-LABEL",
+        "text": "Show the supplied fictional label image clearly.",
+        "purpose": "IDENTITY",
+        "target_node_id": null
+      },
+      {
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "workflow_id": "demo-laptop-no-power",
+        "source": {
+          "source_id": "DEMO-GUIDE",
+          "version": "2",
+          "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+          "title": "Synthetic DEMO-GUIDE",
+          "locator": "Views",
+          "rights_record_id": "synthetic-rights"
+        },
+        "state": "Approved",
+        "approval_record_id": "synthetic-demo-approval",
+        "safety_notice": "Demo only.",
+        "stop_conditions": [
+          "Any reported hazard or uncertainty stops the session."
+        ],
+        "version": "1",
+        "template_id": "DEMO-OVERVIEW",
+        "text": "Show the supplied fictional exterior overview image from a wider angle.",
+        "purpose": "INVESTIGATION",
+        "target_node_id": "INPUT"
+      }
+    ],
+    "question_templates": [
+      {
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "workflow_id": "demo-laptop-no-power",
+        "source": {
+          "source_id": "DEMO-GUIDE",
+          "version": "2",
+          "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+          "title": "Synthetic DEMO-GUIDE",
+          "locator": "Indicator",
+          "rights_record_id": "synthetic-rights"
+        },
+        "state": "Approved",
+        "approval_record_id": "synthetic-demo-approval",
+        "safety_notice": "Demo only.",
+        "stop_conditions": [
+          "Any reported hazard or uncertainty stops the session."
+        ],
+        "version": "1",
+        "template_id": "DEMO-QUESTION",
+        "text": "In the supplied fictional scene, was an indicator previously reported?",
+        "options": [
+          "YES",
+          "NO",
+          "UNSURE"
+        ]
+      }
+    ],
+    "explanation_templates": [
+      {
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "workflow_id": "demo-laptop-no-power",
+        "source": {
+          "source_id": "DEMO-GUIDE",
+          "version": "2",
+          "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+          "title": "Synthetic DEMO-GUIDE",
+          "locator": "Advisory",
+          "rights_record_id": "synthetic-rights"
+        },
+        "state": "Approved",
+        "approval_record_id": "synthetic-demo-approval",
+        "safety_notice": "Demo only.",
+        "stop_conditions": [
+          "Any reported hazard or uncertainty stops the session."
+        ],
+        "version": "1",
+        "template_id": "DEMO-FLOW",
+        "text": "Synthetic flow: INPUT feeds CONTROL, then DISPLAY. The supplied OFF observation suggests inspecting the input stage; the cause is unconfirmed.",
+        "advisory": true,
+        "claim_label": "SUSPECTED",
+        "claim_rule": {
+          "check_id": "DEMO-OBSERVE",
+          "check_version": "1",
+          "observation_code": "DEMO_INDICATOR",
+          "allowed_values": [
+            "OFF"
+          ]
+        },
+        "diagram_id": "DEMO-POWER-FLOW",
+        "diagram_version": "1",
+        "allowed_highlight_node_ids": [
+          "INPUT"
+        ]
+      }
+    ],
+    "diagrams": [
+      {
+        "model_id": "DEMO-LAPTOP",
+        "configuration_id": "DEMO-C1",
+        "workflow_id": "demo-laptop-no-power",
+        "source": {
+          "source_id": "DEMO-GUIDE",
+          "version": "2",
+          "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+          "title": "Synthetic DEMO-GUIDE",
+          "locator": "Flow",
+          "rights_record_id": "synthetic-rights"
+        },
+        "state": "Approved",
+        "approval_record_id": "synthetic-demo-approval",
+        "diagram_id": "DEMO-POWER-FLOW",
+        "version": "1",
+        "title": "Fictional power flow - authored diagram, not camera internal vision",
+        "nodes": [
+          {
+            "node_id": "INPUT",
+            "label": "Input",
+            "x": 100,
+            "y": 500
+          },
+          {
+            "node_id": "CONTROL",
+            "label": "Control",
+            "x": 500,
+            "y": 500
+          },
+          {
+            "node_id": "DISPLAY",
+            "label": "Display",
+            "x": 900,
+            "y": 500
+          }
+        ],
+        "edges": [
+          {
+            "edge_id": "E1",
+            "from_node_id": "INPUT",
+            "to_node_id": "CONTROL",
+            "label": "authored flow"
+          },
+          {
+            "edge_id": "E2",
+            "from_node_id": "CONTROL",
+            "to_node_id": "DISPLAY",
+            "label": "authored flow"
+          }
+        ]
       }
     ]
   },
   "identify_request": {
-    "contract_version": "1.0",
+    "contract_version": "2.0",
     "request_id": "req-demo",
     "session_id": "demo-session-1",
     "based_on_revision": 1,
-    "context_hash": "3d50fc96c4eb7a47ac36f4b945fe863849aa38a976c4230635ead238d7979ca7",
+    "context_hash": "ed8be0684abd0e5d0a6dc662397eee1dcf875ad28f5200bf14c71af35c39a4ad",
     "mode": "IDENTIFY",
     "workflow_id": "demo-laptop-no-power",
     "confirmed_identity": null,
     "manual_label": "DEMO-LAPTOP",
     "cleared_images": [],
     "approved_catalog": {
-      "catalog_version": "demo-1",
+      "catalog_version": "demo-2",
       "checks": [
         {
           "check_id": "DEMO-PREFLIGHT",
@@ -77,14 +291,228 @@
           "prerequisites": [],
           "source": {
             "source_id": "DEMO-GUIDE",
-            "version": "1",
-            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "title": "Synthetic demo guide",
-            "locator": "demo preflight",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Preflight",
             "rights_record_id": "synthetic-rights"
           },
           "state": "Approved",
-          "approval_record_id": "demo-approval"
+          "approval_record_id": "synthetic-demo-approval"
+        },
+        {
+          "check_id": "DEMO-OBSERVE",
+          "version": "1",
+          "kind": "OBSERVATION",
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "instruction": "Demo only: record the supplied fictional indicator observation.",
+          "safety_notice": "Demo only.",
+          "stop_conditions": [
+            "Any reported hazard or uncertainty stops the session."
+          ],
+          "observation_code": "DEMO_INDICATOR",
+          "options": [
+            "ON",
+            "OFF",
+            "UNSURE"
+          ],
+          "stop_values": [
+            "UNSURE"
+          ],
+          "prerequisites": [
+            {
+              "check_id": "DEMO-PREFLIGHT",
+              "check_version": "1",
+              "observation_code": "DEMO_HAZARD",
+              "allowed_values": [
+                "CLEAR"
+              ]
+            }
+          ],
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Indicator",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "synthetic-demo-approval"
+        }
+      ],
+      "view_templates": [
+        {
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Identity",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "synthetic-demo-approval",
+          "safety_notice": "Demo only.",
+          "stop_conditions": [
+            "Any reported hazard or uncertainty stops the session."
+          ],
+          "version": "1",
+          "template_id": "DEMO-LABEL",
+          "text": "Show the supplied fictional label image clearly.",
+          "purpose": "IDENTITY",
+          "target_node_id": null
+        },
+        {
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Views",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "synthetic-demo-approval",
+          "safety_notice": "Demo only.",
+          "stop_conditions": [
+            "Any reported hazard or uncertainty stops the session."
+          ],
+          "version": "1",
+          "template_id": "DEMO-OVERVIEW",
+          "text": "Show the supplied fictional exterior overview image from a wider angle.",
+          "purpose": "INVESTIGATION",
+          "target_node_id": "INPUT"
+        }
+      ],
+      "question_templates": [
+        {
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Indicator",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "synthetic-demo-approval",
+          "safety_notice": "Demo only.",
+          "stop_conditions": [
+            "Any reported hazard or uncertainty stops the session."
+          ],
+          "version": "1",
+          "template_id": "DEMO-QUESTION",
+          "text": "In the supplied fictional scene, was an indicator previously reported?",
+          "options": [
+            "YES",
+            "NO",
+            "UNSURE"
+          ]
+        }
+      ],
+      "explanation_templates": [
+        {
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Advisory",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "synthetic-demo-approval",
+          "safety_notice": "Demo only.",
+          "stop_conditions": [
+            "Any reported hazard or uncertainty stops the session."
+          ],
+          "version": "1",
+          "template_id": "DEMO-FLOW",
+          "text": "Synthetic flow: INPUT feeds CONTROL, then DISPLAY. The supplied OFF observation suggests inspecting the input stage; the cause is unconfirmed.",
+          "advisory": true,
+          "claim_label": "SUSPECTED",
+          "claim_rule": {
+            "check_id": "DEMO-OBSERVE",
+            "check_version": "1",
+            "observation_code": "DEMO_INDICATOR",
+            "allowed_values": [
+              "OFF"
+            ]
+          },
+          "diagram_id": "DEMO-POWER-FLOW",
+          "diagram_version": "1",
+          "allowed_highlight_node_ids": [
+            "INPUT"
+          ]
+        }
+      ],
+      "diagrams": [
+        {
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Flow",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "synthetic-demo-approval",
+          "diagram_id": "DEMO-POWER-FLOW",
+          "version": "1",
+          "title": "Fictional power flow - authored diagram, not camera internal vision",
+          "nodes": [
+            {
+              "node_id": "INPUT",
+              "label": "Input",
+              "x": 100,
+              "y": 500
+            },
+            {
+              "node_id": "CONTROL",
+              "label": "Control",
+              "x": 500,
+              "y": 500
+            },
+            {
+              "node_id": "DISPLAY",
+              "label": "Display",
+              "x": 900,
+              "y": 500
+            }
+          ],
+          "edges": [
+            {
+              "edge_id": "E1",
+              "from_node_id": "INPUT",
+              "to_node_id": "CONTROL",
+              "label": "authored flow"
+            },
+            {
+              "edge_id": "E2",
+              "from_node_id": "CONTROL",
+              "to_node_id": "DISPLAY",
+              "label": "authored flow"
+            }
+          ]
         }
       ]
     },
@@ -93,19 +521,30 @@
     "remaining_budgets": {
       "turns": 8,
       "calls": 16,
-      "deadline_at": "2026-11-04T12:01:00Z"
+      "deadline_at": "2026-11-10T12:01:00Z"
     },
     "model_config_version": "demo-model-1",
     "prompt_version": "demo-prompt-1",
-    "catalog_version": "demo-1"
+    "catalog_version": "demo-2",
+    "investigation_context": {
+      "messages": [],
+      "answers": [],
+      "view_results": [],
+      "acknowledged_explanation_ids": [],
+      "available_evidence_ids": [],
+      "prior_template_ids": [],
+      "omitted_message_count": 0,
+      "inferences_used": 0,
+      "failed_view_attempts": []
+    }
   },
-  "next_check_request": {
-    "contract_version": "1.0",
+  "investigate_request": {
+    "contract_version": "2.0",
     "request_id": "req-demo",
     "session_id": "demo-session-1",
-    "based_on_revision": 1,
-    "context_hash": "b09945e883fc947adbb1dea4e2564cc312fe6077a58aeeb86f5a151f084e356e",
-    "mode": "NEXT_CHECK",
+    "based_on_revision": 6,
+    "context_hash": "3f8e37d5ecc22f1ecdd0bbf9797fabfd5f1c73aafef0c4617342ee7514f58e87",
+    "mode": "INVESTIGATE",
     "workflow_id": "demo-laptop-no-power",
     "confirmed_identity": {
       "model_id": "DEMO-LAPTOP",
@@ -115,7 +554,7 @@
     "manual_label": "DEMO-LAPTOP",
     "cleared_images": [],
     "approved_catalog": {
-      "catalog_version": "demo-1",
+      "catalog_version": "demo-2",
       "checks": [
         {
           "check_id": "DEMO-PREFLIGHT",
@@ -142,26 +581,274 @@
           "prerequisites": [],
           "source": {
             "source_id": "DEMO-GUIDE",
-            "version": "1",
-            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "title": "Synthetic demo guide",
-            "locator": "demo preflight",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Preflight",
             "rights_record_id": "synthetic-rights"
           },
           "state": "Approved",
-          "approval_record_id": "demo-approval"
+          "approval_record_id": "synthetic-demo-approval"
+        },
+        {
+          "check_id": "DEMO-OBSERVE",
+          "version": "1",
+          "kind": "OBSERVATION",
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "instruction": "Demo only: record the supplied fictional indicator observation.",
+          "safety_notice": "Demo only.",
+          "stop_conditions": [
+            "Any reported hazard or uncertainty stops the session."
+          ],
+          "observation_code": "DEMO_INDICATOR",
+          "options": [
+            "ON",
+            "OFF",
+            "UNSURE"
+          ],
+          "stop_values": [
+            "UNSURE"
+          ],
+          "prerequisites": [
+            {
+              "check_id": "DEMO-PREFLIGHT",
+              "check_version": "1",
+              "observation_code": "DEMO_HAZARD",
+              "allowed_values": [
+                "CLEAR"
+              ]
+            }
+          ],
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Indicator",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "synthetic-demo-approval"
+        }
+      ],
+      "view_templates": [
+        {
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Identity",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "synthetic-demo-approval",
+          "safety_notice": "Demo only.",
+          "stop_conditions": [
+            "Any reported hazard or uncertainty stops the session."
+          ],
+          "version": "1",
+          "template_id": "DEMO-LABEL",
+          "text": "Show the supplied fictional label image clearly.",
+          "purpose": "IDENTITY",
+          "target_node_id": null
+        },
+        {
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Views",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "synthetic-demo-approval",
+          "safety_notice": "Demo only.",
+          "stop_conditions": [
+            "Any reported hazard or uncertainty stops the session."
+          ],
+          "version": "1",
+          "template_id": "DEMO-OVERVIEW",
+          "text": "Show the supplied fictional exterior overview image from a wider angle.",
+          "purpose": "INVESTIGATION",
+          "target_node_id": "INPUT"
+        }
+      ],
+      "question_templates": [
+        {
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Indicator",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "synthetic-demo-approval",
+          "safety_notice": "Demo only.",
+          "stop_conditions": [
+            "Any reported hazard or uncertainty stops the session."
+          ],
+          "version": "1",
+          "template_id": "DEMO-QUESTION",
+          "text": "In the supplied fictional scene, was an indicator previously reported?",
+          "options": [
+            "YES",
+            "NO",
+            "UNSURE"
+          ]
+        }
+      ],
+      "explanation_templates": [
+        {
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Advisory",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "synthetic-demo-approval",
+          "safety_notice": "Demo only.",
+          "stop_conditions": [
+            "Any reported hazard or uncertainty stops the session."
+          ],
+          "version": "1",
+          "template_id": "DEMO-FLOW",
+          "text": "Synthetic flow: INPUT feeds CONTROL, then DISPLAY. The supplied OFF observation suggests inspecting the input stage; the cause is unconfirmed.",
+          "advisory": true,
+          "claim_label": "SUSPECTED",
+          "claim_rule": {
+            "check_id": "DEMO-OBSERVE",
+            "check_version": "1",
+            "observation_code": "DEMO_INDICATOR",
+            "allowed_values": [
+              "OFF"
+            ]
+          },
+          "diagram_id": "DEMO-POWER-FLOW",
+          "diagram_version": "1",
+          "allowed_highlight_node_ids": [
+            "INPUT"
+          ]
+        }
+      ],
+      "diagrams": [
+        {
+          "model_id": "DEMO-LAPTOP",
+          "configuration_id": "DEMO-C1",
+          "workflow_id": "demo-laptop-no-power",
+          "source": {
+            "source_id": "DEMO-GUIDE",
+            "version": "2",
+            "sha256": "c4f7a096c86ed11c6131887770cfb45cc0f6b531e435272a75c9870f60ff72a8",
+            "title": "Synthetic DEMO-GUIDE",
+            "locator": "Flow",
+            "rights_record_id": "synthetic-rights"
+          },
+          "state": "Approved",
+          "approval_record_id": "synthetic-demo-approval",
+          "diagram_id": "DEMO-POWER-FLOW",
+          "version": "1",
+          "title": "Fictional power flow - authored diagram, not camera internal vision",
+          "nodes": [
+            {
+              "node_id": "INPUT",
+              "label": "Input",
+              "x": 100,
+              "y": 500
+            },
+            {
+              "node_id": "CONTROL",
+              "label": "Control",
+              "x": 500,
+              "y": 500
+            },
+            {
+              "node_id": "DISPLAY",
+              "label": "Display",
+              "x": 900,
+              "y": 500
+            }
+          ],
+          "edges": [
+            {
+              "edge_id": "E1",
+              "from_node_id": "INPUT",
+              "to_node_id": "CONTROL",
+              "label": "authored flow"
+            },
+            {
+              "edge_id": "E2",
+              "from_node_id": "CONTROL",
+              "to_node_id": "DISPLAY",
+              "label": "authored flow"
+            }
+          ]
         }
       ]
     },
-    "observations": [],
-    "completed_check_ids": [],
+    "observations": [
+      {
+        "check_id": "DEMO-PREFLIGHT",
+        "check_version": "1",
+        "observation_code": "DEMO_HAZARD",
+        "value": "CLEAR",
+        "provenance": "HUMAN_CONFIRMED",
+        "record_id": "ev-preflight"
+      },
+      {
+        "check_id": "DEMO-OBSERVE",
+        "check_version": "1",
+        "observation_code": "DEMO_INDICATOR",
+        "value": "OFF",
+        "provenance": "HUMAN_CONFIRMED",
+        "record_id": "ev-indicator"
+      }
+    ],
+    "completed_check_ids": [
+      "DEMO-PREFLIGHT",
+      "DEMO-OBSERVE"
+    ],
     "remaining_budgets": {
       "turns": 8,
       "calls": 16,
-      "deadline_at": "2026-11-04T12:01:00Z"
+      "deadline_at": "2026-11-10T12:01:00Z"
     },
     "model_config_version": "demo-model-1",
     "prompt_version": "demo-prompt-1",
-    "catalog_version": "demo-1"
+    "catalog_version": "demo-2",
+    "investigation_context": {
+      "messages": [],
+      "answers": [],
+      "view_results": [],
+      "acknowledged_explanation_ids": [],
+      "available_evidence_ids": [
+        "ev-preflight",
+        "ev-indicator"
+      ],
+      "prior_template_ids": [],
+      "omitted_message_count": 0,
+      "inferences_used": 2,
+      "failed_view_attempts": []
+    }
   }
 }

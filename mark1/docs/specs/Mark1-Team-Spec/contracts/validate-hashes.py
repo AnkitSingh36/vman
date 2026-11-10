@@ -7,7 +7,7 @@ root = Path(__file__).resolve().parent
 fields = (
     'mode', 'workflow_id', 'confirmed_identity', 'manual_label',
     'cleared_images', 'approved_catalog', 'observations', 'completed_check_ids',
-    'catalog_version', 'prompt_version', 'model_config_version',
+    'catalog_version', 'prompt_version', 'model_config_version', 'investigation_context',
 )
 
 def canonical_context(request):
@@ -19,7 +19,7 @@ def canonical_context(request):
 def main():
     requests = json.loads((root / 'request-fixtures.json').read_text())
     golden = json.loads((root / 'hash-golden.json').read_text())
-    for name in ('identify_request', 'next_check_request'):
+    for name in ('identify_request', 'investigate_request'):
         canonical = canonical_context(requests[name])
         digest = hashlib.sha256(canonical.encode('utf-8')).hexdigest()
         assert canonical == golden[name]['canonical_json'], name
@@ -27,7 +27,7 @@ def main():
     catalog = json.loads((root / 'catalog.schema.json').read_text())
     engine = json.loads((root / 'engine-request.schema.json').read_text())
     assert catalog == engine['properties']['approved_catalog'], 'Embedded catalog schema drift'
-    print('Two canonical-hash golden fixtures and catalog-schema equivalence passed.')
+    print('Two v2 canonical-hash golden fixtures and catalog-schema equivalence passed.')
 
 if __name__ == '__main__':
     main()

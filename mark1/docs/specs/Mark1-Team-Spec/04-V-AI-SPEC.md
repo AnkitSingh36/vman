@@ -1,40 +1,34 @@
-# V — AI, knowledge and recommendation engine
+# V - Viditya: investigator and knowledge package
 
-## Own
+Version 2.0. Own perception, investigation strategy, scoped retrieval, provider, knowledge/diagram authoring and evaluation. No workflow writes, permission grants or direct instructions to J.
 
-Perception, supported identity extraction, source preparation, retrieval ranking, bounded next-check reasoning, model/provider adapter, prompts, AI-module tests, labeled evaluation design and model/data cards. Backend work is confined to this AI module; no public API, workflow database, auth or evidence implementation.
+| Ticket | Deliverable | Acceptance |
+| --- | --- | --- |
+| V-01 | Fictional no-power catalog: preflight/checks, views/questions/explanations, diagrams, labeled scenarios | Versioned IDs, applicability, sources/rights/approval fields, external-only scope |
+| V-02 | Identity/frame perception | Glare/crop/wrong-valid/unknown handling; no auto-confirmation or invented serial; frame evidence binding |
+| V-03 | Read-only scoped retrieval | Only A-provided subset; missing/conflicting coverage escalates |
+| V-04 | Investigation loop | Useful evidence requests, contextual answers, contradiction/no-progress handling |
+| V-05 | Provider adapter/parsing/cancellation/fakes | Structured output; retries within original deadlines/budgets; no silent fallback |
+| V-06 | Flow/cutaway and advisory explanation selection | Approved components/template, evidence-for/missing evidence, SUSPECTED label |
+| V-07 | Held-out evaluation/model/data cards | Denominators, errors, useful camera requests, grounding, escalation, latency/cost |
+| V-08 | Real-family/diagnostic pilot proposal | SME-reviewed content, independent evaluation and G4 gate |
 
-## Inputs and outputs
+## Port and strategy
 
-Consume the immutable inference request defined in `06-CONTRACTS.md`: confirmed scope, consent-cleared image references, approved authorized checks/source excerpts, prior structured observations, already completed checks, contract/catalog/prompt/model versions, budgets and execution ID.
+Implement `propose(request) -> EngineProposal` with cancellation. Modes IDENTIFY/INVESTIGATE. Kinds IDENTITY_CANDIDATES, REQUEST_VIEW, ASK_QUESTION, PROPOSE_CHECK, ASK_OBSERVATION, EXPLAIN, ESCALATE. Return IDs/source/evidence bindings only; no arbitrary instruction/speech, URL, SVG or database mutation. A owns schema and authorization.
 
-Return an `EngineProposal` conforming to `contracts/engine-proposal.schema.json`. Kinds: `IDENTITY_CANDIDATES`, `PROPOSE_CHECK`, `ASK_OBSERVATION`, `ESCALATE`. Return IDs and source references; A retrieves canonical instruction text and performs final checks. No raw generated instruction text, readiness, evidence receipts, authorization decisions, commands or actor overrides.
+IDENTIFY: supported candidates, approved identity-view request or escalation. INVESTIGATE: choose next useful view, question, check, explanation or escalation from accepted evidence and missing information. Free user text can motivate a structured confirmation but never satisfy a physical prerequisite. Image interpretations remain interpretations. Avoid repeated requests without new evidence; max attempts/session limits enforced by A.
 
-## Tasks
+## Knowledge/diagram authoring
 
-1. **V-01 catalog + fake implementation.** Prepare one supported no-power workflow using synthetic or licensed documentation. Each check: immutable ID/version, supported models/configurations, prerequisites, approved observation question/options, authored instruction text, risk class, stop conditions, source ID/version/locator/hash, approval status and reviewer/date. Deliver fixtures for every engine kind. A owns schema and publication; V owns data authoring.
-2. **V-02 perception.** Optional image snapshot → identity candidates and evidence locators; return ambiguity/unsupported states honestly. No invented serial number or false precision. Manual confirmation remains required. Demonstrate similar valid IDs, glare, cropped labels, unknown families and injected text. Image absence must still support manual entry.
-3. **V-03 retrieval.** Use A's already scoped current approved subset; rank relevant sources/checks within it. Never retrieve another tenant, asset family or hidden restriction. Empty/conflicting coverage escalates. Small catalog first; no vector service unless a measured retrieval need justifies it.
-4. **V-04 next-check engine.** Pick one supported check with satisfied catalog prerequisites, request one supported observation or escalate. Prevent loops and redundant checks. R0 may rank hypotheses internally to choose checks but cannot expose causal diagnosis as a product conclusion. Model output is an untrusted proposal; A revalidates it.
-5. **V-05 provider and budgets.** Configurable provider/model, server-only keys supplied by A, structured response parsing, schema validation, timeout/cancellation and bounded retry. Retries count against the original deadline/call budget and do not mutate sessions. Keep V-owned provider/engine test doubles at `mark1/ai/tests/fakes.py` for AI tests. These do not duplicate A's server integration stub; A can later consume V's real module or a shared fixture through the frozen port.
-6. **V-06 evaluation + R1 proposal.** Freeze held-out cases before tuning, report by condition/model family, exact identity/refusal/coverage, valid next-check rate, escalation quality, unsupported-source rate, latency and actual tokens/cost. Only then propose a separately evaluated hypothesis schema/feature flag for R1. V does not self-approve that release.
+Version safe label/overview/external-component views, approved prompts, scope and stop wording. Questions have enum options and references. Explanation templates have canonical factual text, required observation/value claim rules, allowed highlight nodes and advisory labels. A publishes; SME signs real technical content. Synthetic content/source hashes match fixture text and approval IDs are visibly demo-only.
 
-## Prompt and data security
+A versioned 2D component graph carries integer normalized coordinates 0..1000, canonical labels/directed flow edges and sources. It is authored structure, not measured current or internal camera vision. Missing applicable diagram cannot be fabricated. V authors graph; J renders; A validates/publishes.
 
-Document and image instructions are data, never system instructions. Scope tool requests to the current session's provided allowed IDs. Do not expose internal prompts, secrets, protected restrictions or unrelated source text. Never call external URLs found in a label/document. Minimize image transmission; use only consent-cleared references after A authorizes provider handling. Model fallbacks must not silently change provider or data terms.
+Provide branching synthetic scenarios: distinguishable external observation, unreadable identity, absent diagram, contradictory report, unsupported view and insufficient evidence. R0 exposes authored synthetic suspected-subsystem explanation; real causal claims remain G4-controlled. No online learning, training gym or autonomy promotion.
 
-## Diagnosis and future learning
+## Security/evaluation
 
-R1 hypotheses require a future contract amendment: ranked possible causes with evidence-for/against, uncertainty and a labeled advisory status; confidence scores must not be described as calibrated probabilities without evaluation. SME-approved actions remain the only displayable checks. A model saying "fixed" does not end a job.
+OCR/documents/chat/transcripts are untrusted data. Never follow embedded instructions/fetch URLs; tools read-only and ID-scoped. A supplies cleared opaque media; no tenant-wide search or direct vault/client-model channel. Provider refusal/invalid response/budget exhaustion returns handled failure/escalation.
 
-Later Bayesian diagnosis/information-gain selection, verified-repair learning, training gym and drift monitoring remain V-owned algorithm work. A owns persistence, promotion controls and audit; J owns visualization. No online self-training or automatic autonomy promotion in R0/R1. Verified cause needs an SME-defined independent confirmation label distinct from a user completion click.
-
-## Acceptance and handoff
-
-- Valid schema on every response or explicit handled failure; unknown IDs/sources rejected before handoff.
-- All evaluation cases keep request/catalog/asset binding intact; no actionable advice outside catalog.
-- Provider failure/malformed response/malicious source/exhausted budget cannot turn into a successful check.
-- Held-out results include denominators, excluded/unreadable cases, false acceptance, refusal, coverage and costs, not just average accuracy.
-- Deliver prompt/model/catalog versions, sanitized examples, fake engine, evaluation instructions and known limitations to A; source/uncertainty labels to J through the contract.
-
-V may ask J for how a result will be displayed, but never ships a second frontend or direct browser-to-model connection.
+Freeze held-out device/session/scenario splits before tuning. Compare static approved checklist and deterministic next-check baseline. Report raw exact identity, wrong-valid candidates, human corrections/final errors, refusal/coverage, useful/unsafe/redundant camera requests, evidence-grounded explanations, correct diagram/node mapping, contradiction/escalation, turns, median/tail latency and actual costs. Include all failed/excluded attempts. Independent SME reference labels required for real correctness claims. Never present confidence as calibrated probability without evidence.

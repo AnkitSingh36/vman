@@ -1,451 +1,322 @@
 # Mark-1: complete team implementation specification
 
-4 November 2026 | A: backend and integration; V: AI and knowledge; J: frontend.
+Version 2.0 | 10 November 2026 | Visual investigation baseline.
 
-This combined document contains all Markdown specifications. Companion ZIP also contains the assignable backlog, OpenAPI, schemas, fixtures and runnable artifact checks.
-
+Generated from the split specifications; edit those files first. Companion contracts and backlog are in `Mark1-Team-Spec/`.
 
 ---
 
 <!-- 00-START-HERE.md -->
 
-# Mark-1: three-developer implementation pack
+# Mark-1: visual investigation implementation pack
 
-Version: 1.0 | 4 November 2026 (India) | Status: proposed implementation specification, independently reviewed; no product release gate closed.
+Version 2.0 | 10 November 2026 (India) | Proposed specification; implementation and product gates unverified.
 
-## What we are building
+## Product baseline
 
-Mark-1 is a human-in-the-loop assistant for physical troubleshooting. In the first laptop workflow, a person identifies a laptop that will not turn on, provides observations, follows a supported external check, reports the result, and receives the next permitted check or an escalation. The person performs all physical actions. Mark-1 records observations, sources, decisions and human confirmations.
+Mark-1 is a human-in-the-loop visual investigation assistant. The camera is its eye; the AI investigates; a permission-enforcing bridge supplies applicable approved machine knowledge from an M-Files-like vault. The agent requests useful views and contextual answers, retrieves evidence, explains machine flow using a cutaway diagram, highlights a suspected subsystem, and proposes permitted checks. The human controls the camera and performs every physical action.
 
-The long-term vision includes diagnosis, learning from verified repairs, overlays and additional equipment. These are separately gated increments, not claims about the current prototype. PAaaS is a positioning choice here, not a certification.
+R0 must demonstrate this investigation experience, not merely a sequential checklist: one fictional laptop model/configuration, no-power symptom, selected camera snapshots, voice/chat, a source-backed 2D cutaway and a small branching scenario set. Real M-Files access remains prohibited in this repository; use the local mock and synthetic data.
 
-## The division
+## Read and implement
 
-| Developer | Sole implementation responsibility | Delivers to the others |
+1. `01-PRODUCT-AND-ARCHITECTURE.md`: scope, experience, trust and state model.
+2. `02-OWNERSHIP-AND-HANDOFFS.md`: owners, integration and dependencies.
+3. `03-A-BACKEND-SPEC.md`: Ankit's independently buildable backend package.
+4. `04-V-AI-SPEC.md`: Viditya's investigator, perception and knowledge package.
+5. `05-J-FRONTEND-SPEC.md`: J's camera, chat, speech and diagram package.
+6. `06-CONTRACTS.md` and `contracts/`: normative v2 operations, schemas, fixtures and checks.
+7. `07-VALIDATION-AND-RELEASE.md`: evaluation and evidence gates.
+8. `08-DELIVERY-AND-OPERATIONS.md`, `09-BACKLOG.csv`: delivery order and tickets.
+9. `10-ELEPHANT-GOLDFISH-REVIEW.md`, `11-GATE-AND-DECISION-REGISTER.md`: review status and decisions.
+
+Split files and machine-readable contracts are authoritative. The combined sibling document is a distribution copy assembled from these Markdown files.
+
+| Owner | Implements | Independent development substitute |
 | --- | --- | --- |
-| A — Ankit | Trusted backend, policy, authentication, database, public and internal contracts, deployment, end-to-end integration | Stable API and fixtures to J; scoped requests/catalog access to V |
-| V — Viditya (spelling supplied by user) | AI perception, retrieval, next-check recommendation, model provider integration, offline AI evaluation | A typed recommendation to A; never direct operational instructions to J |
-| J | Phone-friendly web UI, camera/upload UX, confirmations, source display, frontend tests | A client that renders server-authorized states and submits human observations |
+| A - Ankit | API/auth, bridge/policy, state/evidence, media boundary, publication, deployment/integration | Deterministic engine stub and synthetic server test catalog |
+| V - Viditya | Perception, investigation, retrieval, knowledge/diagram authoring, model adapter/evaluation | Frozen requests and AI-owned provider fakes |
+| J | Phone UI, capture/chat, speech UX, diagram renderer, recovery/accessibility | Frozen API fixtures |
 
-Skill percentages provided by the user describe strengths, not available working hours. J's backend knowledge is useful for integration review; V's backend knowledge stays inside the AI module. A does not implement their modules by default.
+A can complete the local backend without V's engine or J's screens. Integrated experience requires both. V/J contract review is needed before branches rely on the frozen interface. A does not implement their modules by default.
 
-Single code ownership prevents competing implementations. Reviews, contract discussions and integration are deliberately collaborative. Nobody edits another owner's area without an explicit transfer recorded in the ownership register.
+## Change from v1
 
-## Read these files
-
-1. `01-PRODUCT-AND-ARCHITECTURE.md`: scope, architecture, state and trust rules.
-2. `02-OWNERSHIP-AND-HANDOFFS.md`: paths, interfaces, PR rules, existing-code mapping.
-3. `03-A-BACKEND-SPEC.md`, `04-V-AI-SPEC.md`, `05-J-FRONTEND-SPEC.md`: individual work instructions and acceptance criteria.
-4. `06-CONTRACTS.md` and `contracts/`: OpenAPI definition, request/catalog/response schemas, every state/error fixture and runnable schema checks.
-5. `07-VALIDATION-AND-RELEASE.md`: tests, evidence gates, evaluation and release controls.
-6. `08-DELIVERY-AND-OPERATIONS.md`: sequence, dependencies, support, privacy and decisions.
-7. `09-BACKLOG.csv`: assignable tickets with dependencies and acceptance evidence.
-8. `10-ELEPHANT-GOLDFISH-REVIEW.md`: independent review findings and resolutions.
-9. `11-GATE-AND-DECISION-REGISTER.md`: reusable evidence and decision templates.
-
-Downloadable ZIP contains all files, including schemas and example payloads. Markdown files are also supplied individually. These are design artifacts; they do not create GitHub issues, modify a repository, deploy a service, or contact teammates.
-
-## Start together, then work independently
-
-On the first shared session, A freezes contract v1 and publishes mock responses; V freezes the supported check/source catalog; J confirms every screen state against those mocks. Then J builds against fixtures, V against the AI port, and A against a deterministic fake engine. A owns the integrated demo.
-
-## Basis and limits
-
-This pack uses the user's team descriptions, laptop example, visible Mark-1 discussion and the current `Vman-Amber-to-Green-Plan.md` read on 4 November 2026. That plan reviewed repository commit `8bd2f05eda8500897775678f9a6842145569be65`. No fresh repository inspection or live model/customer validation was performed for this pack. Proposed paths below are a target layout, not a report of files already present.
-
-The earlier plan intentionally excluded diagnosis from its first industrial pilot. This pack makes an explicit scope change: R0 is a laptop-specific controlled-check demonstration; R1 adds evaluated diagnostic hypotheses in a supervised pilot only after its additional gates pass. The earlier industrial/customer green status does not transfer to laptops. All release criteria in this pack are proposed thresholds, not achieved results or safety standards.
-
+Camera requests, dialogue, voice and cutaway explanations move into R0. Synthetic advisory suspected-subsystem explanations are enabled; real-world diagnosis remains separately gated. Streaming video, tracked AR, learning and autonomy remain later increments. Contract 2.0 and `/v2` replace the v1 design. No deployed migration, independent v2 review or passed product gate is claimed.
 
 ---
 
 <!-- 01-PRODUCT-AND-ARCHITECTURE.md -->
 
-# Product and architecture specification
+# Product and architecture: visual investigation
 
-## Releases and user outcome
+Version 2.0 | 10 November 2026
 
-| Release | What a user can do | Explicit boundary |
+## Practical experience
+
+The user opens a phone web app beside a supported device and describes the symptom. The agent inspects a selected frame, requests the label or a better angle, retrieves applicable knowledge, asks contextual questions and chooses further evidence. Text/optional speech, camera preview and a separate 2D flow/cutaway panel explain the suspected subsystem. It requests an approved external check, waits for a human observation, then continues or escalates.
+
+Example R0 path: identify fictional DEMO-LAPTOP/DEMO-C1; confirm identity; hazard preflight; request a wider external view; ask about a supplied fictional indicator; show an approved power-flow diagram with a suspected input-stage location; offer a supported check or escalate. Branch on unreadable views, uncertainty and conflicting evidence. Camera appearance alone never establishes an internal electrical failure.
+
+| Release | Required experience | Boundary |
 | --- | --- | --- |
-| R0 — controlled laptop demonstration | Confirm laptop identity, describe no-power symptom, record observations, follow source-backed allowlisted external checks, save session record | Fictional/licensed test material; AI proposes only check IDs; no causal diagnosis displayed; no customer operational use |
-| R1 — supervised laptop pilot | Same flow with a real authorized catalog, evaluated next-check reasoning, separately labeled diagnostic hypotheses when enabled | One supported laptop family, qualified supervisor, explicit escalation; gates in file 07 required |
-| R2 — expansion | More symptoms/equipment, verified-repair learning and overlays, each behind separate scope/evaluation decisions | No automatic promotion to broad rollout or autonomous physical action |
+| R0 visual demo | One fictional model/no-power scenario set; camera follow-up; contextual questions; chat; speech input/output with visible fallback; source-backed 2D cutaway and advisory suspected subsystem; external checks and durable history | Synthetic/generated material; no customer operational use; failure handling demonstrated |
+| R1 supervised pilot | Technically approved real family/catalog and evaluated investigator in an authorized environment | G0-G3; real diagnostic explanation additionally G4; real vault prohibited under current repo rules |
+| R2 expansion | Streaming, tracked AR, more equipment, verified-repair learning, separately evaluated | No automatic autonomy or universal diagnosis |
 
-First supported symptom: laptop does not turn on. A customer/repair subject-matter expert (SME) chooses the exact family and approves the check catalog before R1. The team must not invent a universal repair checklist from this specification.
+No disassembly, battery handling, energized probing, mains measurement, flashing, bypass or remote execution. View requests must not ask for internal access, moving running machinery or another unapproved operation. Machine-specific behavior is catalog metadata, not hardcoded policy.
 
-R0 covers observation and supported external user checks only. No disassembly, battery handling, energized probing, mains measurements, firmware/BIOS flashing, password/security bypass, or remote execution. Visible damage, liquid, swelling, unusual heat/smell or an uncertain condition triggers a stop and professional escalation. Actual instructions and stop wording are catalog content reviewed by an SME, not generated by the model. Ordinary indicator interpretation also needs model-specific source support.
+## Loop
 
-## User journey
+1. Authenticate, select supported workflow and describe symptom.
+2. Capture/upload a snapshot or enter a label. Before confirmation, only identity-oriented safe view requests are allowed.
+3. AI returns exact supported candidates or requests another view; human confirms model/configuration against label.
+4. A scopes knowledge/permissions and independently requires hazard preflight. CLEAR is a human report, not guarantee; HAZARD/UNSURE stops.
+5. V receives authorized catalog, selected frames, accepted evidence and recent messages; proposes a view, question, explanation, check or escalation.
+6. A validates and resolves canonical text/diagram. J displays one active interaction; voice reads that same authorized text.
+7. Save human response before the next inference. Free chat never silently becomes a confirmed prerequisite. End on human-reported outcome or escalation.
 
-1. Authenticate and create a session with symptom and supported workflow.
-2. Capture/upload an image or manually enter a label. Image use is optional.
-3. AI proposes identity candidates; the human explicitly confirms model/configuration against the physical label. Ambiguity stops progress.
-4. Backend scopes sources and checks to that confirmed asset and workflow; checks authorization, catalog lifecycle and restrictions.
-5. A requires a source/SME-approved hazard preflight observation before any physical check. AI then recommends one check ID or asks for a permitted observation. Backend validates prerequisites and releases the current approved instruction text.
-6. Human performs the external check and submits a structured observation/confirmation.
-7. Backend persists evidence before releasing the next check; then re-evaluates current policy and asks the engine for another candidate.
-8. End with an explicitly human-reported outcome, exhausted-check escalation or stopped session. R1 hypotheses are advisory and are never recorded as a verified cause without independent confirmation.
+## Architecture and trust
 
-## Architecture
+Phone web client -> A authenticated HTTP API -> A state/policy/mock knowledge bridge -> V investigation module -> configured multimodal provider. One backend deployment and transactional store; no mandatory microservices, agent swarm, vector service or live stream. A supplies a bounded authorized catalog; V ranks within it. A may refresh knowledge on a subsequent context-bound turn. Model tools are read-only; writes/confirmations are app-only.
 
-```mermaid
-flowchart TD
-  J["J: Web interface"] --> A["A: Authenticated backend and policy"]
-  A --> V["V: AI module"]
-  V --> M["Configured model provider"]
-  A --> D["A: State, approved catalog and evidence"]
-  V --> A
-  A --> J
-```
+A owns readiness/policy; V proposes IDs/source/evidence bindings, not instructions or approvals; J renders A's output, never direct model/vault content. Bridge checks user and configured agent access, exact applicability, current lifecycle and hidden restrictions. Missing policy ->UNKNOWN. Withdrawal/obsolescence/supersession revokes with no historical approved fallback; a Draft successor alone does not revoke valid content.
 
-One backend deployment with a module boundary, one database, one web client. No mandatory microservices, queues, vector database, multi-agent runtime, or live video stream. R0 uses image snapshots and an authorized small source catalog; retrieval can be metadata/full-text based. Add infrastructure only when measured limitations require it. Google Elephant–Goldfish is used to review this specification; it is not a requirement for multiple runtime agents.
+## Language and evidence
 
-Proposed stack: retain existing Python Lantern code; add a small Python HTTP layer and a React/Vite/TypeScript UI if no suitable existing UI exists. A records exact framework/runtime/SDK versions after a fresh repository/dependency check in A-01. This specification defines behavior independently of framework syntax and does not claim those dependencies are installed.
+R0 uses context-selected approved view/question/explanation templates. Free text and corrected voice transcripts are bounded untrusted human reports. An unknown question triggers clarification/escalation. Composed canonical explanations describe flow, evidence and suspected location without asserting verified cause or calibrated probability. Arbitrary model prose is not displayed/spoken; expanding generative language requires a new evaluated contract.
 
-## Trust boundary and authority
+Distinguish HUMAN_REPORT, HUMAN_CONFIRMED_OBSERVATION and IMAGE_OBSERVATION evidence. Image interpretations remain model interpretations. OBSERVED/REPORTED/SUSPECTED/UNKNOWN highlights retain provenance; A evaluates authored claim rules, not merely source membership. Conflicting evidence produces uncertainty. A completion click never verifies repair.
 
-- J never decides whether work is permitted and never connects directly to a model or vault.
-- V treats images, OCR, source documents and user input as untrusted data. It returns typed proposals only, never readiness or approval.
-- A computes readiness independently; skipped model calls cannot skip policy. All public responses pass through A.
-- A authenticates actor and organization from the session, never request-supplied actor IDs. Every query, object reference, image, recommendation and record is scoped to them.
-- A selects authorized catalog entries and evaluates hidden restrictions using an approved policy identity. A generic block may be returned without leaking protected details; unavailable policy returns UNKNOWN.
-- V cannot write workflow state or evidence. Its access is read-only and bounded to the current approved source set.
-- Changing confirmed identity, symptom scope, configuration or catalog version invalidates the active recommendation and requires a new policy evaluation.
+## Cutaway ('x-ray')
 
-## Authoritative states
+An approved schematic/cutaway has immutable version, component node/edge IDs, source references and 2D coordinates expressed as integer 0..1000, normalized by renderer. It represents authored machine structure, not camera penetration or measured current. Highlights reference catalog nodes and display evidence/uncertainty. No model-supplied coordinates/HTML/SVG/URLs or invented geometry. Missing applicable diagram ->explicit unavailable/text explanation. Separate panel needs no camera tracking; moving aligned overlays are deferred.
 
-Session `status`: `AWAITING_IDENTITY`, `EVALUATING`, `READY`, `RECORD_PENDING`, `BLOCKED`, `UNKNOWN`, `ESCALATED`, `COMPLETED`.
+## State, freshness and interruptions
 
-| Transition | Who triggers it | Required condition |
-| --- | --- | --- |
-| Create → AWAITING_IDENTITY | A | Authenticated, supported workflow |
-| AWAITING_IDENTITY → EVALUATING | Human via J, validated by A | Identity confirmed and configuration supported |
-| EVALUATING → READY | A | Current checks pass; proposal maps to one authorized check with satisfied prerequisites |
-| READY → RECORD_PENDING | Human submits result; A accepts command | Expected session revision and active check match; authorization rechecked |
-| RECORD_PENDING → EVALUATING | A | Observation and event durably committed; no unresolved write |
-| EVALUATING → COMPLETED | A | Explicit human-reported resolved outcome durably saved; no implication of independently verified repair |
-| Any active state → BLOCKED / UNKNOWN / ESCALATED | A | Restriction / unavailable required evidence or service / unsupported or exhausted workflow |
+Statuses: AWAITING_IDENTITY, EVALUATING, AWAITING_VIEW, AWAITING_ANSWER, EXPLAINING, READY, RECORD_PENDING, BLOCKED, UNKNOWN, ESCALATED, COMPLETED. READY carries one check. The three new interaction states carry exactly one VIEW/QUESTION/EXPLANATION respectively. Other states have neither. Unconfirmed AWAITING_VIEW permits IDENTITY purpose only. EVALUATING runs IDENTIFY or INVESTIGATE; GET never initiates inference. Terminal BLOCKED/UNKNOWN/ESCALATED/COMPLETED never revive; restart after UNKNOWN means a new session.
 
-Duplicate commands replay the immutable command receipt/effect, never a stored instructional Session snapshot. Responses reconstruct current authorized Session state even on retry. Wrong/stale commands return conflict and current revision. Terminal states are BLOCKED, UNKNOWN, ESCALATED and COMPLETED. None resumes from late model responses. UNKNOWN is terminal in v1: after resolving the cause, create a new session and repeat required confirmations. A restart reconciles pending commands. No next instruction can be released during uncertain persistence. To start again after a terminal stop, create a new session or use a future separately specified supervisor operation; no hidden override exists in v1.
+Reauthorize every served interaction/check and submitted result. Foreground refresh every five seconds, lease <=15 seconds. Hide prompts/highlights and cancel queued/playing speech on expiry, failed refresh, background/offline, stop or changed context. Refresh on focus before restoring. Already heard speech cannot be recalled. Historical text is visibly non-actionable and never spoken as current guidance. Retry returns immutable command effect plus fresh current state, never old instructional snapshots.
 
-The operation/state matrix in file 06 is normative. Identification inference returns EVALUATING → AWAITING_IDENTITY with candidates, never READY.
+## Media, voice and budgets
 
-READY responses identify the confirmed asset, current check, exact source version, policy evaluation time and server revision. Before serving a step again or accepting its result, A revalidates; cached READY is never sufficient authorization. J shows an active check as needing refresh after connection loss and does not permit offline continuation. Once shown, content cannot be physically recalled; operators must stop when connectivity/policy is lost.
+Local live preview; transmit explicit user-selected JPEG/PNG frames, not continuous video. Max 10 MiB each, three selected frames/inference; server verifies signature/type/dimensions, rejects bombs and strips metadata. A-01 freezes pixel/downsampling limits. No raw audio/video persistence or arbitrary runtime document uploads.
 
-## Catalog lifecycle
+Push-to-talk yields an editable transcript with explicit Send; backend accepts text, not audio. J owns browser speech adapter and typed/text fallback. Browser speech processing/consent must be documented; adding hosted speech requires new rights/API design. Speak only the current authorized text, with mute/stop.
 
-Catalog states: Draft, Approved, Withdrawn, Obsolete. A Draft successor alone does not invalidate a still-authorized release. Explicit withdrawal, obsolescence or supersession revokes affected releases according to an explicit catalog authority record; never fall back to a historical Approved row merely because a newer row is unusable. Missing or conflicting applicability is UNKNOWN. A owns lifecycle enforcement; V owns source preparation, mappings and SME review package. Content hashes and versions are immutable once approved.
-
-## Budgets and failure behavior
-
-Proposed defaults to freeze and verify in A-01: eight model turns, sixteen scoped retrieval/tool calls and sixty seconds wall time per recommendation request. Only one active inference per session revision. Timeout, malformed response, provider refusal, ambiguous identity, exhausted checks or exceeded budget stops/escalates; never bypass policy. Policy evaluation is independent of model budgets.
-
-## Nonfunctional acceptance
-
-Single supported operator/session initially; concurrency correctness must still protect simultaneous tabs/retries. Images: JPEG/PNG, maximum 10 MiB, server checks signature/type and decoded dimensions, rejects decompression bombs and strips metadata before provider use. A chooses tested pixel limits and downsampling in A-01. Documents are ingested by authorized maintainers only, not arbitrary runtime uploads. Secrets remain server-side. Frontend must support keyboard navigation, labeled controls and textual state labels. Session persistence survives restart; no false saved/completed state is acceptable.
-
-## Guidance freshness and hazards
-
-READY includes `guidance_valid_until`, at most 15 seconds after `policy_checked_at`. J refreshes an active visible session every five seconds, immediately on focus/resume and before submission; any refresh failure or expiry hides actionable guidance and disables progression. Hidden/background tabs invalidate locally and revalidate on return. A rechecks current policy on every served READY and accepted observation regardless of expiry. Detection of a silent remote restriction is bounded by polling/network behavior, not instantaneous; this is acceptable only for the bounded external-check workflow and requires SME acceptance. No autonomous action uses this lease.
-
-The first current check is the approved hazard preflight, with enum values CLEAR, HAZARD, UNSURE. CLEAR is a human report, not a guarantee. HAZARD/UNSURE stops deterministically; a new hazard can be reported from every active screen through the hazard command. J immediately hides guidance locally even offline; A invalidates inference/next steps as soon as the stop is received. If a prior evidence write is pending, reconcile it without releasing another check; a durable stop event takes precedence over any next-step result. If storage is unavailable, local stop persists and server returns UNKNOWN rather than claiming a durable stop receipt. Stop conditions and escalation wording are canonical displayed fields, never optional model commentary.
-
+Chat/transcripts <=2000 characters; newest 20 relevant human messages per inference, explicit omitted count. Full authoritative observations remain available to backend prerequisites. Provisional per-inference caps: 8 model turns, 16 scoped calls, 60 seconds; per-session 24 inferences, three unsuccessful captures per view template. Atomic enforcement, retries within original budgets, no repeats without new evidence. Freeze measured limits A-01; exhaustion escalates.
 
 ---
 
 <!-- 02-OWNERSHIP-AND-HANDOFFS.md -->
 
-# Ownership and handoff contract
+# Ownership, dependencies and handoffs
 
-## Rule
+Version 2.0. Every file/artifact/ticket has one implementation owner. Reviews are collaborative; transfer records paths, interval and replacement owner. Never create competing APIs, providers, catalog stores or workflow databases.
 
-Every production file, shared artifact and backlog ticket has exactly one implementation owner. An approver is a reviewer, not a second writer. Never solve a blocked dependency by creating a competing API, model client, schema or persistence layer.
-
-## Proposed repository paths
-
-| Path / concern | Sole owner | Reviewer / consumer |
+| Area / target path | Sole owner | Consumer/reviewer |
 | --- | --- | --- |
-| `mark1/web/**` including web manifest/lockfile/frontend mocks/component tests | J | A reviews integration; V reviews AI-state wording |
-| `mark1/server/**` HTTP, sessions, auth, policy, catalog repository, evidence, migrations | A | V reviews AI binding; J reviews API usability |
-| `mark1/ai/**` OCR/perception adapter, retrieval ranking, next-check engine, prompts/provider client | V | A reviews security/contract; J reviews display needs |
-| `mark1/contracts/**` canonical schemas, fixtures, operation definitions, generated-client configuration | A | Both V and J review before freeze |
-| `mark1/knowledge/**` source manifest, versioned checks, applicability/observation metadata, AI eval data | V | A validates lifecycle; SME approves technical content |
-| `mark1/tests/integration/**`, `mark1/tests/security/**` | A | Relevant module owner reviews |
-| `mark1/ai/tests/**`, `mark1/ai/evals/**` | V | A reviews integrity; SME labels cases |
-| `mark1/web/**/tests/**` | J | A reviews contract use |
-| Root Python dependencies, lockfiles, CI, deployment, database, environments, monitoring | A | V requests AI dependencies through A |
-| `mark1/docs/product/**`, `mark1/docs/contracts/**`, release/gate/decision logs | A | V and J review affected decisions |
-| `mark1/docs/ai/**` and source/data/model cards | V | A + SME |
-| `mark1/docs/ux/**` and screen/error-state inventory | J | A + V |
+| `mark1/server/**` | A | V/J boundary review |
+| `mark1/contracts/**` and spec contracts | A | V/J before freeze |
+| `mark1/tests/integration/**`, `mark1/tests/security/**` | A | Relevant owner |
+| `mark1/ai/**`, prompts/provider/retrieval, AI tests/evals | V | A/SME |
+| `mark1/knowledge/**`, templates, diagrams/graph, sources/scenario labels | V authors | A publishes; SME approves real content |
+| `mark1/web/**`, camera/chat/speech/diagram renderer/UI tests | J | A integration, V content UX |
+| Mark-1 root dependencies/locks/CI/deployment | A | V requests AI dependencies; J owns web lockfile |
+| Product/contracts/gate docs | A | Affected owners |
+| AI/data/model cards | V | A/SME |
+| UX/accessibility docs | J | A/V |
 
-Existing `lantern/app.py`, `lantern/bridge/**`, `lantern/mockvault/**`, root `tests/**` and CLI remain A-owned. Existing `lantern/agent/**` becomes V-owned if reused. A must not edit that agent area as part of policy fixes; adapt it in A's caller or request V's ticket. `mark1/` source skeleton was previously reported but has not been freshly inspected here; A-01 reconciles actual paths before assigning tickets. Existing docs outside these new namespaces default to A. No rename/rebuild is required merely to match this proposed layout.
+Target paths are not existing implementation claims. A-01 reconciles nested `mark1/mark1/**` skeleton with one Python package/import layout. Do not create two package roots. Preserve `lantern/**` reference POC without modification. Reuse patterns with regressions, not inherited trust; machine behavior stays in metadata.
 
-## Shared-boundary decisions
+## Independent work
 
-| Boundary | Producer owner | Consumer owner | How change happens |
-| --- | --- | --- | --- |
-| Public API, sessions, evidence receipts | A | J | A edits contract; J reviews usability; fixtures released before frontend changes |
-| Internal inference request/response | A owns schema, V owns implementation | A ↔ V | V proposes requirement; A publishes schema version and fixture |
-| Approved source/check catalog | V authors data; A publishes/enforces it | A and V | V provides immutable candidate + SME approval evidence; A validates and activates version |
-| UX wording | J owns generic UI text; A owns policy message codes; V owns hypothesis labels | All | Structured codes and approved templates; no model-written imperative text |
-| Model/version configuration | V proposes tested model; A deploys credentials/config | V | A records deployed version; provider changes require impacted evaluation |
+A owns `server/testing/engine_stub.py` and synthetic server-only test catalog. V owns `ai/tests/fakes.py` and production knowledge authoring. J uses A's all-state fixtures. Shared fixtures are canonical; these doubles are not competing production engines/catalogs.
 
-V's source authoring is distinct from A's catalog storage/migrations. Only A publishes authoritative catalog state. J displays sources received through A and must not maintain a second applicability table.
+A can complete local API/auth/state/bridge/evidence/media/interaction validation without V/J. Live AI integration needs V; full phone UX needs J; pilot content needs V+SME/rights. Contract freeze needs their review, not completed modules. Label substituted demos truthfully.
 
-## Contract change protocol
+## Handoffs and changes
 
-1. Requestor opens one change ticket: producer/consumers, reason, schema diff, fixture, backward compatibility, migration, impacted tests.
-2. A is sole contract editor. J and V review relevant changes; no implementation against an unmerged draft.
-3. Freeze v1 before parallel implementation. Additive optional fields are compatible only if old clients still validate and behave correctly; otherwise bump contract version and migrate both consumers together.
-4. A checks in fixtures/schema first. J and V generate or consume types; generated files are not hand-edited.
-5. Cross-boundary bug: consumer records failing payload/test, producer fixes its own module. Ownership transfer is explicit in the decision log with start/end, affected paths, and replacement owner. Never two simultaneous owners.
+A -> J: public API, auth/demo setup, all states/errors, command reconciliation, media/speech rules. A -> V: hashed immutable request, scoped catalog/opaque media, budgets/cancellation and strict proposal schema. V -> A: typed proposals, reviewed sources/templates/diagram, versioned model/prompts/evaluation. V -> J only through A: canonical text, labels/graph IDs. J -> A: API-fixture/mobile/speech/accessibility evidence and failing payloads.
 
-## Branches and review
-
-Use short-lived branches `a/<ticket>`, `v/<ticket>`, `j/<ticket>`. Merge contracts → module implementations → integration → release evidence. A owns final integration and tags; J and V merge their module work only after the designated cross-review and checks. Root/shared changes go through A. Keep one PR focused on one owner area; split cross-area fixes into dependent PRs. A publishes a proposed CODEOWNERS mapping and configures protected-branch checks only after actual team GitHub usernames are supplied; initials are not valid substitute handles. No GitHub account or invitation is inferred.
-
-## Handoff checklist
-
-Each ticket hands over: contract version, changed owner paths, runnable/local verification instructions, sanitized request/response example, error cases, remaining limitations, linked source/evaluation evidence and reviewer. Provider keys and customer material never enter fixtures. Reviewer feedback returns to owner. A reviewer may stop a release but does not silently take implementation ownership.
-
-## Preventing A from becoming a bottleneck
-
-A-01/A-02 are the first critical path. Publish stable fakes early and timebox schema discussion to one shared session. V and J continue against frozen contracts while A completes persistence/policy. Avoid new pilot integrations until the laptop thin slice passes. If A's measured capacity cannot meet the plan, reduce scope or explicitly transfer one whole owner area; do not ask all three to edit the backend.
-
-## Test doubles and catalog schemas
-
-A owns `mark1/server/testing/engine_stub.py` to unblock server integration. V owns `mark1/ai/tests/fakes.py` to test provider/AI behavior. They consume shared fixtures and the same port; neither is a second production engine. A owns all schema files, including catalog and engine requests; V owns the corresponding knowledge records. A-02 publishes the pack's complete contract baseline before module branches begin.
-
+A edits contract/schema/fixtures first with compatibility/migration and consumer reviews. 2.0 `/v2` is breaking. Do not implement against unmerged drafts. V authors immutable catalog; A publishes lifecycle; J never copies applicability policy. Short branches `a/<ticket>`, `v/<ticket>`, `j/<ticket>`; merge contracts -> modules -> integration -> evidence. A owns tags/shared configuration. Actual GitHub handles needed before CODEOWNERS/branch rules. No messages/issues/deployments are created by this document.
 
 ---
 
 <!-- 03-A-BACKEND-SPEC.md -->
 
-# A — Ankit: trusted backend and integration
+# A - Ankit: trusted backend package
 
-## Own
+Version 2.0. Complete the local backend against a deterministic engine, independent of V/J. Own API/contracts, authentication, state, bridge/policy, publication, media/evidence and integration. Do not implement V's investigator/prompts/production diagram data or J's UI.
 
-API, schema authority, authentication, session state, storage/migrations, catalog publication, current-policy enforcement, source lifecycle, evidence, secure model egress boundary, deployment, observability, end-to-end release evidence. A is final technical integrator, not a substitute frontend/AI developer.
+| Ticket | Deliverable | Observable acceptance |
+| --- | --- | --- |
+| A-01 | Baseline/decisions, single package layout, isolated reproducible runtime | Old/new scope reconciled; auth/limits selected; clean baseline recorded |
+| A-02 | v2 contracts, engine stub, all-state fixtures, server test catalog | Full view/question/explanation/check path without real AI/UI; V/J review before freeze |
+| A-03 | Transactional sessions/auth/event/command ledger | Actor/tenant isolation, stale/concurrent tabs and restart reconciliation |
+| A-04 | Mock knowledge bridge, lifecycle and catalog publication | User+agent permission, exact applicability, withdrawal and hidden restrictions fail closed |
+| A-05 | Messages, answers, view responses, explanation acknowledgements and observations | Exactly one effect per retry; no inference before durable save; chat cannot satisfy check prerequisites |
+| A-06 | Media/transcript/context/hash/budget boundary | Session-owned frames; no raw audio/video; edited transcript stored as human report |
+| A-07 | Independent interaction/claim/diagram validator and preflight | Unknown IDs, forged evidence, unsupported claims, stale diagrams and model prose rejected |
+| A-08 | Integrate real V/J with full regression matrix | Camera -> scoped knowledge -> question -> cutaway -> check -> durable outcome |
+| A-09 | Local runbook and pilot hardening | Reproducible stub demo, backup/restore, kill switch, retention/deletion evidence |
 
-## Build in this order
+## Storage/state
 
-1. **A-01 baseline and decisions.** Freshly inspect the repo and applicable instructions; record commit/runtime/dependencies, existing tests, reusable Lantern components, final paths and framework. Resolve pilot laptop family, workflow/source owner, provider-data permission, human reviewer, budgets, limits and team capacity. Use synthetic data while permissions are unresolved.
-2. **A-02 contracts and mocks.** Publish schemas from this pack in the repository contract area, define full public session envelopes, implement the A-owned deterministic server integration stub at `mark1/server/testing/engine_stub.py` and response fixtures for all UI states. Own the one canonical public API definition. Fix contract ambiguities before parallel implementation.
-3. **A-03 state/storage/auth.** Durable sessions, immutable event log, catalog revisions, image metadata, observations, inference runs and idempotency table. Tenant/actor scope every read/write. Reject unauthenticated, cross-session and stale commands. R0 local seeded identity must be visibly demo-only, unreachable in R1 deployment.
-4. **A-04 trusted policy.** Bind confirmed identity/task, recheck current permissions/restrictions per check and confirmation, validate candidate check/source/prerequisites, fail closed, enforce workflow/tool allowlists, reject stale or late model outputs and prevent raw model advice reaching UI.
-5. **A-05 evidence and lifecycle.** Atomically persist human observation, evidence event, session revision and idempotency result. Reconcile timeout/restart. Distinguish human assertion, pending write and persisted receipt. Implement withdrawal/supersession with no historical approval fallback.
-6. **A-06 integrate/security.** Replace fake engine with V's port. A controls scoped engine input and allowlisted egress; V owns provider logic. Enforce file input limits, redaction, permissions, per-request budget and generic protected restriction blocks. Wire J's client to HTTP layer.
-7. **A-07 release/ops.** Environment management, reproducible checks, backup/restore exercise, data retention/deletion, sanitized logs, kill switch, rollback and release-gate evidence. No secrets in client or logs.
+One transactional database: sessions; append-only events; observations; messages; view attempts/responses; images; catalog/lifecycle/rights/approvals; inference runs; interactions; idempotency commands. Opaque IDs still require scope authorization. Bind inference to revision, identity, catalog, frame/transcript hashes, accepted evidence, model/prompt versions. Persist human command/event/revision atomically before inference. Image storage alone does not advance investigation; view-response commits linkage. An image receipt is not physical observation evidence.
 
-## Storage contract
+Only one current inference. User input cancels/invalidates old inference/output before reevaluation. Restart reconciles persisted jobs or yields controlled UNKNOWN. Stop/hazard overrides normal output including pending writes; no write ->no next instruction. External authoritative evidence store, if later required, keeps RECORD_PENDING until its acknowledgement; local commit is not external success. No distributed outbox needed for R0 local storage.
 
-One transactional store initially. Minimum entities: sessions (tenant, actor, asset/configuration, workflow, status, revision), events (append-only, human assertion/source/policy/request references), observations, catalog/check versions and applicability, image objects, inference runs (model/prompt/catalog versions, duration, outcome), idempotency commands (key, request hash, status, result). IDs must be opaque and authorization-checked; unguessability is not authorization.
+## Bridge/publication
 
-Use a transactional outbox only if an external evidence system is required. R0 local durable storage suffices; do not introduce distributed writes prematurely. If R1 uses an external vault, a local commit is not proof of external success: keep RECORD_PENDING until the required authoritative system acknowledges, reconcile by stable key and stop progression on uncertain/denied writes.
+Validate permissions/lifecycle at publication, serving, submission and replay. Only approved source/graph/templates within asset/config/workflow scope. Resolve template IDs to canonical text. Claim rules bind required durable observation/value, required provenance and uncertainty label; evidence membership alone is insufficient. Real diagnosis disabled until G4. R0 synthetic suspected subsystem is visibly advisory.
 
-## Idempotency and concurrency
+Reject duplicate IDs/versions, prerequisite cycles/invalid values, dangling graph edges, foreign component references, invalid positions, missing sources/rights/approvals and undeclared claims. Physical/view/question investigation after identity requires preflight CLEAR. Pre-identity views are IDENTITY-purpose safe framing only. Missing diagram yields explicit unavailable/text explanation; missing safety knowledge blocks. Preserve draft-vs-withdrawal distinction and no obsolete fallback.
 
-Every mutation requires `Idempotency-Key` and `expected_revision`. Scope keys by tenant + actor + session + operation; creation uses tenant + actor + operation. Store a canonical request hash. Same key/same payload replays the original immutable command receipt/effect together with freshly authorized current Session state; never replay stored check instructions; same key/different payload is 409. A stale revision with a fresh key is 409. Transactional compare-and-update prevents two tabs completing different checks. Authenticate/authorize access first, then deduplicate before stale-revision rejection for legitimate retries. Previously authorized effects do not grant current read access. Active inference IDs bind revision, asset, catalog and policy context; discard late results when any changes. Persisted receipts never imply independent physical verification.
+## Commands/errors
 
-## Error taxonomy
+Mutations require Idempotency-Key and expected_revision; create omits revision. Scope keys tenant+actor+session+operation (creation tenant+actor+operation); hash canonical payload. Authenticate/authorize before deduplication, then deduplicate legitimate retries before stale checks. Same key/different payload or fresh stale command ->409. Transactional compare-and-update prevents double effect. Replay returns original command headers plus fresh current Session; Session.receipt stays latest command. Pending never has durable record ID. No historic instruction snapshots.
 
-401 unauthenticated; 403 unauthorized; 404 nonexistent or inaccessible object (no enumeration); 409 revision/key/state conflict; 413 too large; 415 unsupported media; 422 malformed/unsupported request; 429 budget/rate limit; 503 required service unavailable. Known restrictions return a valid session with BLOCKED, not a fabricated system outage. Response error envelope contains stable `code`, user-safe `message`, `request_id`, `retryable` and optional `current_revision`. All error responses suppress actionable instructions.
+401 unauthenticated; 403 unauthorized; 404 absent/inaccessible; 409 conflict; 413 size; 415 media; 422 request; 429 limits; 503 dependency unavailable. Restriction yields BLOCKED, policy unavailable UNKNOWN, both without actionable output. Errors suppress guidance/protected details. Truthful pending/UNKNOWN on storage uncertainty, never false saved/completed.
 
-## Acceptance
+## Completion boundary
 
-- Direct HTTP callers cannot bypass policy even without using the frontend or engine.
-- All historical Lantern failures from the prior plan have regression coverage: skipped blocker call, obsolete fallback, hidden critical restriction, uncontrolled final text.
-- Same session/check submission retried after timeout/restart creates exactly one logical observation/evidence event.
-- Wrong organization, forged actor, mismatched asset/source, stale catalog/permission, source withdrawal and model-selected excluded checks stop progression.
-- One offline demo works with fake V and J fixtures; then an integrated demo works with V's real adapter in an authorized environment.
-- Backup restore, kill switch and pending-state recovery are demonstrated before R1.
-
-## Do not own
-
-Do not build the React screens, prompt design, image reading engine, retrieval ranking, diagnostic algorithm or AI evaluation dataset. File bugs/contract changes to J/V. A may inspect and review all areas.
-
+Local milestone: API, stub, synthetic test catalog, contract and isolation/policy/media/retry/recovery checks, startup instructions and scripted HTTP journey. No model key/frontend/SME needed for this milestone. V production knowledge/AI, J speech/camera UI and real pilot permissions remain separate handoffs. A test catalog is never production technical approval.
 
 ---
 
 <!-- 04-V-AI-SPEC.md -->
 
-# V — AI, knowledge and recommendation engine
+# V - Viditya: investigator and knowledge package
 
-## Own
+Version 2.0. Own perception, investigation strategy, scoped retrieval, provider, knowledge/diagram authoring and evaluation. No workflow writes, permission grants or direct instructions to J.
 
-Perception, supported identity extraction, source preparation, retrieval ranking, bounded next-check reasoning, model/provider adapter, prompts, AI-module tests, labeled evaluation design and model/data cards. Backend work is confined to this AI module; no public API, workflow database, auth or evidence implementation.
+| Ticket | Deliverable | Acceptance |
+| --- | --- | --- |
+| V-01 | Fictional no-power catalog: preflight/checks, views/questions/explanations, diagrams, labeled scenarios | Versioned IDs, applicability, sources/rights/approval fields, external-only scope |
+| V-02 | Identity/frame perception | Glare/crop/wrong-valid/unknown handling; no auto-confirmation or invented serial; frame evidence binding |
+| V-03 | Read-only scoped retrieval | Only A-provided subset; missing/conflicting coverage escalates |
+| V-04 | Investigation loop | Useful evidence requests, contextual answers, contradiction/no-progress handling |
+| V-05 | Provider adapter/parsing/cancellation/fakes | Structured output; retries within original deadlines/budgets; no silent fallback |
+| V-06 | Flow/cutaway and advisory explanation selection | Approved components/template, evidence-for/missing evidence, SUSPECTED label |
+| V-07 | Held-out evaluation/model/data cards | Denominators, errors, useful camera requests, grounding, escalation, latency/cost |
+| V-08 | Real-family/diagnostic pilot proposal | SME-reviewed content, independent evaluation and G4 gate |
 
-## Inputs and outputs
+## Port and strategy
 
-Consume the immutable inference request defined in `06-CONTRACTS.md`: confirmed scope, consent-cleared image references, approved authorized checks/source excerpts, prior structured observations, already completed checks, contract/catalog/prompt/model versions, budgets and execution ID.
+Implement `propose(request) -> EngineProposal` with cancellation. Modes IDENTIFY/INVESTIGATE. Kinds IDENTITY_CANDIDATES, REQUEST_VIEW, ASK_QUESTION, PROPOSE_CHECK, ASK_OBSERVATION, EXPLAIN, ESCALATE. Return IDs/source/evidence bindings only; no arbitrary instruction/speech, URL, SVG or database mutation. A owns schema and authorization.
 
-Return an `EngineProposal` conforming to `contracts/engine-proposal.schema.json`. Kinds: `IDENTITY_CANDIDATES`, `PROPOSE_CHECK`, `ASK_OBSERVATION`, `ESCALATE`. Return IDs and source references; A retrieves canonical instruction text and performs final checks. No raw generated instruction text, readiness, evidence receipts, authorization decisions, commands or actor overrides.
+IDENTIFY: supported candidates, approved identity-view request or escalation. INVESTIGATE: choose next useful view, question, check, explanation or escalation from accepted evidence and missing information. Free user text can motivate a structured confirmation but never satisfy a physical prerequisite. Image interpretations remain interpretations. Avoid repeated requests without new evidence; max attempts/session limits enforced by A.
 
-## Tasks
+## Knowledge/diagram authoring
 
-1. **V-01 catalog + fake implementation.** Prepare one supported no-power workflow using synthetic or licensed documentation. Each check: immutable ID/version, supported models/configurations, prerequisites, approved observation question/options, authored instruction text, risk class, stop conditions, source ID/version/locator/hash, approval status and reviewer/date. Deliver fixtures for every engine kind. A owns schema and publication; V owns data authoring.
-2. **V-02 perception.** Optional image snapshot → identity candidates and evidence locators; return ambiguity/unsupported states honestly. No invented serial number or false precision. Manual confirmation remains required. Demonstrate similar valid IDs, glare, cropped labels, unknown families and injected text. Image absence must still support manual entry.
-3. **V-03 retrieval.** Use A's already scoped current approved subset; rank relevant sources/checks within it. Never retrieve another tenant, asset family or hidden restriction. Empty/conflicting coverage escalates. Small catalog first; no vector service unless a measured retrieval need justifies it.
-4. **V-04 next-check engine.** Pick one supported check with satisfied catalog prerequisites, request one supported observation or escalate. Prevent loops and redundant checks. R0 may rank hypotheses internally to choose checks but cannot expose causal diagnosis as a product conclusion. Model output is an untrusted proposal; A revalidates it.
-5. **V-05 provider and budgets.** Configurable provider/model, server-only keys supplied by A, structured response parsing, schema validation, timeout/cancellation and bounded retry. Retries count against the original deadline/call budget and do not mutate sessions. Keep V-owned provider/engine test doubles at `mark1/ai/tests/fakes.py` for AI tests. These do not duplicate A's server integration stub; A can later consume V's real module or a shared fixture through the frozen port.
-6. **V-06 evaluation + R1 proposal.** Freeze held-out cases before tuning, report by condition/model family, exact identity/refusal/coverage, valid next-check rate, escalation quality, unsupported-source rate, latency and actual tokens/cost. Only then propose a separately evaluated hypothesis schema/feature flag for R1. V does not self-approve that release.
+Version safe label/overview/external-component views, approved prompts, scope and stop wording. Questions have enum options and references. Explanation templates have canonical factual text, required observation/value claim rules, allowed highlight nodes and advisory labels. A publishes; SME signs real technical content. Synthetic content/source hashes match fixture text and approval IDs are visibly demo-only.
 
-## Prompt and data security
+A versioned 2D component graph carries integer normalized coordinates 0..1000, canonical labels/directed flow edges and sources. It is authored structure, not measured current or internal camera vision. Missing applicable diagram cannot be fabricated. V authors graph; J renders; A validates/publishes.
 
-Document and image instructions are data, never system instructions. Scope tool requests to the current session's provided allowed IDs. Do not expose internal prompts, secrets, protected restrictions or unrelated source text. Never call external URLs found in a label/document. Minimize image transmission; use only consent-cleared references after A authorizes provider handling. Model fallbacks must not silently change provider or data terms.
+Provide branching synthetic scenarios: distinguishable external observation, unreadable identity, absent diagram, contradictory report, unsupported view and insufficient evidence. R0 exposes authored synthetic suspected-subsystem explanation; real causal claims remain G4-controlled. No online learning, training gym or autonomy promotion.
 
-## Diagnosis and future learning
+## Security/evaluation
 
-R1 hypotheses require a future contract amendment: ranked possible causes with evidence-for/against, uncertainty and a labeled advisory status; confidence scores must not be described as calibrated probabilities without evaluation. SME-approved actions remain the only displayable checks. A model saying "fixed" does not end a job.
+OCR/documents/chat/transcripts are untrusted data. Never follow embedded instructions/fetch URLs; tools read-only and ID-scoped. A supplies cleared opaque media; no tenant-wide search or direct vault/client-model channel. Provider refusal/invalid response/budget exhaustion returns handled failure/escalation.
 
-Later Bayesian diagnosis/information-gain selection, verified-repair learning, training gym and drift monitoring remain V-owned algorithm work. A owns persistence, promotion controls and audit; J owns visualization. No online self-training or automatic autonomy promotion in R0/R1. Verified cause needs an SME-defined independent confirmation label distinct from a user completion click.
-
-## Acceptance and handoff
-
-- Valid schema on every response or explicit handled failure; unknown IDs/sources rejected before handoff.
-- All evaluation cases keep request/catalog/asset binding intact; no actionable advice outside catalog.
-- Provider failure/malformed response/malicious source/exhausted budget cannot turn into a successful check.
-- Held-out results include denominators, excluded/unreadable cases, false acceptance, refusal, coverage and costs, not just average accuracy.
-- Deliver prompt/model/catalog versions, sanitized examples, fake engine, evaluation instructions and known limitations to A; source/uncertainty labels to J through the contract.
-
-V may ask J for how a result will be displayed, but never ships a second frontend or direct browser-to-model connection.
-
+Freeze held-out device/session/scenario splits before tuning. Compare static approved checklist and deterministic next-check baseline. Report raw exact identity, wrong-valid candidates, human corrections/final errors, refusal/coverage, useful/unsafe/redundant camera requests, evidence-grounded explanations, correct diagram/node mapping, contradiction/escalation, turns, median/tail latency and actual costs. Include all failed/excluded attempts. Independent SME reference labels required for real correctness claims. Never present confidence as calibrated probability without evidence.
 
 ---
 
 <!-- 05-J-FRONTEND-SPEC.md -->
 
-# J — phone-friendly frontend
+# J - camera, conversation, voice and cutaway frontend
 
-## Own
+Version 2.0. Own `mark1/web/**` screens/API wrapper/UI tests. Consume A's API/fixtures; no direct model/vault, client policy or copied applicability rules.
 
-All web screens, camera/file capture, manual fallback, client state rendering, structured observations, accessibility, frontend API wrapper and UI tests. Consume A's API; do not implement policy, source applicability, evidence storage or model/provider requests.
+| Screen/panel | Behavior |
+| --- | --- |
+| Start/identity | Demo label/supported symptom; camera capture/retake; manual fallback; explicit model/config physical-label confirmation |
+| Investigation camera | Local live preview; canonical request/target/safety text; user-selected snapshot submission; unavailable/unsure response |
+| Conversation | Bounded chat; approved assistant text; enum questions; sources; distinguish report from confirmed observation |
+| Voice | Push-to-talk ->editable transcript ->explicit Send; optional current-text read-aloud; mute/stop and typed fallback |
+| Cutaway | Separate 2D flow panel, source/version, canonical labels, suspected/evidence highlight; 'diagram, not internal camera observation' |
+| Check/preflight | One authorized check, safety/stop conditions, enum answer and human confirmation |
+| Recovery/summary | Pending vs saved, command reconciliation, human-reported outcome and historical evidence |
 
-## Screens and behavior
+No continuous video upload or tracked AR in R0. Missing camera/speech/diagram has explicit fallback; manual identity does not count as a supplied investigative image.
 
-| Screen | Required behavior | Important failure state |
+| Ticket | Deliverable | Evidence |
 | --- | --- | --- |
-| Start | Show supported workflow and demo/pilot label; collect symptom | Unsupported task cannot continue |
-| Identify | Snapshot/upload or manual label entry; show candidate and explicit confirmation | Camera denial, unreadable label, unknown model; manual fallback |
-| Review identity | Show exact model/configuration and ask user to compare physical label | No automatic confirmation from model confidence |
-| Guided check | One server-authorized check, canonical instruction, source/version, approved observation form | BLOCKED/UNKNOWN/ESCALATED hides next actions |
-| Save result | Submit structured human observation with expected revision and stable idempotency key | Pending/timeout is not saved; retry reconciles same command |
-| Summary | Distinguish human-reported resolved/unresolved from durable evidence status; show references | Missing receipt does not display a success tick |
-| Session recovery | Fetch authoritative server state, reconcile pending submission, refresh policy | Offline or stale tab cannot continue from cached READY |
+| J-01 | Wireframes/all-state inventory | Phone journey and every pending/error/terminal state |
+| J-02 | Capture/identity/view response | Denied permission, retake, cancel/unavailable, explicit send |
+| J-03 | Chat/structured answers | Sources, report/confirmation distinction, stale interaction rejection |
+| J-04 | Speech adapter UX | Editable transcript, consent, stop/mute, unsupported-browser fallback |
+| J-05 | 2D diagram renderer | Correct graph/version/labels and grounded highlight; no invented alignment |
+| J-06 | Retry/freshness/local stop | Double tap, lost response, reload, background/resume, speech cancellation |
+| J-07 | Summary/mobile/accessibility/integration | Focus/keyboard/screen-reader states; fake/real backend modes |
 
-No unrestricted chat is needed for R0. Symptom text is untrusted input; observations use catalog-defined fields/options. Do not turn user text, OCR or AI text into HTML. External/source links must be authorized URLs supplied by A; render safely.
+## State and safety
 
-## Tasks
+AWAITING_VIEW shows VIEW; AWAITING_ANSWER shows QUESTION; EXPLAINING shows explanation+Continue; READY shows check/preflight. No readiness inferred from missing fields. Refresh visible active session every five seconds; hide active prompts/highlights and cancel speech on lease expiry <=15 seconds, refresh failure, background/offline or stop. Fetch current state on resume/before submission. Repeat speech only while authorized; no model commentary spoken. Safety text remains visible. Already heard speech cannot be recalled.
 
-1. **J-01 state inventory and prototype.** Produce compact wireframes and a state-to-screen table; use A's fake responses for every state. Show clear text labels as well as colors. Design for a phone used beside a laptop; avoid an overlay/video requirement.
-2. **J-02 capture + identity.** Camera permission flow, image preview/retake, upload feedback, manual fallback and explicit human identity confirmation. Client limits help UX; A still validates all bytes.
-3. **J-03 guidance + observations.** Render canonical server-supplied check/source and structured observation controls. No inferred authorization from missing fields or a model message. Display pending and blocked states unambiguously.
-4. **J-04 retry + recovery.** One stable idempotency key per intentional action; preserve only minimal pending command metadata securely across transient failure, never assume a fresh key is a retry. On reload, GET authoritative session and reconcile through A. Stale revision prompts refresh; no automatic resubmit of a different payload.
-5. **J-05 summary + UI checks.** Show durable receipt and explicitly human-reported outcome; keyboard labels/focus, mobile layout, screen-reader state updates and clear escalation. Component and API-fixture tests cover all states. Submit J's UX acceptance evidence to A.
+Browser speech support/processing varies: test named target mobile browsers and disclose approved processing/consent; typing/text always available. No raw audio upload or secret hosted speech fallback. Speak `interaction.text` or approved check text only. Never let pending ordinary response override local stop. Report hazard/Stop remains available from every active screen, locks immediately offline, cancels speech/capture and reconciles same command key.
 
-## Data/security boundaries
-
-Use same-origin authenticated requests; no provider keys/client secrets/local authorization flags. Do not store raw images, source documents or full sessions in browser persistent storage. If minimal pending-key persistence is needed, agree its scope/expiry with A. Clear it after confirmed receipt/logout. Do not log images, serials, tokens or document excerpts in console/analytics. Connectivity loss marks displayed guidance stale and disables progression pending server revalidation. Logout removes private client state.
-
-## Acceptance
-
-- A new user can complete the fake-engine happy path without instructions from the developers.
-- Every API status/error has an explicit usable screen; camera denial is recoverable.
-- Double tap, slow response, reload and lost response never show false completion or create a second intentional command.
-- Withdrawing authorization, catalog update, stale session, outage or unknown identity stops the next action visibly.
-- Model prose cannot become HTML or operational guidance. Sources, human-confirmation labels and saved/pending distinction remain visible.
-- J's frontend works against fixtures while A/V continue implementation; switching to real API requires only configured endpoint/auth, not a second business-rule layer.
-
-J can review backend API design using their backend experience. Any implementation outside `mark1/web/**` returns to its owner.
-
-## Freshness, hazards and stop
-
-Poll active visible sessions every five seconds; hide instructions on refresh failure, 15-second lease expiry, tab backgrounding or loss of connectivity. On focus/resume, fetch current state before restoring guidance. Always show canonical safety notice/stop conditions and a Report hazard / Stop control. Reporting a hazard locks the UI immediately, including offline, then reconciles with A using the same command key. Do not let a pending ordinary observation override a local stop. The backend remains authoritative; the UI cannot guarantee immediate remote-revocation detection.
-
+Stable key per intentional command; exact retry preserves key/payload; changed answer is a new action. Minimal pending-key persistence only by A-agreed scope/expiry, clear on receipt/logout. Never persist raw images/audio/sources/full sessions in browser storage or log private payloads. Render text as text; graph accepts validated nodes/edges, never arbitrary HTML/SVG/URLs. Source/history views are labeled historical and cannot replay old physical guidance as current.
 
 ---
 
 <!-- 06-CONTRACTS.md -->
 
-# Contract v1 — public API and internal AI port
+# Contract 2.0: API and visual investigation port
 
-Sole schema editor: A. Reviewers: J and V. These are normative behavior contracts, not an implemented server. `contracts/session.schema.json` and `contracts/engine-proposal.schema.json` define response envelopes. The included `public-api.openapi.json`, request/catalog schemas and examples are the contract baseline. A-02 must verify framework representation and generated client types before implementation; it cannot silently change these semantics.
+A is sole editor; V/J review before freeze. Breaking change: `/v2`, interaction states, conversational/media responses, context and diagram/template catalog. No deployed migration or v1 compatibility is claimed. Files here are canonical until A-02 publishes the chosen runtime location; do not hand-maintain duplicate copies.
 
-## Common conventions
+## Common rules
 
-HTTPS for pilot. Authenticated same-origin session/cookie or equivalent server-verified token; choose and record one in A-01. Cookie deployments require CSRF protection on mutations and secure/HttpOnly/SameSite settings. Every ID/reference is authorization-checked. Tenant and actor are obtained from auth, never trusted from body. Timestamps are UTC RFC3339; display in user's local time. Contract version is `1.0`. All mutation bodies forbid unknown fields. All mutations require an `Idempotency-Key` header; session mutations also require integer `expected_revision`. HTTP errors use the envelope from A's spec. Body IDs cannot override URL IDs.
+Authenticated same-origin API; HTTPS for pilot. A-01 chooses secure/HttpOnly/SameSite cookies+CSRF or server-verified tokens. Actor/tenant come from auth. Every ID is scope-checked. UTC RFC3339; integer revisions; unknown mutation fields rejected. All mutations require Idempotency-Key; session mutations expected_revision. Error/receipt semantics in A's spec apply to new operations.
 
-## Public operations
-
-| Operation | Request body (besides common fields) | Response / behavior |
+| Method/path (prefix `/v2/sessions`) | Allowed state | Effect |
 | --- | --- | --- |
-| `POST /v1/sessions` | `workflow_id`, `symptom_code`, optional bounded `symptom_text` | 201, Session AWAITING_IDENTITY; only allowlisted workflow/symptom |
-| `POST /v1/sessions/{id}/images` | Multipart image file + expected revision + purpose `identity` | 201 `{image_id, session_id, revision, status: STORED}` after safe processing; no model call until authorized data terms; failures do not imply identity |
-| `POST /v1/sessions/{id}/identity-candidates` | `expected_revision`, optional session-owned `image_id`, optional `manual_label` | 202 Session EVALUATING; poll GET; engine result becomes AWAITING_IDENTITY with candidates; failure → UNKNOWN; no instructions |
-| `POST /v1/sessions/{id}/identity-confirmation` | `expected_revision`, `model_id`, `configuration_id`, optional `serial`, `human_confirmed:true` | 202 Session EVALUATING; confirm only supported model/configuration; bind identity, invalidate old proposals, begin independent policy evaluation |
-| `GET /v1/sessions/{id}` | None | 200 current Session; READY must be freshly revalidated before return; include no protected details |
-| `POST /v1/sessions/{id}/observations` | `expected_revision`, `check_id`, `check_version`, `observation_code`, `value`, optional session-owned `image_id`, `human_confirmed:true` | 200 persisted Session or 202 RECORD_PENDING; check/value schema must match active check; persist before reevaluation; retry same key |
-| `POST /v1/sessions/{id}/outcome` | `expected_revision`, `human_reported_outcome: RESOLVED or UNRESOLVED`, `human_confirmed:true` | RESOLVED → COMPLETED only after persistence; UNRESOLVED → ESCALATED; no model can call this operation |
-| `POST /v1/sessions/{id}/stop` | `expected_revision`, `reason_code` | 200 Session ESCALATED after durable stop event; invalidate pending inference |
-| `GET /v1/sessions/{id}/events` | Optional pagination cursor | Authorized human/evidence/source summary; paginated immutable records with receipts; not model debug text |
+| POST root | No session | AWAITING_IDENTITY |
+| GET /{id}, /{id}/events, /{id}/commands/{command_id} | Any authorized | Current revalidated state/history/receipt; no inference |
+| POST /{id}/images | AWAITING_IDENTITY, AWAITING_VIEW, READY | Store sanitized image; purpose identity/investigation/observation matches state; no inference |
+| POST /{id}/identity-candidates | AWAITING_IDENTITY | IDENTIFY ->candidates or identity view, EVALUATING meanwhile |
+| POST /{id}/identity-confirmation | AWAITING_IDENTITY | Human identity ->EVALUATING ->independent preflight |
+| POST /{id}/view-responses | AWAITING_VIEW | IMAGE with image ID, UNAVAILABLE or UNSURE; persist ->EVALUATING; identity views run IDENTIFY |
+| POST /{id}/answers | AWAITING_ANSWER | Active interaction/question/version+enum answer; persist ->EVALUATING |
+| POST /{id}/messages | AWAITING_IDENTITY, EVALUATING, AWAITING_VIEW, AWAITING_ANSWER, EXPLAINING, READY | Persist CHAT/VOICE_TRANSCRIPT human report; invalidate prior inference/output ->EVALUATING; IDENTIFY if unconfirmed, otherwise INVESTIGATE; preflight still enforced |
+| POST /{id}/explanation-acks | EXPLAINING | Persist acknowledgement ->EVALUATING; never repair verification |
+| POST /{id}/observations | READY | Check/version/value confirmation; pending until durable ->EVALUATING |
+| POST /{id}/outcome | READY, EVALUATING, AWAITING_VIEW, AWAITING_ANSWER, EXPLAINING after >=1 durable check observation | No pending write; cancel inference; human RESOLVED ->COMPLETED, UNRESOLVED ->ESCALATED after save |
+| POST /{id}/stop or /hazards | Any nonterminal including RECORD_PENDING | Monotonic inhibit/reconcile ->ESCALATED after save; stale revision accepted; key/payload mismatch remains 409 |
 
-Terminal session mutations return 409 except an authenticated/authorized replay of an already accepted command effect. Replay returns its immutable receipt plus freshly evaluated current Session, never old instructions. Long-running image/AI operations use 202 + GET polling (proposed one-second polling with capped backoff); no WebSocket/SSE required. Background request handling must survive/reconcile restart; use persisted job state or return a controlled UNKNOWN, never fabricate READY. `GET` never submits a new inference, confirmation or physical action.
+Ordinary mutation in RECORD_PENDING/terminal ->409 except authorized same-command replay. Accepted commands have durable event/command records; 202 RECORD_PENDING while required write unresolved. Pending stop may return RECORD_PENDING or UNKNOWN on storage failure with no output, never fabricated saved receipt. Inference result commits only on matching current revision/context. Image upload increments revision but preserves active interaction/check; follow with current-revision response. Conversation can interrupt but never bypass identity/preflight. GET never runs engine.
 
-`identity_candidates` objects contain `model_id`, `configuration_id`, `label_excerpt` and `basis: IMAGE or MANUAL`; they never claim physical truth. Limit candidates to three. Serial is optional and minimized; store only when applicability requires it. Manual labels still need human comparison/confirmation. If no supported match exists, offer escalation, not a closest-model guess.
+## Session/interaction
 
-`value` is typed according to the approved check's observation schema, not arbitrary executable text. Initial v1 forms use string enums only (including YES/NO where appropriate); no numerical instrument interpretation. A-02 freezes code/value constraints, input text bounds and allowed enum sets with V's catalog. Any optional note is evidence only and cannot change prerequisites without an explicitly supported observation.
+Required `interaction` is null except AWAITING_VIEW/AWAITING_ANSWER/EXPLAINING, which require VIEW/QUESTION/EXPLANATION respectively and no current_check. READY requires current_check, confirmed identity, null interaction and no pending receipt. Unconfirmed AWAITING_VIEW permits identity purpose only. Question/explanation require confirmed identity. Each interaction has ID, template/version, canonical text, exact primary source, current-policy time, expiry, safety/stop fields. VIEW includes purpose/target; QUESTION enum options; EXPLANATION advisory flag, claim/evidence list, optional embedded catalog diagram/highlights. Missing diagram ->null and no highlights. Actual lease order/duration <=15 seconds, ID applicability and claim semantics are runtime validations.
 
-## Session envelope semantics
+Speech uses current `interaction.text` or check instruction, never extra model audio/prose. Diagram consists of authored nodes/edges, integer normalized positions 0..1000 and exact version/source; no arbitrary external fetch/markup. Historical events remain evidence summaries, not replayable instruction snapshots.
 
-Every response conforms to the schema. `revision` is a monotonic integer changed by state-changing events. `identity` is null until confirmed; candidate identities stay in `identity_candidates`. `current_check` is non-null only for READY. `receipt` refers to the last accepted human command, not AI output; a PERSISTED receipt includes a durable record ID. `human_reported_outcome` is never named verified repair. Non-ready responses cannot carry instructions. `reason_code` is safe structured explanation, never arbitrary model prose. Schema validity alone does not establish current authorization; A must enforce runtime invariants.
+## Catalog, context and proposals
 
-## Internal port
+Catalog includes checks, view_templates, question_templates, explanation_templates and diagrams. Every record binds model/config/workflow, source/hash/rights, Approved state and approval record. Questions enum-only; views approved external safe framing. Explanation claim rules bind a required check/version/observation/value and allowed highlight node IDs, with authored SUSPECTED label. Graph node/edge/reference/prerequisite validation is mandatory at publication beyond schema. V authors; A publishes; SME approves real content.
 
-V implements one module entry point `propose(request) -> EngineProposal`, with cancellation/deadline support in the chosen Python implementation. A calls it; J cannot. V can stub/fake it without running HTTP.
+EngineRequest modes IDENTIFY/INVESTIGATE. Include authorized catalog, identity, selected cleared media, durable observations, versions/budgets and required investigation_context: recent human messages, answers, view results, explanation acknowledgements, available evidence IDs, prior interaction template IDs, omitted message count and session counters. Max 20 messages, three frames. Full backend observations remain authoritative even when conversation is truncated. Context contains no raw audio or arbitrary URLs.
 
-`request` fields (owned/frozen by A): `contract_version`, `request_id`, `session_id`, `based_on_revision`, `context_hash`, `mode` (`IDENTIFY` or `NEXT_CHECK`), `workflow_id`, `confirmed_identity` (null only in IDENTIFY), `manual_label`, `cleared_images` (session-scoped sanitized image bytes/references, never arbitrary URL fetches), `approved_catalog` (check and source ID/version/hash, approved text, prerequisites and observation schemas), `observations` (typed values and provenance), `completed_check_ids`, `remaining_budgets` (turns, calls, wall-time deadline), `model_config_version`, `prompt_version`, `catalog_version`.
+Proposal bindings echo contract_version/request_id/session_id/based_on_revision/context_hash. Kinds:
 
-A computes `context_hash` over canonical decision-relevant input, excluding transient transport fields. A persists the inference request binding. An engine response must exactly echo request/session/revision/hash; mismatch or late response is rejected. Context binding is a correlation control, not proof the model reasoned correctly. Neither actor nor tenant may be supplied/changed by the model. A passes only authorized material and scopes any V retrieval to that input.
+- IDENTITY_CANDIDATES: exact supported candidates, never auto-confirmation.
+- REQUEST_VIEW: approved view ID/version and sources; A resolves purpose/target/prompt.
+- ASK_QUESTION: question ID/version and sources; A resolves options/wording.
+- PROPOSE_CHECK/ASK_OBSERVATION: check ID/version and sources; observation code when applicable.
+- EXPLAIN: explanation ID/version, sources, evidence IDs and highlight node IDs. A evaluates authored claim rules and composes canonical explanation; no model-authored diagnosis/instruction text.
+- ESCALATE: safe reason enum.
 
-`EngineProposal` kinds:
+IDENTIFY accepts only candidates/identity view/escalation. INVESTIGATE accepts investigation views/questions/checks/explanations/escalation. A forces preflight independently of model choice. Evidence membership alone cannot justify claims: observation value/provenance/applicability must match. Synthetic R0 suspected subsystem is advisory; real diagnosis requires G4. Unknown user questions can motivate clarification, not invent new permitted physical actions.
 
-- IDENTITY_CANDIDATES: up to three candidates from approved supported IDs; no auto-confirmation.
-- PROPOSE_CHECK: exactly one approved `check_id` and `check_version`, references to approved sources; no instruction prose.
-- ASK_OBSERVATION: a `check_id`, `check_version` and `observation_code` defined by the active catalog and its source references; A must map it to a canonical approved question/check. It is not a loophole for arbitrary checks.
-- ESCALATE: safe enum reason `INSUFFICIENT_EVIDENCE`, `UNSUPPORTED`, `CONFLICT`, `EXHAUSTED`, `MODEL_FAILURE`, `BUDGET_EXCEEDED`.
+## Hash/replay/media
 
-## Source and check authority
+context_hash = SHA-256 of UTF-8 JSON, recursively sorted keys, compact separators, ASCII escapes, no NaN/Infinity, integer numeric inputs, array order preserved. Include mode/workflow_id/confirmed_identity/manual_label/cleared_images/approved_catalog/observations/completed_check_ids/catalog_version/prompt_version/model_config_version/investigation_context. Exclude request/session IDs, revision, deadline, remaining request budget counters and hash; A separately binds these. Session counters inside context are hashed. Image content represented by SHA-256/opaque server handle; no model URL fetch. A records exact bytes; V echoes hash. Absolute UTC deadline plus monotonic elapsed enforcement.
 
-Authoring record: source ID/version/hash/title/locator/rights, approved audience, model/configuration applicability, lifecycle and approver; check ID/version, canonical instruction, prerequisites, approved observation schema, stop conditions, source refs and risk/scope tags. V authors, SME signs technical content, A publishes and enforces. Inference cannot approve or mutate these records. A resolves output references against the current catalog, including permission/revocation, before displaying anything.
-
-## Fixtures and change gate
-
-`contracts/examples.json` contains a READY session, a pending session and an engine proposal; all status/error/engine-kind fixtures are included in `contracts/all-fixtures.json` under the same schemas. Contract checks must reject READY without a check, non-ready with a check, pending with PERSISTED receipt, persisted without record ID, stale response binding and additional model instruction fields. J and V consume these exact fixtures rather than copying altered shapes. Public API/schema/examples are a single versioned contract; drift blocks merge.
-
-## Normative operation/state matrix
-
-| Operation | Allowed starting states | Result / special rule |
-| --- | --- | --- |
-| create | No existing session | AWAITING_IDENTITY |
-| image upload, identity candidates, identity confirmation | AWAITING_IDENTITY only | Identity inference temporarily EVALUATING, then AWAITING_IDENTITY; confirmation → EVALUATING |
-| GET session/events | Any authorized state | No new inference or human action; refresh current policy before returning READY |
-| observation | READY only | Active check/version/observation/value must match; RECORD_PENDING until durable; then EVALUATING |
-| outcome | READY or EVALUATING after >=1 durably recorded check observation | No pending write; cancel active inference; persist before COMPLETED/ESCALATED |
-| stop or hazard | Any nonterminal state, including RECORD_PENDING | Immediately inhibit future instructions; reconcile pending event; persist stop; no completion or next-check release |
-| ordinary mutation while RECORD_PENDING | None | 409; exact authorized command replay allowed |
-| ordinary mutation in terminal state | None | 409; exact authorized command replay allowed |
-
-New hazards always take priority over a normal observation/outcome. `/hazards` is a dedicated mutation with expected revision and `hazard_code` enum DAMAGE, LIQUID, SWELLING, HEAT_OR_SMELL, UNSURE. For a valid authorized active session it is accepted even with a stale expected revision: stopping is monotonic, may not change asset identity, and must not be defeated by an inference race. `/stop` has the same monotonic exception. Key/payload conflict is still 409. J locks locally before network acknowledgement. A returns a truthful PENDING or persisted receipt; never releases guidance while reconciliation is unresolved.
-
-Public schemas and examples are illustrative of data structure, but their enum-only observation forms and all state constraints are normative v1 behavior. Richer booleans, numbers, multiple-source display or diagnosis payloads require a contract amendment. Each check displays one canonical primary source; the authoritative catalog may preserve additional references, but A must not omit any safety-critical condition when composing canonical instruction/stop fields.
-
-The Session `receipt` always describes its current latest accepted human command; it must not be overwritten with an older receipt during replay. Successful mutations return `X-Command-Id` and `X-Command-State` headers to identify the original command effect independently of current Session state. `GET /v1/sessions/{id}/commands/{command_id}` returns that authorized command's receipt (`command_id`, `state`, `record_id`); reconciliation may update PENDING to PERSISTED but never create a second effect. Historical receipts contain no instruction snapshots. A command may have committed yet now be inaccessible to a revoked caller; authorization always precedes replay. The image-upload receipt is separate from human-work evidence and obeys the same authorization/replay rules.
-
-Catalog publication rejects duplicate check/version identities, unsupported configuration mappings, cycles, invalid prerequisite values and missing source/approval references. Exactly one required preflight is defined per workflow/configuration. Every physical check must transitively depend on the current approved preflight's CLEAR value; hazard/UNSURE stops before engine choice. No request, model proposal or human outcome can bypass this invariant. Runtime binding/value/prerequisite/expiry checks remain necessary beyond schema validation.
-
-## Hash and clock conventions
-
-Engine request schemas are in `engine-request.schema.json`, with reusable definitions in `catalog.schema.json`. `context_hash` is SHA-256 over UTF-8 JSON of `mode`, `workflow_id`, `confirmed_identity`, `manual_label`, `cleared_images` metadata, `approved_catalog`, `observations`, `completed_check_ids`, `catalog_version`, `prompt_version` and `model_config_version`, serialized by the canonical A-owned serializer: keys sorted recursively, compact separators, no NaN/Infinity, ASCII escapes, integer numeric fields only, input array order preserved. Request ID, deadline, counters and hash itself are excluded. A creates the hash, records the exact serialized bytes and validates the echoed hash; V does not independently reinterpret hashing. Image bytes are represented by their content SHA-256 in metadata; only A-authorized opaque handles can resolve to bytes. Deadline is an absolute UTC RFC3339 `deadline_at`; A also enforces a monotonic wall-clock elapsed deadline. No duration unit is inferred.
-
+Authenticate/authorize before deduplication, legitimate retry before stale check. Return original X-Command-Id/X-Command-State and fresh current Session; Session.receipt remains latest command. Command receipt endpoint reconciles PENDING ->PERSISTED without duplicate effect. Image receipt separate from physical evidence. Fixed synthetic fixture timestamps/hashes are examples, not current authorizations; fake server must issue fresh leases and binding hashes.
 
 ---
 
@@ -453,277 +324,143 @@ Engine request schemas are in `engine-request.schema.json`, with reusable defini
 
 # Validation and release gates
 
-Criteria below are proposed. No tests, photo benchmark, pilot or customer payment is claimed complete by this specification. Specification schema checks and Goldfish reviews are recorded separately.
+Version 2.0. Proposed criteria; no runtime/model/independent-v2-review/pilot/customer result is claimed.
 
-## Test ownership
-
-| ID / requirement | Implementation test owner | Reviewer / witness | Required observable result |
-| --- | --- | --- | --- |
-| T01 skipped checks and direct HTTP bypass | A | V | No check text until independent policy passes |
-| T02 withdrawn/obsolete/superseded vs Draft | A | V + SME | Revoked release denied; still-authorized release not wrongly revoked by draft alone |
-| T03 hidden restriction/denied policy service | A | V | Generic BLOCKED or UNKNOWN, no protected detail leakage |
-| T04 actor/tenant/asset/configuration/source binding | A | V | Forged/mismatched/stale requests rejected |
-| T05 timeout, duplicate key, key payload mismatch, restart | A | J | One logical evidence event; pending never shown saved; current revision returned |
-| T06 simultaneous tabs, late inference, stop during inference | A | J + V | One valid transition; terminal state never revived |
-| T07 provider refusal/malformed output/budget exhaustion | V | A | Explicit handled failure; no unsupported check/instruction |
-| T08 image/document prompt injection, unscoped lookup | V (engine) + A (separate egress tests) | Cross-review by other owner | No unauthorized tool/lookup/output/data transfer; separate test paths |
-| T09 identity, wrong-valid model, unsupported configuration | V | SME + A | Record raw extraction and post-confirmation errors separately |
-| T10 denied camera, offline/reload, pending receipt, accessibility | J | A | Manual fallback, no stale continuation or false success |
-| T11 integrated no-power happy path and each failure branch | A | J + V | Trace from input to scoped source/check, observation and durable receipt |
-| T12 backups, restore, policy kill switch, deletion | A | V + independent reviewer | Restore verified; stop/recovery rehearsed; deletion evidence recorded |
-| T13 hypotheses/next-check value and escalation (R1 only) | V | SME independent of engine tuning | Held-out results and uncertainty accepted; wrong recommendations cannot bypass catalog |
-
-Rows with two modules contain separate tests owned within each module; no shared test file has two writers. A owns end-to-end acceptance wiring. Existing prior tests are rerun with declared dependencies in a clean environment; do not inherit the old pass count as a new result.
-
-## Gates
-
-| Gate | Accountable implementation lead | Evidence / proposed condition |
+| Test | Owner | Result |
 | --- | --- | --- |
-| G0 scope, rights and contracts | A | One laptop family/symptom, authorized sources and images, SME-approved checks, frozen v1 contract, data terms, operator/stop boundaries; demo remains synthetic until authorized |
-| G1 deterministic policy and persistence | A | T01–T06 pass; no open critical bypass/false evidence result; output cannot carry raw operational model advice |
-| G2 perception and engine | V | At least 100 held-out images with varied readable/unreadable/near-match cases; zero accepted wrong assets/configurations in that set; >=90% usable coverage on readable supported images; all unknown/unreadable cases refuse or request confirmation; per-condition and pre-/post-human results reported; T07–T09 pass |
-| G3 supervised pilot environment | A | Real auth, tenant permissions, lifecycle, storage, authorized provider use, retention, recovery, T10–T12; customer/admin + SME + independent reviewer accept this bounded environment |
-| G4 diagnostic increment | V delivers evidence; A controls release | Separate hypothesis contract/feature flag, held-out no-power cases, independent SME labels, calibrated-claim limits, next-check/escalation results and no unsafe/out-of-scope action acceptance; predeclare sample size/targets before tuning; T13 passes |
-| G5 user value and cost | A | At least 30 matched task pairs, >=20% lower median task completion time without observed worsening of errors, tail time or supervisor effort; costs include setup/support/model; report uncertainty and all attempts |
-| G6 commercial validation | A | Five buyer interviews across >=3 buying organizations, two independent scoped pilot commitments and one paying customer; actual measured economics support next bounded deployment |
+| T01 policy/direct HTTP/skipped model | A | No output/check before independent policy/preflight |
+| T02 lifecycle/hidden restrictions | A | Withdrawal/obsolete/supersession stops, draft alone does not revoke; protected details hidden |
+| T03 scope/auth | A | User+agent access, tenant/asset/source/frame/diagram/evidence mismatch denied |
+| T04 receipts/concurrency/restart | A | One effect; stale/replayed command cannot restore old guidance |
+| T05 stop/freshness | A backend; J UI | Stop during inference/write; stale stop; expiry/offline/background cancel output/speech |
+| T06 model failures/injection/budgets | V engine; A boundary | No unsafe tool/write/URL/prose or unbounded loop |
+| T07 perception | V | Raw/post-human identity, refusal/coverage and wrong-valid errors separate |
+| T08 investigation | V | Useful views/questions, blur/unsupported/contradiction and no-progress handling |
+| T09 evidence/explanation/diagram | V authoring; A runtime | Source/version/node/claim rules; missing evidence/diagram; advisory label |
+| T10 voice/chat/mobile/accessibility | J | Edited transcript, typing fallback, canonical speech, no stale playback |
+| T11 integrated journey | A | Image ->retrieval ->question ->cutaway ->check ->durable outcome |
+| T12 operations | A | Backup/restore, kill switch, retention/deletion/restart |
+| T13 real diagnosis | V with independent SME | Predeclared held-out causal/next-check/escalation criteria met |
 
-R0 developer demonstration: synthetic/licensed test catalog, frozen contracts, integrated deterministic controls and truthful labels; no customer-green claim. R1 controlled-check pilot requires G0–G3. Diagnostic hypotheses must remain disabled until G4 also passes. G5–G6 support a next bounded paid deployment, and its own impacted G0–G4 must be satisfied. No broad rollout or autonomy is authorized by passing these gates.
+Each test file has one owner; multi-module rows mean separate owner tests plus A integration. Schema validity is not runtime policy/semantic correctness.
 
-G2's finite sample is not proof of a zero real-world error rate. Human confirmation helps but is itself fallible. Record correction rate, refusal and coverage separately to avoid hiding bad extraction behind operator fixes. Identity must be tied to applicability, not merely a matching database row.
+| Gate | Evidence |
+| --- | --- |
+| G0 scope/rights/contracts | One family/symptom, owner-reviewed frozen v2, technical/source owner, provider/media permissions and boundaries |
+| G1 controls | T01-T06 backend; no critical bypass/false saved result |
+| G2 investigator/perception | >=100 held-out images, zero wrong final accepted identity in set, >=90% usable readable-supported coverage; raw errors separate; investigator criteria below |
+| G3 supervised environment | Auth/scope, approved sources/data terms, retention/recovery, T10-T12; named customer/admin/SME/independent acceptance |
+| G4 real diagnosis | Explicit enablement, independent labels, predeclared sample/error criteria and T13; calibrated claims require evidence |
+| G5 value/cost | >=30 matched task pairs, proposed >=20% lower median time without observed worse errors/tail/supervisor effort; total cost/uncertainty |
+| G6 commercial | Five interviews across >=3 organizations, two independent commitments, one actual paying customer, measured economics |
+
+R0: frozen artifacts, integrated synthetic visual investigation, deterministic controls and truthful labels. Synthetic advisory claims do not close G4. R1 requires G0-G3; real diagnosis also G4. Current repository real-vault/customer-data prohibition remains; pilot needs separately authorized environment/rule review. No gate grants broad rollout or physical autonomy.
 
 ## Evaluation protocol
 
-V prepares a manifest of held-out cases, sources, expected identity/allowed next checks, stop labels and independent repair/SME reference where relevant. Split by device/session/source families to avoid near-duplicate leakage. Lock the evaluation set before prompt tuning. Record model/provider/prompt/catalog/contract versions, sample counts, excluded cases, exact-match results, accepted wrong-valid IDs, refusal, coverage, escalation and unsupported-source outputs. Report latency median/tail and per-run actual usage costs; do not invent provider prices.
+Freeze held-out sessions before tuning; split by device/session/source, avoid near duplicates. Include indistinguishable causes, glare/crop, wrong-valid ID, absent diagram, contradictory reports, unsupported angle, injection, voice correction and exhausted views. Compare static approved checklist and deterministic next-check baseline. Predeclare case counts, useful-view/task/escalation labels, diagram criteria and latency/cost budget; until recorded, investigator evaluation is UNKNOWN.
 
-For R1 diagnostic planning, choose sample size and acceptance target with the SME based on severity and workflow before evaluation; until specified and met, G4 is UNKNOWN. This is an explicit future gate, not a zero-decision implementation ticket for hypothesis display.
+Report raw extraction, human corrections and accepted identity separately; confirmation is not abstention. Measure useful/unsafe/redundant camera requests, grounding, correct nodes, contradiction/escalation, turns to evidence, completion time, refusal/coverage, median/tail latency and actual costs; include excluded/failed attempts. Require zero accepted unsafe/out-of-catalog actions and zero ungrounded displayed fault claims in frozen set. Finite sample does not prove zero real-world error. Camera request success means safe/relevant evidence gain or appropriate refusal, not just plausible wording.
 
-Value study: counterbalance existing-process and Mark-1 ordering where feasible; pair comparable tasks, count failed/refused attempts and supervisor time, specify start/stop timing and tail statistic before collection, record learning/order effects and uncertainty. Small samples cannot establish safety. A owns study records; the SME validates technical outcomes. No paid claim without actual payment evidence.
-
-## Release decision
-
-A attaches test run IDs, commit/config/catalog/model hashes and open limitations to the gate register. Module owners do not self-certify domain safety. Named external SME/customer/admin/independent reviewer roles must be filled before an operational pilot. They are not assumed to exist. If unavailable, stay at developer demo. Any severe incident, source withdrawal, permission uncertainty, policy outage, model/data-term change or failed persistence stops impacted work; rerun affected gates after remediation.
-
-## Identity acceptance metrics and freshness regressions
-
-Count raw exact candidates, explicit unreadable/unsupported abstentions, wrong-valid candidates, human corrections, and final backend-accepted asset/configuration as separate numerators and denominators. Ordinary mandatory human confirmation is not an abstention. Unreadable/unsupported test inputs must elicit explicit uncertainty/refusal, not confident fabricated candidates. Zero accepted wrong IDs means zero wrong final backend acceptances in the held-out set after the entire workflow; also report raw engine errors to expose reliance on human correction.
-
-T05 additionally tests original-command retry after source revocation and after terminal stop: command effect/receipt is stable but current guidance is absent. T06/T10 include idle-screen expiry, background/resume, lost polling, stale hazard/stop during inference and pending writes. T01 requires preflight before any physical check, and HAZARD/UNSURE causes deterministic stop. A schema pass does not replace these runtime tests.
-
+Evidence binds commit/environment, contract/catalog/diagram/model/prompt versions, manifest/denominators, failures and independent reviewer. Named external roles required before pilot. Rerun impacted tests on provider/content/policy changes; v1 review does not transfer to v2.
 
 ---
 
 <!-- 08-DELIVERY-AND-OPERATIONS.md -->
 
-# Delivery sequence and operations
+# Delivery and operations
 
-## Planning assumptions
+Version 2.0. Capacity/hours/access unknown; no calendar promise. A can build local backend in continuous tested checkpoints; full product requires V/J handoffs.
 
-Three developers; availability and budget unspecified. Use effort ranges as planning estimates, not dates/promises. One shared integration window per workday when active. No new customer connector, advanced diagnosis display, AR or learning in the initial thin slice. A owns all schedule decisions and records actual capacity after kickoff. SME/customer availability may dominate elapsed time.
+## Sequence
 
-## Dependency schedule
+1. A-01 baseline: scope/package layout, isolated dependencies, demo auth, media/budget limits, target browsers and open pilot blockers.
+2. A-02 contracts/stub; V-01 synthetic knowledge/diagram; J-01 wireframes. Review/freeze same v2 payloads before branches consume them.
+3. Independently A-03..A-07 against stub; V-02..V-06 against requests; J-02..J-06 against API fixtures.
+4. A-08 integration replaces doubles, runs full experience/failure matrix; A-09 local runbook/recovery, J-07 acceptance.
+5. V-07 evaluation; remain synthetic R0. V-08/pilot require source rights/SME/environment; real diagnosis separately gated.
 
-| Stage | A | V | J | Exit |
-| --- | --- | --- | --- | --- |
-| 0: align (1–2 focused days estimate) | Repo/dependency baseline, scope/rights, contracts/fakes | Draft synthetic check catalog and engine examples | Screen/state prototype using examples | A-01/A-02 + V-01 + J-01 contracts aligned; unresolved pilot decisions recorded |
-| 1: independent build (roughly 4–7 focused days per developer estimate) | State/auth/policy/evidence using fake V | Perception/retrieval/next-check using frozen port | Capture/confirmation/guidance using frozen API fixtures | Owner tests and all status/error fixtures pass |
-| 2: integrate (roughly 2–4 focused days estimate) | Own integrated API, security and recovery | Replace fake engine, fix AI binding failures | Replace API mocks, fix UX/retry failures | One full synthetic no-power session plus failure matrix demonstrated |
-| 3: evaluate/harden (estimate only after baseline) | Gate evidence, staging/ops, independent review | Held-out evaluation and model/data cards | Usability/mobile/accessibility acceptance | Developer-demo criteria satisfied; G0–G3 evaluated for bounded pilot |
-| 4: R1 and value study (depends on evidence/access) | Pilot operations, measurements and commercial interviews | Separately gated hypotheses/diagnostic evaluation | R1 display only after contract amendment | G4 if hypotheses enabled; G5/G6 assessed, never assumed |
+Old 10-day plan/v1 effort ranges are superseded. Confirm each owner's hours and separately estimate implementation/evaluation/integration. A critical path includes auth/policy/persistence/integration; reduce scope or explicitly transfer a whole area if capacity fails, never overlapping writers.
 
-Stage estimates are not additive calendar commitments and exclude unknown access/SME waits. If the team is part-time, schedule proportionally to confirmed working capacity. Work can start independently only after its input contract/fixture exists. A is not allocated full-time simultaneously to every role; defer nonessential connectors/advanced work if capacity is exceeded.
+## Stack and configuration
 
-## Daily integration protocol
+Prefer existing Python/FastAPI direction and SQLite. J's React/Vite/TypeScript proposal is frozen with J at A-01, not assumed installed. A reconciles nested package skeleton. V selects configurable multimodal provider with measured evaluation; no stale model ID/free price assumption. Browser speech adapter with typed fallback first; hosted speech/live transport needs separate data/API design.
 
-Each owner posts ticket state, contract version, demonstrated behavior, blocker and next handoff in the project record. No message is sent by this specification. A resolves shared-contract blockers first; discussion cannot authorize an unsafe shortcut. Weekly (or each milestone) demonstrate one complete workflow rather than three isolated modules. Every defect has one owner determined by the failing boundary, not whoever first sees it.
+A configures demo/pilot, enabled workflow, contract/catalog/diagram, synthetic/real advisory flags, provider/model/prompt, budgets/files, auth/retention/kill switch. Secrets server-only .env/config. Logs contain correlation/state/version/latency/counter/rejection/pending-age/cost, not raw images/transcripts/serials/documents. V owns AI metrics; J sanitized UI failures through A.
 
-## Configuration and secrets
+## Privacy and incidents
 
-A controls deployment config: environment, contract/catalog version, enabled workflow, diagnosis flag (off in R0), provider/model/prompt versions, request budgets, file limits, retention and emergency stop. V provides model requirements; J gets only public endpoint/config. No keys in repo, client, screenshots or exported reports. Model changes rerun relevant tests. Use synthetic images until source and provider rights are established.
+R0 fictional/generated data. Separate permissions for source display, provider image/source transmission, evaluation, retention/backups and training. Browser speech may transmit audio depending on platform: disclose approved processing/consent or disable input with typing available. No silent fallback. Deletion covers derived copies and backup expiry. No real M-Files/MCP/customer access introduced by v2.
 
-## Observability
+Operator stops, J hides prompts/highlights/cancels speech locally, A disables workflow. Reconcile stable command keys before retry; never manually mark saved. Owners fix own modules and rerun affected gates. Restore compatible schema/catalog/model without reviving revoked authority. Operators must stop on lost connectivity/current authorization; spoken content cannot be recalled.
 
-Record correlation/session/inference/command IDs, state transitions, latency, result codes, catalog/model/prompt versions, tool/budget counts, persistence reconciliation and safe error category. Do not log raw images, serials, access tokens or document content by default. Track wrong-identity acceptance, refusal/coverage, unsupported candidate rejection, escalations, pending-write age, provider error and actual usage cost. A owns telemetry; V owns engine metrics; J owns sanitized UX error events sent through A.
-
-## Data handling and retention
-
-A documents who can view images, sources, observations and evidence; V only processes the scoped subset; J receives authorized display fields. Default R0 uses synthetic data only. For R1, A records approved retention periods, lawful/contractual basis and provider terms with the customer/admin before collection. Prefer dropping raw images after the approved short retention period; retain minimized audit references only as authorized. Deletion must cover objects, database references, derived copies and backup expiry policy; explain any required audit retention. No training reuse without separate rights and an approved evaluation plan.
-
-## Runbook
-
-1. Incident or unsafe/unknown behavior: operator stops physical work and escalates; J shows stop state; A disables impacted workflow/model via server kill switch.
-2. Preserve minimal authorized correlation/evidence; never paste sensitive payloads into public issues.
-3. A diagnoses policy/storage/auth; V diagnoses provider/perception/reasoning; J diagnoses capture/display/retry. Each fixes its own module.
-4. Pending writes reconcile by idempotency key before retry; do not manually mark complete. Lost authorization or withdrawn sources invalidates active guidance.
-5. Restore only a compatible server/schema/catalog set. A rehearses restore/migration and documents rollback; destructive migrations need a tested recovery strategy. Do not roll back to revoked content or authorization state.
-6. Rerun impacted gates; independent SME/reviewer approval is needed where pilot conditions changed. Inform operators of accepted limits before resuming.
-
-## Future-work ownership
-
-| Increment | V | A | J |
-| --- | --- | --- | --- |
-| Bayesian/information-gain diagnosis | Algorithm, calibration and benchmark | State/source/policy integration | Hypothesis and evidence views |
-| Verified-repair learning | Learning pipeline and leakage controls | Rights, labels store, version promotion/audit | Expert confirmation UX |
-| Training gym | Simulator/evaluations | Reproducible execution and release boundaries | Optional result dashboard |
-| Drift/CUSUM | Detection method and false-alarm evaluation | Authorized telemetry and alert workflow | Alert display |
-| AR guidance | Perception/coordinate proposals | Session/budget/policy binding | Camera overlay rendering |
-| Equipment/customer expansion | New domain evaluation/catalog | Connector/auth/lifecycle and customer gates | Supported-device UX |
-
-These are deferred increments, not parallel first-sprint deliverables. Physical autonomous actuation needs a separate architecture and task-specific safety case.
-
-## Capacity commitment rule
-
-The 4–7-day module range is a provisional planning placeholder, not an implementation commitment. Stage 0 must separately estimate A's policy/persistence work and A's operations/integration work, and confirm each person's available hours before setting dates. If capacity does not fit, keep R0 synthetic and defer connector/ops/diagnostic work; do not overlap module ownership to force a date.
-
+Streaming needs transport/backpressure/privacy/budgets; tracked AR needs geometry/pose/alignment evaluation; learning needs independent labels/rights/offline promotion controls; more equipment needs catalog/evaluation. None is prerequisite for R0 visual investigation.
 
 ---
 
 <!-- 10-ELEPHANT-GOLDFISH-REVIEW.md -->
 
-# Elephant–Goldfish specification review
+# Review status and v2 change record
 
-Method: adapted manual Elephant–Goldfish workflow. The context-rich author drafted this pack; two independent fresh-context reviewers received only the self-contained files and their review instructions. A third fresh reviewer checks the revised pack. This does not claim the Google plugin is installed or that a Google-hosted model was used.
+Version 2.0 | 10 November 2026
 
-Review scope: completeness, ownership, independent implementation, contracts, trust boundaries, feasible delivery and release evidence. This is a design review, not customer authorization, safety certification, repository implementation testing or product-green evidence.
+V1 recorded independent reviews of the controlled-check design. That acceptance does not apply to v2. No independent v2 review has been performed in this revision; no product gate is closed.
 
-## Record
+Fresh review must cover new view/question/explanation states, conversation/media commands, context hashing, diagram/claim rules, voice as an authorized output, safe camera framing, synthetic advisory versus real G4 diagnosis, and preservation of lifecycle/idempotency/hidden-restriction/pending-write controls.
 
-| Fresh review | Finding | Author resolution |
-| --- | --- | --- |
-| Technical contracts | Boolean/enum observation mismatch | Standardized v1 on string enums in prose, catalog, public schema and requests |
-| Both reviewers | Exact historical Session replay could resend revoked guidance | Immutable command effect/receipt separated from freshly authorized Session; added command-receipt endpoint and headers; replay-after-revocation tests required |
-| Delivery/operations | No bounded READY refresh/expiry | Five-second foreground refresh, at most fifteen-second lease, immediate local invalidation on refresh failure/background/offline; per-step backend revalidation retained |
-| Delivery/operations | Hazard preflight and reporting undefined | Mandatory approved preflight, canonical safety/stop fields, deterministic hazard stop and stale-revision monotonic stop exception |
-| Technical contracts | Operation/state ambiguity and pending evidence | Normative operation matrix, explicit terminal states including UNKNOWN, pending-write blocking and stop reconciliation |
-| Technical contracts | Prose-only internal request/catalog | Added machine-readable EngineRequest and scoped Catalog schemas plus IDENTIFY/NEXT_CHECK fixtures and hashing conventions |
-| Technical contracts | Observation code could map to multiple checks | ASK_OBSERVATION now binds check ID/version as well as observation code |
-| Technical contracts | Public request/error/state fixtures incomplete | Added OpenAPI 3.1 definition, all session/engine-kind/error fixtures and public-body checks |
-| Technical ownership | Both A and V appeared to own the same fake | A server integration stub and V AI-module test doubles have distinct paths/purposes; shared contract fixtures |
-| Delivery/capacity | A workload under-estimated | Stage 0 requires actual per-owner hours and separate policy/persistence/ops estimates; ranges are provisional; scope reduction before overlap |
-| Delivery/evaluation | Human correction could conceal extraction failures | Separate raw candidates, explicit abstentions, corrections and final acceptance denominators; confirmation is not counted as refusal |
-| Delivery/rights | Authorized data needs purpose-specific authority | Separate display, provider-transmission, evaluation, retention and future-training rights checklist |
+A reviews schema/OpenAPI/references/hash/state/replay; V evidence/claim semantics, camera utility and contradiction; J UI/speech/capture/diagram/recovery. Independent reviewer assesses trust/feasibility after owner reviews; SME approves real technical knowledge.
 
-## Artifact verification
+Run `python contracts/validate-contracts.py` and `python contracts/validate-hashes.py` from this pack (or repository-relative equivalents). Record actual environment/output; do not copy historical pass counts. These validate artifacts only, not application/model/repair correctness. This filename is retained for continuity; no fresh multi-agent review is claimed.
 
-Executed `contracts/validate-contracts.ps1`: 44 positive/negative schema fixture checks passed, covering response states, engine kinds, catalog/request shapes, public request bodies and error payloads. Checked 24 uniquely assigned backlog tickets and resolved dependency IDs. JSON artifacts parse successfully. These checks do not run application code, evaluate AI accuracy, exercise live APIs, or close product gates.
+## Artifact verification - 10 November 2026
 
-Final fresh review: **PASS for a useful three-person implementation specification; no remaining material design blocker identified.** The reviewer independently reran the 44 schema checks. Two small cleanup suggestions were accepted: added canonical-hash golden fixtures with a runnable validator, and an equality check that prevents the embedded request/catalog schemas drifting. Both checks passed. These additions do not imply the backend's runtime serializer is already implemented. No product gate is closed by this design review.
+Executed with Python 3.13.7 and jsonschema 4.26.0 in a temporary validation installation:
 
-## Source basis
+- 92 positive/negative schema fixture checks passed, including public Session reference resolution.
+- Fictional source hash, catalog/graph references, v2 API structure, scenario references and all 28 single-owner backlog dependencies passed.
+- Two canonical-context golden hashes and embedded/standalone catalog-schema equality passed.
+- Combined specification matched all 11 split Markdown documents; Git whitespace checks passed.
 
-The current `Vman-Amber-to-Green-Plan.md` was read in full for this specification. The author also attempted to retrieve the previously referenced official Google article at https://opensource.googleblog.com/2026/10/introducing-elephant-goldfish-model-plugin.html ; access failed during this task, so no newly verified claims about the article are made. The workflow implemented here is explicitly described above and evidenced by the review records.
-
+This is author-run artifact verification, not an independent design review or runtime/model/pilot test. Product gate statuses remain unchanged.
 
 ---
 
 <!-- 11-GATE-AND-DECISION-REGISTER.md -->
 
-# Reusable decision, evidence and release register
+# Decision and evidence register
 
-## Initial decision log
+Version 2.0 | 10 November 2026
 
-| ID | Decision | Owner | Status / resolution |
+| ID | Decision | Owner | Status |
 | --- | --- | --- | --- |
-| D01 | One backend deployment; independent UI and AI module; no required microservices | A | Proposed architecture baseline |
-| D02 | A owns contracts/state/policy; V owns AI/catalog authoring; J owns UI | A | Derived from user-provided strengths |
-| D03 | Laptop no-power workflow replaces generic industrial first demo | A | Explicit scope change; prior pilot gates do not transfer |
-| D04 | R0 only controlled external checks; diagnosis display and learning deferred | A | G4 required for diagnostic increment |
-| D05 | Confirm available hours and funding | A | Open; blocks reliable calendar commitment, not synthetic spec work |
-| D06 | Confirm actual repo paths/framework/runtime and clean baseline | A | A-01; no fresh repo verification claimed |
-| D07 | Choose supported family/source rights/SME and technical check approvals | A | Open; V prepares content; blocks operational pilot |
-| D08 | Select auth/tenant model and approved provider/data handling | A | Open; synthetic development only until resolved |
-| D09 | Record GitHub handles and branch-protection capability | A | Open; do not infer identities or configure invalid CODEOWNERS |
-| D10 | Freeze exact budgets/image pixel limits/SDK versions | A | A-01; proposed limits in file 01 are defaults requiring measured verification |
-| D11 | Independent SME/reviewer/customer-admin availability | A | Open; missing role prevents operational pilot |
-| D12 | R1 hypothesis schema, sample size, acceptable error criteria | A owns contract; V supplies evaluation proposal | Deferred to G4; no automatic approval |
+| D01 | Camera-led selected snapshots, voice/chat, separate 2D cutaway in R0 | A | User-accepted direction, implementation pending |
+| D02 | AI investigates; bridge supplies knowledge; backend authorizes; human acts | A | Baseline |
+| D03 | A backend/contracts; V investigator/knowledge; J UI/speech/renderer | A | Baseline, no transfer |
+| D04 | Fictional laptop/config, no-power scenario set, external-only | A, V content | R0 scope |
+| D05 | Contract 2.0 /v2 | A | Proposed; V/J review/freeze pending |
+| D06 | Synthetic suspected subsystem R0; real diagnosis G4 | A | Baseline |
+| D07 | Single Python layout/framework/locked dependencies | A | Open A-01; reconcile nested skeleton |
+| D08 | Auth/pixel limits/budgets/target browser speech | A with V/J | Open A-01 |
+| D09 | Real family/SME/source/media/provider rights/retention | A; V content | Open; blocks pilot, not build |
+| D10 | Real vault/customer data prohibited here | A | Standing; mock only |
+| D11 | Hours/GitHub handles/hosting | A | Open; no dates/accounts inferred |
+| D12 | Held-out investigation/real diagnosis criteria | V; A release | Open before evaluation |
+| D13 | Streaming/tracked AR/learning/autonomy | A | Deferred |
 
-## Decision change template
-
-Decision ID; date; proposing owner; problem; options; chosen behavior; affected contracts/files/tickets; consumer reviews; test/evaluation impact; rollback; effective version. Ownership transfer also states replacement owner, paths and interval, ensuring only one active writer.
-
-## Initial gate register
-
-| Gate | Status | Implementation lead | Required sign-off |
-| --- | --- | --- | --- |
-| G0 | UNKNOWN — source/family/rights/contract not accepted yet | A | A + SME/rights owner/customer as applicable |
-| G1 | UNKNOWN — implementation tests not run by this pack | A | A + cross-reviewer |
-| G2 | UNKNOWN — real-image benchmark absent | V | SME + A + independent reviewer |
-| G3 | UNKNOWN — customer environment/operations absent | A | Customer/admin + SME + independent reviewer |
-| G4 | NOT ENABLED — hypothesis feature off | V produces evidence; A releases | SME + independent reviewer + A |
-| G5 | UNKNOWN — task study absent | A | Customer sponsor + SME |
-| G6 | UNKNOWN — buying evidence absent | A | Budget-authorized buyer evidence |
-
-Do not copy old green evidence without an applicability assessment. Each record binds customer/environment, task/device family, repository commit, contract/catalog/prompt/model versions, test date, evaluator, sample size and limitations. A reviewer accepting this specification does not close product gates.
-
-## Evidence record template
-
-- Evidence ID and gate/test IDs:
-- Owner and independent witness/reviewer:
-- Exact workflow, environment and device/configuration:
-- Commit, contract/catalog/model/prompt/deployment versions:
-- Predeclared criterion and test/data manifest:
-- Run date, command/protocol, sanitized raw result locator:
-- Denominator, exclusions, failures, false acceptances and uncertainty:
-- Pass/fail/unknown and why:
-- Remaining risk, mitigation, reviewer disposition and expiry/retest triggers:
-
-## Release checklist
-
-- [ ] Scope is labeled R0/R1 and diagnosis flag matches passed gates.
-- [ ] All current sources, identities and deployment rights are authorized.
-- [ ] Clean baseline + owner tests + integration/security evidence attached.
-- [ ] No open critical finding, fake live accuracy or false persistence claim.
-- [ ] Exact contract/catalog/model/prompt versions and rollback set recorded.
-- [ ] Emergency stop, pending recovery, restore and retention/deletion rehearsed.
-- [ ] Operators understand physical stop/escalation and no offline continuation.
-- [ ] Named required reviewers accept bounded deployment and residual uncertainty.
-- [ ] Per-customer impacted gates rerun before any new paid deployment.
-
-## Risk register
-
-| Risk | Owner | Mitigation / trigger |
+| Gate | Status | Sign-off |
 | --- | --- | --- |
-| A overloaded by backend/integration/product roles | A | Fakes/contracts first; narrow scope; replan capacity or transfer whole area explicitly |
-| AI invents identity/source/check | V | Typed proposals, held-out eval, uncertainty/refusal; A validates all IDs/lifecycle |
-| Model-derived check bypasses restrictions | A | Trusted independent gate and allowlist; adversarial/direct HTTP tests |
-| Pending evidence appears complete | A | Durable receipts/idempotency/reconciliation; J renders pending truthfully |
-| Customer data leaks through prompts/images | A | Approved provider terms, scoped egress/minimization; V injection tests; J no local raw-image persistence |
-| Source knowledge wrong or not applicable | V authors; A publishes | Named SME content approval and version/applicability/lifecycle gates |
-| Laptop diagnosis broadens beyond expertise | A | One family/symptom; G4 separate; external checks only; stop/escalate |
-| Prototype mistaken for validated product | A | Demo labels, evidence status register, no gate inherited from planning review |
+| G0 | UNKNOWN: owner freeze/rights not accepted | A + V/J contract review + relevant rights/SME |
+| G1 | UNKNOWN: implementation evidence absent | A + reviewer |
+| G2 | UNKNOWN: investigator/photo benchmark absent | V + A/SME/independent |
+| G3 | UNKNOWN: pilot environment absent | A + customer/admin/SME/independent |
+| G4 | REAL DIAGNOSIS DISABLED; synthetic advisory only | V evidence; A/SME/independent release |
+| G5 | UNKNOWN: value study absent | A + customer/SME |
+| G6 | UNKNOWN: buyer evidence absent | A + authorized buyer |
 
-## Rights checklist before G0/G3
+Decision template: ID/date/owner/problem/options/chosen behavior/paths/schema diff/consumer review/verification/rollback/version. Transfer adds replacement owner/interval.
 
-Record separate permissions/authority for (1) source storage and display, (2) source/image transmission to the chosen model provider, (3) evaluation images and labels, (4) evidence retention/deletion and backup expiry, and (5) any future training reuse. Each record names the approving rights holder/customer, permitted purpose, data scope, expiration and revocation process. A missing permission blocks that data use, not synthetic development.
+Evidence template: gate/test, commit/environment, contract/catalog/diagram/model/prompt, manifest/predeclared criteria, date/command, sanitized results, denominator/exclusions/failures/uncertainty, reviewer/limitations/retest. No old green status transfers without applicability evidence.
 
+Release checklist: owner/independent review, required gates, rights by purpose, auth/scope/kill switch, no false saved result, source/diagram revocation, speech/offline controls, backup/deletion/recovery, visible demo/advisory labels and named acceptance. Artifact pass is not product pass.
 
----
-
-## Assignable backlog
-
-```csv
-ticket,owner,title,depends_on,deliverable,acceptance_evidence,release
-A-01,A,Freeze baseline and runtime,,mark1/docs/product/baseline-and-decisions.md,Fresh commit and reusable code mapped; scope and dependency decisions recorded,R0
-A-02,A,Publish v1 contracts and all-state fakes,A-01,mark1/contracts/,Schemas plus full operation definition plus every UI state/error fixture; J and V reviews,R0
-V-01,V,Prepare synthetic supported catalog,A-01,mark1/knowledge/,Versioned sources checks prerequisites observations rights and SME-review fields; no invented repair facts,R0
-J-01,J,Map screens and statuses,A-02,mark1/docs/ux/,Every status and error mapped; phone layout and manual fallback shown,R0
-A-03,A,Implement session auth and durable state,A-02,mark1/server/,Tenant actor revision isolation and restart tests pass,R0
-A-04,A,Enforce policy and catalog lifecycle,A-03;V-01,mark1/server/,Skipped blocker obsolete fallback hidden restriction and cross-asset tests pass,R0
-A-05,A,Implement idempotent evidence,A-03,mark1/server/,Duplicate mismatch timeout concurrency and restart tests pass,R0
-V-02,V,Implement bounded identity perception,A-02;V-01,mark1/ai/,Candidates from allowed family; ambiguity unknown and malicious image tests pass,R0
-V-03,V,Implement scoped retrieval,A-02;V-01,mark1/ai/,Only supplied approved authorized sources used; missing or conflicting sources escalate,R0
-V-04,V,Implement next-check engine,A-02;V-03,mark1/ai/,Valid check or observation IDs; no raw instructions; no loops or unsafe expansion,R0
-V-05,V,Implement model adapter and fake,A-02,mark1/ai/,Cancellation deadline bounded retries structured validation and offline fake demonstrated,R0
-J-02,J,Implement capture and identity confirmation,J-01,mark1/web/,Camera denial retake upload manual input and human comparison work,R0
-J-03,J,Implement check and observation screens,J-01,mark1/web/,Canonical source/check display plus blocked unknown and escalation states,R0
-J-04,J,Implement retry and recovery,J-03,mark1/web/,Double tap lost response reload and conflict never display false saved state,R0
-J-05,J,Implement summary and UI checks,J-02;J-04,mark1/web/,Human outcome vs persisted evidence clear; keyboard and mobile checks pass,R0
-A-06,A,Integrate AI and frontend,A-04;A-05;V-02;V-04;V-05;J-05,mark1/tests/integration/,Happy path plus rejection and failure branches pass with sanitized trace,R0
-V-06,V,Run held-out perception and engine evaluation,V-02;V-04;V-05,mark1/ai/evals/,Frozen cases raw and post-confirmation results refusal coverage costs and latency published,G2
-A-07,A,Harden pilot environment and recovery,A-06,mark1/docs/product/operations.md,Authorization provider terms file limits kill switch backup restore retention and deletion evidence,G3
-A-08,A,Assemble controlled-check pilot release evidence,A-07;V-06,mark1/docs/product/gates.md,G0-G3 accepted by named SME admin customer and independent reviewer; otherwise demo only,R1
-V-07,V,Specify and evaluate optional hypotheses,V-06,mark1/docs/ai/hypotheses.md,Predeclared SME sample targets labels contract-change request and held-out results; no production display,G4
-A-09,A,Gate and integrate diagnostic increment,A-08;V-07,mark1/contracts/,Amended schema and policy plus G4 evidence; explicit feature flag remains off until accepted,R1-optional
-J-06,J,Render optional advisory hypotheses,A-09,mark1/web/,Labels sources uncertainty and separation from approved checks verified,R1-optional
-A-10,A,Measure value and economics,A-08,mark1/docs/product/pilot-results.md,30 matched pairs all attempts support costs tail errors and uncertainty recorded,G5
-A-11,A,Validate buying commitments,A-01,mark1/docs/product/commercial-evidence.md,5 qualified interviews across 3 organizations; 2 independent commitments and 1 actual payment or amber,G6
-```
+Main risks: wrong identity (V perception/A binding), invented diagnosis (V templates/A claim rules), stale speech (A lease/J cancellation), duplicate evidence (A ledger/J pending), data leakage (A scopes/V injection), misleading cutaway (V graph/J labels), A bottleneck (early fixtures/capacity scope).

@@ -1,0 +1,7 @@
+Synthetic DEMO-GUIDE version 2. Demo only; no real repair guidance.
+Identity: DEMO-LAPTOP / DEMO-C1 is fictional. Read the supplied fictional label.
+Preflight: select supplied CLEAR, HAZARD or UNSURE. Hazard or uncertainty stops.
+Views: show only the supplied exterior label or overview image. Do not manipulate equipment.
+Indicator: supplied ON, OFF or UNSURE is an observation, not a measured internal fault.
+Flow: fictional INPUT -> CONTROL -> DISPLAY is an authored relationship, not measured current.
+Advisory: a supplied OFF observation permits only a suspected input-stage explanation; cause remains unconfirmed.

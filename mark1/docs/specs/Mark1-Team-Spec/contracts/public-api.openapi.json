@@ -2,7 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Mark-1 public contract",
-    "version": "1.0"
+    "version": "2.0",
+    "description": "Proposed synthetic visual investigation API; not an implemented service. State rules in 06-CONTRACTS.md are normative."
   },
   "servers": [
     {
@@ -15,9 +16,9 @@
     }
   ],
   "paths": {
-    "/v1/sessions": {
+    "/v2/sessions": {
       "post": {
-        "operationId": "post__v1_sessions",
+        "operationId": "post__v2_sessions",
         "parameters": [
           {
             "name": "Idempotency-Key",
@@ -164,9 +165,9 @@
         }
       }
     },
-    "/v1/sessions/{id}": {
+    "/v2/sessions/{id}": {
       "get": {
-        "operationId": "get__v1_sessions_session",
+        "operationId": "get__v2_sessions_session",
         "parameters": [
           {
             "name": "id",
@@ -282,9 +283,9 @@
         }
       }
     },
-    "/v1/sessions/{id}/identity-candidates": {
+    "/v2/sessions/{id}/identity-candidates": {
       "post": {
-        "operationId": "post__v1_sessions_session_identity-candidates",
+        "operationId": "post__v2_sessions_session_identity-candidates",
         "parameters": [
           {
             "name": "id",
@@ -470,9 +471,9 @@
         }
       }
     },
-    "/v1/sessions/{id}/identity-confirmation": {
+    "/v2/sessions/{id}/identity-confirmation": {
       "post": {
-        "operationId": "post__v1_sessions_session_identity-confirmation",
+        "operationId": "post__v2_sessions_session_identity-confirmation",
         "parameters": [
           {
             "name": "id",
@@ -658,9 +659,9 @@
         }
       }
     },
-    "/v1/sessions/{id}/observations": {
+    "/v2/sessions/{id}/observations": {
       "post": {
-        "operationId": "post__v1_sessions_session_observations",
+        "operationId": "post__v2_sessions_session_observations",
         "parameters": [
           {
             "name": "id",
@@ -846,9 +847,9 @@
         }
       }
     },
-    "/v1/sessions/{id}/outcome": {
+    "/v2/sessions/{id}/outcome": {
       "post": {
-        "operationId": "post__v1_sessions_session_outcome",
+        "operationId": "post__v2_sessions_session_outcome",
         "parameters": [
           {
             "name": "id",
@@ -1034,9 +1035,9 @@
         }
       }
     },
-    "/v1/sessions/{id}/stop": {
+    "/v2/sessions/{id}/stop": {
       "post": {
-        "operationId": "post__v1_sessions_session_stop",
+        "operationId": "post__v2_sessions_session_stop",
         "parameters": [
           {
             "name": "id",
@@ -1222,9 +1223,9 @@
         }
       }
     },
-    "/v1/sessions/{id}/hazards": {
+    "/v2/sessions/{id}/hazards": {
       "post": {
-        "operationId": "post__v1_sessions_session_hazards",
+        "operationId": "post__v2_sessions_session_hazards",
         "parameters": [
           {
             "name": "id",
@@ -1410,9 +1411,9 @@
         }
       }
     },
-    "/v1/sessions/{id}/images": {
+    "/v2/sessions/{id}/images": {
       "post": {
-        "operationId": "post__v1_sessions_session_images",
+        "operationId": "post__v2_sessions_session_images",
         "parameters": [
           {
             "name": "id",
@@ -1573,7 +1574,11 @@
                     "minimum": 0
                   },
                   "purpose": {
-                    "const": "identity"
+                    "enum": [
+                      "identity",
+                      "investigation",
+                      "observation"
+                    ]
                   }
                 },
                 "required": [
@@ -1587,9 +1592,9 @@
         }
       }
     },
-    "/v1/sessions/{id}/events": {
+    "/v2/sessions/{id}/events": {
       "get": {
-        "operationId": "get__v1_sessions_session_events",
+        "operationId": "get__v2_sessions_session_events",
         "parameters": [
           {
             "name": "id",
@@ -1714,7 +1719,7 @@
         }
       }
     },
-    "/v1/sessions/{id}/commands/{command_id}": {
+    "/v2/sessions/{id}/commands/{command_id}": {
       "get": {
         "operationId": "get_command_receipt",
         "parameters": [
@@ -1779,6 +1784,762 @@
             }
           }
         }
+      }
+    },
+    "/v2/sessions/{id}/view-responses": {
+      "post": {
+        "operationId": "post_v2_view_responses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted / pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViewResponse"
+              }
+            }
+          }
+        },
+        "description": "Authenticated revision/idempotency command; normative allowed states and runtime bindings in 06-CONTRACTS.md."
+      }
+    },
+    "/v2/sessions/{id}/answers": {
+      "post": {
+        "operationId": "post_v2_answers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted / pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Answer"
+              }
+            }
+          }
+        },
+        "description": "Authenticated revision/idempotency command; normative allowed states and runtime bindings in 06-CONTRACTS.md."
+      }
+    },
+    "/v2/sessions/{id}/messages": {
+      "post": {
+        "operationId": "post_v2_messages",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted / pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Message"
+              }
+            }
+          }
+        },
+        "description": "Authenticated revision/idempotency command; normative allowed states and runtime bindings in 06-CONTRACTS.md."
+      }
+    },
+    "/v2/sessions/{id}/explanation-acks": {
+      "post": {
+        "operationId": "post_v2_explanation_acks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current authorized state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted / pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            },
+            "headers": {
+              "X-Command-Id": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Stable original command identity; never an instruction snapshot."
+              },
+              "X-Command-State": {
+                "required": true,
+                "schema": {
+                  "enum": [
+                    "PENDING",
+                    "PERSISTED"
+                  ]
+                },
+                "description": "Current durable acknowledgement state of this command effect."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Budget exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExplanationAck"
+              }
+            }
+          }
+        },
+        "description": "Authenticated revision/idempotency command; normative allowed states and runtime bindings in 06-CONTRACTS.md."
       }
     }
   },
@@ -2133,6 +2894,179 @@
       },
       "CommandReceipt": {
         "$ref": "session.schema.json#/$defs/receipt"
+      },
+      "ViewResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "interaction_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "template_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "template_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "result": {
+            "enum": [
+              "IMAGE",
+              "UNAVAILABLE",
+              "UNSURE"
+            ]
+          },
+          "image_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "human_confirmed": {
+            "const": true
+          }
+        },
+        "required": [
+          "expected_revision",
+          "interaction_id",
+          "template_id",
+          "template_version",
+          "result",
+          "image_id",
+          "human_confirmed"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "result": {
+                  "const": "IMAGE"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "image_id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "image_id": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "Answer": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "interaction_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "template_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "template_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {
+            "type": "string",
+            "minLength": 1
+          },
+          "human_confirmed": {
+            "const": true
+          }
+        },
+        "required": [
+          "expected_revision",
+          "interaction_id",
+          "template_id",
+          "template_version",
+          "value",
+          "human_confirmed"
+        ]
+      },
+      "Message": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "channel": {
+            "enum": [
+              "CHAT",
+              "VOICE_TRANSCRIPT"
+            ]
+          },
+          "human_confirmed": {
+            "const": true
+          }
+        },
+        "required": [
+          "expected_revision",
+          "text",
+          "channel",
+          "human_confirmed"
+        ]
+      },
+      "ExplanationAck": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "interaction_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "template_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "template_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "acknowledged": {
+            "const": true
+          }
+        },
+        "required": [
+          "expected_revision",
+          "interaction_id",
+          "template_id",
+          "template_version",
+          "acknowledged"
+        ]
       }
     }
   }

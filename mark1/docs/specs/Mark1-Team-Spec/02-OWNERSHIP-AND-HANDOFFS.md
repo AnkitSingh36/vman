@@ -1,60 +1,30 @@
-# Ownership and handoff contract
+# Ownership, dependencies and handoffs
 
-## Rule
+Version 2.0. Every file/artifact/ticket has one implementation owner. Reviews are collaborative; transfer records paths, interval and replacement owner. Never create competing APIs, providers, catalog stores or workflow databases.
 
-Every production file, shared artifact and backlog ticket has exactly one implementation owner. An approver is a reviewer, not a second writer. Never solve a blocked dependency by creating a competing API, model client, schema or persistence layer.
-
-## Proposed repository paths
-
-| Path / concern | Sole owner | Reviewer / consumer |
+| Area / target path | Sole owner | Consumer/reviewer |
 | --- | --- | --- |
-| `mark1/web/**` including web manifest/lockfile/frontend mocks/component tests | J | A reviews integration; V reviews AI-state wording |
-| `mark1/server/**` HTTP, sessions, auth, policy, catalog repository, evidence, migrations | A | V reviews AI binding; J reviews API usability |
-| `mark1/ai/**` OCR/perception adapter, retrieval ranking, next-check engine, prompts/provider client | V | A reviews security/contract; J reviews display needs |
-| `mark1/contracts/**` canonical schemas, fixtures, operation definitions, generated-client configuration | A | Both V and J review before freeze |
-| `mark1/knowledge/**` source manifest, versioned checks, applicability/observation metadata, AI eval data | V | A validates lifecycle; SME approves technical content |
-| `mark1/tests/integration/**`, `mark1/tests/security/**` | A | Relevant module owner reviews |
-| `mark1/ai/tests/**`, `mark1/ai/evals/**` | V | A reviews integrity; SME labels cases |
-| `mark1/web/**/tests/**` | J | A reviews contract use |
-| Root Python dependencies, lockfiles, CI, deployment, database, environments, monitoring | A | V requests AI dependencies through A |
-| `mark1/docs/product/**`, `mark1/docs/contracts/**`, release/gate/decision logs | A | V and J review affected decisions |
-| `mark1/docs/ai/**` and source/data/model cards | V | A + SME |
-| `mark1/docs/ux/**` and screen/error-state inventory | J | A + V |
+| `mark1/server/**` | A | V/J boundary review |
+| `mark1/contracts/**` and spec contracts | A | V/J before freeze |
+| `mark1/tests/integration/**`, `mark1/tests/security/**` | A | Relevant owner |
+| `mark1/ai/**`, prompts/provider/retrieval, AI tests/evals | V | A/SME |
+| `mark1/knowledge/**`, templates, diagrams/graph, sources/scenario labels | V authors | A publishes; SME approves real content |
+| `mark1/web/**`, camera/chat/speech/diagram renderer/UI tests | J | A integration, V content UX |
+| Mark-1 root dependencies/locks/CI/deployment | A | V requests AI dependencies; J owns web lockfile |
+| Product/contracts/gate docs | A | Affected owners |
+| AI/data/model cards | V | A/SME |
+| UX/accessibility docs | J | A/V |
 
-Existing `lantern/app.py`, `lantern/bridge/**`, `lantern/mockvault/**`, root `tests/**` and CLI remain A-owned. Existing `lantern/agent/**` becomes V-owned if reused. A must not edit that agent area as part of policy fixes; adapt it in A's caller or request V's ticket. `mark1/` source skeleton was previously reported but has not been freshly inspected here; A-01 reconciles actual paths before assigning tickets. Existing docs outside these new namespaces default to A. No rename/rebuild is required merely to match this proposed layout.
+Target paths are not existing implementation claims. A-01 reconciles nested `mark1/mark1/**` skeleton with one Python package/import layout. Do not create two package roots. Preserve `lantern/**` reference POC without modification. Reuse patterns with regressions, not inherited trust; machine behavior stays in metadata.
 
-## Shared-boundary decisions
+## Independent work
 
-| Boundary | Producer owner | Consumer owner | How change happens |
-| --- | --- | --- | --- |
-| Public API, sessions, evidence receipts | A | J | A edits contract; J reviews usability; fixtures released before frontend changes |
-| Internal inference request/response | A owns schema, V owns implementation | A ↔ V | V proposes requirement; A publishes schema version and fixture |
-| Approved source/check catalog | V authors data; A publishes/enforces it | A and V | V provides immutable candidate + SME approval evidence; A validates and activates version |
-| UX wording | J owns generic UI text; A owns policy message codes; V owns hypothesis labels | All | Structured codes and approved templates; no model-written imperative text |
-| Model/version configuration | V proposes tested model; A deploys credentials/config | V | A records deployed version; provider changes require impacted evaluation |
+A owns `server/testing/engine_stub.py` and synthetic server-only test catalog. V owns `ai/tests/fakes.py` and production knowledge authoring. J uses A's all-state fixtures. Shared fixtures are canonical; these doubles are not competing production engines/catalogs.
 
-V's source authoring is distinct from A's catalog storage/migrations. Only A publishes authoritative catalog state. J displays sources received through A and must not maintain a second applicability table.
+A can complete local API/auth/state/bridge/evidence/media/interaction validation without V/J. Live AI integration needs V; full phone UX needs J; pilot content needs V+SME/rights. Contract freeze needs their review, not completed modules. Label substituted demos truthfully.
 
-## Contract change protocol
+## Handoffs and changes
 
-1. Requestor opens one change ticket: producer/consumers, reason, schema diff, fixture, backward compatibility, migration, impacted tests.
-2. A is sole contract editor. J and V review relevant changes; no implementation against an unmerged draft.
-3. Freeze v1 before parallel implementation. Additive optional fields are compatible only if old clients still validate and behave correctly; otherwise bump contract version and migrate both consumers together.
-4. A checks in fixtures/schema first. J and V generate or consume types; generated files are not hand-edited.
-5. Cross-boundary bug: consumer records failing payload/test, producer fixes its own module. Ownership transfer is explicit in the decision log with start/end, affected paths, and replacement owner. Never two simultaneous owners.
+A -> J: public API, auth/demo setup, all states/errors, command reconciliation, media/speech rules. A -> V: hashed immutable request, scoped catalog/opaque media, budgets/cancellation and strict proposal schema. V -> A: typed proposals, reviewed sources/templates/diagram, versioned model/prompts/evaluation. V -> J only through A: canonical text, labels/graph IDs. J -> A: API-fixture/mobile/speech/accessibility evidence and failing payloads.
 
-## Branches and review
-
-Use short-lived branches `a/<ticket>`, `v/<ticket>`, `j/<ticket>`. Merge contracts → module implementations → integration → release evidence. A owns final integration and tags; J and V merge their module work only after the designated cross-review and checks. Root/shared changes go through A. Keep one PR focused on one owner area; split cross-area fixes into dependent PRs. A publishes a proposed CODEOWNERS mapping and configures protected-branch checks only after actual team GitHub usernames are supplied; initials are not valid substitute handles. No GitHub account or invitation is inferred.
-
-## Handoff checklist
-
-Each ticket hands over: contract version, changed owner paths, runnable/local verification instructions, sanitized request/response example, error cases, remaining limitations, linked source/evaluation evidence and reviewer. Provider keys and customer material never enter fixtures. Reviewer feedback returns to owner. A reviewer may stop a release but does not silently take implementation ownership.
-
-## Preventing A from becoming a bottleneck
-
-A-01/A-02 are the first critical path. Publish stable fakes early and timebox schema discussion to one shared session. V and J continue against frozen contracts while A completes persistence/policy. Avoid new pilot integrations until the laptop thin slice passes. If A's measured capacity cannot meet the plan, reduce scope or explicitly transfer one whole owner area; do not ask all three to edit the backend.
-
-## Test doubles and catalog schemas
-
-A owns `mark1/server/testing/engine_stub.py` to unblock server integration. V owns `mark1/ai/tests/fakes.py` to test provider/AI behavior. They consume shared fixtures and the same port; neither is a second production engine. A owns all schema files, including catalog and engine requests; V owns the corresponding knowledge records. A-02 publishes the pack's complete contract baseline before module branches begin.
+A edits contract/schema/fixtures first with compatibility/migration and consumer reviews. 2.0 `/v2` is breaking. Do not implement against unmerged drafts. V authors immutable catalog; A publishes lifecycle; J never copies applicability policy. Short branches `a/<ticket>`, `v/<ticket>`, `j/<ticket>`; merge contracts -> modules -> integration -> evidence. A owns tags/shared configuration. Actual GitHub handles needed before CODEOWNERS/branch rules. No messages/issues/deployments are created by this document.
