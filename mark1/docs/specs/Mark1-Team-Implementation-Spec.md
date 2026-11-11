@@ -183,6 +183,10 @@ Mutations require Idempotency-Key and expected_revision; create omits revision. 
 
 Local milestone: API, stub, synthetic test catalog, contract and isolation/policy/media/retry/recovery checks, startup instructions and scripted HTTP journey. No model key/frontend/SME needed for this milestone. V production knowledge/AI, J speech/camera UI and real pilot permissions remain separate handoffs. A test catalog is never production technical approval.
 
+## Implementation evidence - 11 November 2026
+
+The local backend is implemented in nested `mark1/server/**` relative to the outer Mark-1 project directory. See [baseline/decisions](../../product/baseline-and-decisions.md) and [operations/consumer handoff](../../product/operations.md). A-01..A-07 have author-run local evidence; V/J reviews and contract freeze are not claimed. A-08 real module integration and A-09 pilot acceptance remain pending. No V-owned production engine/catalog or J-owned UI has been implemented by A.
+
 ---
 
 <!-- 04-V-AI-SPEC.md -->
@@ -270,7 +274,7 @@ A is sole editor; V/J review before freeze. Breaking change: `/v2`, interaction 
 
 ## Common rules
 
-Authenticated same-origin API; HTTPS for pilot. A-01 chooses secure/HttpOnly/SameSite cookies+CSRF or server-verified tokens. Actor/tenant come from auth. Every ID is scope-checked. UTC RFC3339; integer revisions; unknown mutation fields rejected. All mutations require Idempotency-Key; session mutations expected_revision. Error/receipt semantics in A's spec apply to new operations.
+Authenticated same-origin API; HTTPS for pilot. A-01 selected server-verified opaque bearer tokens for the local demo; canonical OpenAPI records `bearerAuth`. Cookie authentication is not implemented. Any later cookie deployment requires secure/HttpOnly/SameSite cookies and CSRF protection. Actor/tenant come from auth. Every ID is scope-checked. UTC RFC3339; integer revisions; unknown mutation fields rejected. All mutations require Idempotency-Key; session mutations expected_revision. Error/receipt semantics in A's spec apply to new operations.
 
 | Method/path (prefix `/v2/sessions`) | Allowed state | Effect |
 | --- | --- | --- |
@@ -439,8 +443,8 @@ Version 2.0 | 10 November 2026
 | D04 | Fictional laptop/config, no-power scenario set, external-only | A, V content | R0 scope |
 | D05 | Contract 2.0 /v2 | A | Proposed; V/J review/freeze pending |
 | D06 | Synthetic suspected subsystem R0; real diagnosis G4 | A | Baseline |
-| D07 | Single Python layout/framework/locked dependencies | A | Open A-01; reconcile nested skeleton |
-| D08 | Auth/pixel limits/budgets/target browser speech | A with V/J | Open A-01 |
+| D07 | Single Python layout/framework/locked dependencies | A | Local nested Python package/runtime implemented; see backend decision record |
+| D08 | Auth/pixel limits/budgets/target browser speech | A with V/J | Demo bearer auth/media/budgets chosen; J browser/speech decision open |
 | D09 | Real family/SME/source/media/provider rights/retention | A; V content | Open; blocks pilot, not build |
 | D10 | Real vault/customer data prohibited here | A | Standing; mock only |
 | D11 | Hours/GitHub handles/hosting | A | Open; no dates/accounts inferred |
@@ -450,7 +454,7 @@ Version 2.0 | 10 November 2026
 | Gate | Status | Sign-off |
 | --- | --- | --- |
 | G0 | UNKNOWN: owner freeze/rights not accepted | A + V/J contract review + relevant rights/SME |
-| G1 | UNKNOWN: implementation evidence absent | A + reviewer |
+| G1 | UNKNOWN: author-run local backend evidence available; cross-review/acceptance pending | A + reviewer |
 | G2 | UNKNOWN: investigator/photo benchmark absent | V + A/SME/independent |
 | G3 | UNKNOWN: pilot environment absent | A + customer/admin/SME/independent |
 | G4 | REAL DIAGNOSIS DISABLED; synthetic advisory only | V evidence; A/SME/independent release |

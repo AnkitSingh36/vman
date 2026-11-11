@@ -10,7 +10,7 @@ The cutaway is a known machine diagram, not internal camera vision. Continuous s
 
 ## Status
 
-Application source remains a skeleton. Specification/schema checks do not implement the API or validate model accuracy. No product release gate is closed. See [delivery plan](PLAN.md), [contracts](docs/specs/Mark1-Team-Spec/contracts/README.md) and [decision register](docs/specs/Mark1-Team-Spec/11-GATE-AND-DECISION-REGISTER.md).
+The local A-owned backend is implemented with a deterministic integration stub. It provides authenticated API commands, policy/knowledge checks, durable evidence, safe image handling and an advisory diagram workflow. V's production AI and J's frontend are not included. No product release gate is closed. See [delivery plan](PLAN.md), [contracts](docs/specs/Mark1-Team-Spec/contracts/README.md) and [decision register](docs/specs/Mark1-Team-Spec/11-GATE-AND-DECISION-REGISTER.md).
 
 ## Work packages
 
@@ -18,7 +18,23 @@ Application source remains a skeleton. Specification/schema checks do not implem
 - [V - Viditya](docs/specs/Mark1-Team-Spec/04-V-AI-SPEC.md): perception, investigation, retrieval/provider, knowledge/diagram authoring and evaluation.
 - [J](docs/specs/Mark1-Team-Spec/05-J-FRONTEND-SPEC.md): camera/chat/voice, diagram renderer, phone screens and recovery.
 
-[Backlog](docs/specs/Mark1-Team-Spec/09-BACKLOG.csv) assigns one owner per ticket. A-01 must settle package layout and reproducible dependencies before application implementation. No runnable Mark-1 server or demo command is claimed yet.
+[Backlog](docs/specs/Mark1-Team-Spec/09-BACKLOG.csv) assigns one owner per ticket. The chosen package/runtime and remaining dependencies are recorded in [backend decisions](docs/product/baseline-and-decisions.md). See [runbook and consumer handoff](docs/product/operations.md) for authentication, recovery, backup and V/J integration.
+
+## Run the local backend
+
+From this `mark1/` project directory:
+
+```powershell
+python -m venv .venv
+.venv/Scripts/python.exe -m pip install -r requirements-dev.lock.txt
+.venv/Scripts/python.exe -m pip install --no-deps --no-build-isolation -e .
+.venv/Scripts/python.exe -m mark1.server init
+.venv/Scripts/python.exe -m uvicorn mark1.server.app:create_app --factory --host 127.0.0.1 --port 8000 --workers 1
+```
+
+Use the generated bearer token in `http://127.0.0.1:8000/docs`. For an offline scripted journey, run `.venv/Scripts/python.exe -m mark1.server.testing.demo`. Tests: `.venv/Scripts/python.exe -m pytest -q`. No model key or real vault is needed.
+
+Only one local worker and source-checkout/editable installation are supported. Demo mode refuses pilot configuration. The stub does not interpret images or diagnose real devices; the generated snapshot is an API/media demonstration.
 
 ## Data boundary
 

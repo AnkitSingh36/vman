@@ -35,3 +35,7 @@ Mutations require Idempotency-Key and expected_revision; create omits revision. 
 ## Completion boundary
 
 Local milestone: API, stub, synthetic test catalog, contract and isolation/policy/media/retry/recovery checks, startup instructions and scripted HTTP journey. No model key/frontend/SME needed for this milestone. V production knowledge/AI, J speech/camera UI and real pilot permissions remain separate handoffs. A test catalog is never production technical approval.
+
+## Implementation evidence - 11 November 2026
+
+The local backend is implemented in nested `mark1/server/**` relative to the outer Mark-1 project directory. See [baseline/decisions](../../product/baseline-and-decisions.md) and [operations/consumer handoff](../../product/operations.md). A-01..A-07 have author-run local evidence; V/J reviews and contract freeze are not claimed. A-08 real module integration and A-09 pilot acceptance remain pending. No V-owned production engine/catalog or J-owned UI has been implemented by A.

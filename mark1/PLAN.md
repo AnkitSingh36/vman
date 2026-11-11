@@ -11,3 +11,9 @@
 Streaming, tracked overlays, learning and autonomy are deferred. No real M-Files/customer data is authorized. A can complete local backend without V/J implementations; integrated camera/voice/AI experience needs both.
 
 Use the [full delivery specification](docs/specs/Mark1-Team-Spec/08-DELIVERY-AND-OPERATIONS.md), [28-ticket backlog](docs/specs/Mark1-Team-Spec/09-BACKLOG.csv), and [role/ownership map](docs/specs/Mark1-Team-Spec/02-OWNERSHIP-AND-HANDOFFS.md). Each nontrivial module needs meaningful owner tests; application acceptance requires runtime tests beyond contract artifacts. Run contract checks using [these instructions](docs/specs/Mark1-Team-Spec/contracts/README.md).
+
+## Local backend implementation status - 11 November 2026
+
+A-owned code is now in `mark1/mark1/server/`, with integration/security regressions under `mark1/tests/`. The backend consumes canonical v2 schemas, uses a deterministic engine stub and provides a generated-image HTTP walkthrough. See [implementation decisions](docs/product/baseline-and-decisions.md) and [operations/handoff](docs/product/operations.md).
+
+A-01..A-07 have local implementation evidence; contract/owner acceptance is still pending. A-08 real V/J integration and A-09 operational-pilot acceptance remain incomplete. Do not promote local test results into closed product gates.
