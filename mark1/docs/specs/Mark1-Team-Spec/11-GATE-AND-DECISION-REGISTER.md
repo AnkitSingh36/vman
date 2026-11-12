@@ -10,8 +10,8 @@ Version 2.0 | 10 November 2026
 | D04 | Fictional laptop/config, no-power scenario set, external-only | A, V content | R0 scope |
 | D05 | Contract 2.0 /v2 | A | Proposed; V/J review/freeze pending |
 | D06 | Synthetic suspected subsystem R0; real diagnosis G4 | A | Baseline |
-| D07 | Single Python layout/framework/locked dependencies | A | Open A-01; reconcile nested skeleton |
-| D08 | Auth/pixel limits/budgets/target browser speech | A with V/J | Open A-01 |
+| D07 | Single Python layout/framework/locked dependencies | A | Local nested Python package/runtime implemented; see backend decision record |
+| D08 | Auth/pixel limits/budgets/target browser speech | A with V/J | Demo bearer auth/media/budgets chosen; J browser/speech decision open |
 | D09 | Real family/SME/source/media/provider rights/retention | A; V content | Open; blocks pilot, not build |
 | D10 | Real vault/customer data prohibited here | A | Standing; mock only |
 | D11 | Hours/GitHub handles/hosting | A | Open; no dates/accounts inferred |
@@ -21,7 +21,7 @@ Version 2.0 | 10 November 2026
 | Gate | Status | Sign-off |
 | --- | --- | --- |
 | G0 | UNKNOWN: owner freeze/rights not accepted | A + V/J contract review + relevant rights/SME |
-| G1 | UNKNOWN: implementation evidence absent | A + reviewer |
+| G1 | UNKNOWN: author-run local backend evidence available; cross-review/acceptance pending | A + reviewer |
 | G2 | UNKNOWN: investigator/photo benchmark absent | V + A/SME/independent |
 | G3 | UNKNOWN: pilot environment absent | A + customer/admin/SME/independent |
 | G4 | REAL DIAGNOSIS DISABLED; synthetic advisory only | V evidence; A/SME/independent release |

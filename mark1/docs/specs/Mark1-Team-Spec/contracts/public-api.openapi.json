@@ -12,7 +12,7 @@
   ],
   "security": [
     {
-      "sessionCookie": []
+      "bearerAuth": []
     }
   ],
   "paths": {
@@ -2545,10 +2545,10 @@
   },
   "components": {
     "securitySchemes": {
-      "sessionCookie": {
-        "type": "apiKey",
-        "in": "cookie",
-        "name": "mark1_session"
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Opaque locally issued synthetic-demo token; only its SHA-256 hash is stored. No cookie authentication."
       }
     },
     "schemas": {

@@ -4,7 +4,7 @@ A is sole editor; V/J review before freeze. Breaking change: `/v2`, interaction 
 
 ## Common rules
 
-Authenticated same-origin API; HTTPS for pilot. A-01 chooses secure/HttpOnly/SameSite cookies+CSRF or server-verified tokens. Actor/tenant come from auth. Every ID is scope-checked. UTC RFC3339; integer revisions; unknown mutation fields rejected. All mutations require Idempotency-Key; session mutations expected_revision. Error/receipt semantics in A's spec apply to new operations.
+Authenticated same-origin API; HTTPS for pilot. A-01 selected server-verified opaque bearer tokens for the local demo; canonical OpenAPI records `bearerAuth`. Cookie authentication is not implemented. Any later cookie deployment requires secure/HttpOnly/SameSite cookies and CSRF protection. Actor/tenant come from auth. Every ID is scope-checked. UTC RFC3339; integer revisions; unknown mutation fields rejected. All mutations require Idempotency-Key; session mutations expected_revision. Error/receipt semantics in A's spec apply to new operations.
 
 | Method/path (prefix `/v2/sessions`) | Allowed state | Effect |
 | --- | --- | --- |
