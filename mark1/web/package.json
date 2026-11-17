@@ -1,0 +1,36 @@
+{
+  "name": "mark1-web",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Mark-1 phone web client (J): camera, chat, voice, cutaway renderer. Synthetic R0 only.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:real": "vite --mode real",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "node e2e/journey.mjs"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "6.6.3",
+    "@testing-library/react": "16.0.1",
+    "@testing-library/user-event": "14.5.2",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "4.3.3",
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1",
+    "jsdom": "25.0.1",
+    "playwright-core": "1.48.2",
+    "typescript": "5.6.3",
+    "vite": "5.4.11",
+    "vitest": "2.1.5"
+  }
+}
