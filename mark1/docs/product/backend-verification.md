@@ -1,5 +1,16 @@
 # Local backend verification
 
+## Browser-to-backend integration - 19 November 2026
+
+Branch `a/frontend-backend-integration`, based on merged A/J work at `f32b2ae`. Tested with Node 22.11.0, the existing Python virtual environment and headless Microsoft Edge at 390 x 844. No backend code or contracts changed.
+
+- `npm.cmd run build` from `mark1/web`: TypeScript and Vite production build passed.
+- `npm.cmd test`: 60 tests passed (57 existing plus three credential/transport checks).
+- `npm.cmd run e2e:real`: real Vite proxy -> FastAPI -> temporary SQLite -> deterministic engine journey passed. Manual fictional label, explicit identity confirmation, preflight CLEAR, generated snapshot, human chat report, enum answer, OFF observation, advisory cutaway and escalation were exercised. 25 durable events appeared in history; API reads confirmed the terminal state and expected command event types. Offline guidance hiding, reconnect and authenticated reload/resume passed. No browser console errors.
+- An unauthenticated request through the proxy returned 401. The runtime credential was captured privately and never included in URLs, committed configuration or screenshots. The runner stopped both servers and removed its temporary database.
+
+This is local A/J integration evidence only. Live V engine integration, phone camera/speech acceptance, pilot gates and the separately reported prerequisite-withdrawal defect remain open. The auth hook is now supplied by the bootstrap UI; J-R3 is resolved for the local bearer-token demo, not production identity management.
+
 11 November 2026 | `a/mark1-backend-r0` | Author-run developer evidence; no product gate closed.
 
 Tested with Windows/Python 3.13.7 and the isolated environment captured in `requirements-dev.lock.txt`. The initial global-environment baseline had two missing-Google-SDK failures in the original Lantern tests. With the declared optional SDK in the isolated environment, the unchanged Lantern suite passes. No Lantern source or original tests were edited.

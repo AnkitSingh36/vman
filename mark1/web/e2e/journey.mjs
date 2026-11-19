@@ -16,6 +16,7 @@ mkdirSync(out, { recursive: true });
 const url = process.env.E2E_URL ?? 'http://localhost:5173/';
 const channel = process.env.E2E_CHANNEL ?? (process.platform === 'win32' ? 'msedge' : 'chrome');
 const frame = path.join(here, 'fictional-frame.png');
+const real = process.env.E2E_REAL === '1';
 
 const browser = await chromium.launch({ channel, headless: process.env.E2E_HEADED ? false : true });
 const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
@@ -33,10 +34,22 @@ const step = async (label, fn) => {
 
 try {
   await page.goto(url);
+  if (real) {
+    if (!process.env.E2E_TOKEN) throw new Error('The real-backend runner must supply a temporary token.');
+    await step('enter demo token', async () => {
+      await page.getByLabel('Demo bearer token').fill(process.env.E2E_TOKEN);
+      await page.getByRole('button', { name: 'Use demo token' }).click();
+    });
+  }
   await step('start session', () => page.getByRole('button', { name: /Start: device has no power/ }).click());
-  await step('send label photo', async () => {
-    await page.locator('input[type=file]').first().setInputFiles(frame);
-    await page.getByRole('button', { name: 'Send selected photo' }).click();
+  await step(real ? 'look up fictional label' : 'send label photo', async () => {
+    if (real) {
+      await page.getByLabel('Label text').fill('DEMO-LAPTOP');
+      await page.getByRole('button', { name: 'Look up', exact: true }).click();
+    } else {
+      await page.locator('input[type=file]').first().setInputFiles(frame);
+      await page.getByRole('button', { name: 'Send selected photo' }).click();
+    }
     await page.getByRole('button', { name: 'Confirm identity' }).waitFor();
   });
   await shot('identity-candidates');
@@ -93,6 +106,24 @@ try {
   });
   await shot('summary');
   console.log(`history events: ${await page.locator('.events li').count()}`);
+  if (real) {
+    const sid = new URLSearchParams(new URL(page.url()).hash.slice(1)).get('s');
+    const headers = { Authorization: `Bearer ${process.env.E2E_TOKEN}` };
+    const current = await ctx.request.get(`${url}v2/sessions/${sid}`, { headers });
+    const session = await current.json();
+    if (session.status !== 'ESCALATED') throw new Error('Final backend state was not persisted.');
+    const history = await ctx.request.get(`${url}v2/sessions/${sid}/events`, { headers });
+    const { events } = await history.json();
+    for (const type of ['IMAGES', 'ANSWERS', 'OBSERVATIONS', 'MESSAGES', 'EXPLANATION-ACKS']) {
+      if (!events.some((event) => event.event_type === type)) throw new Error(`Missing durable event: ${type}`);
+    }
+    await page.reload();
+    await page.getByLabel('Demo bearer token').waitFor();
+    await page.getByLabel('Demo bearer token').fill(process.env.E2E_TOKEN);
+    await page.getByRole('button', { name: 'Use demo token' }).click();
+    await page.getByText('History (historical record — not instructions)').waitFor();
+    console.log('Real backend: durable events and authenticated reload/resume verified.');
+  }
   console.log(errors.length ? `console errors: ${errors.join(' | ')}` : 'console errors: none');
   console.log(`screenshots: ${out}`);
   if (errors.length) process.exitCode = 1;
