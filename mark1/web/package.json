@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "e2e": "node e2e/journey.mjs"
+    "e2e": "node e2e/journey.mjs",
+    "e2e:real": "node e2e/real.mjs"
   },
   "dependencies": {
     "react": "18.3.1",
