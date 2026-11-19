@@ -35,7 +35,7 @@ Owner: J (`mark1/web/**`). It consumes A's v2 contract; it never talks to a mode
 | Mode | Transport | Use |
 | --- | --- | --- |
 | fake (default) | `src/fake/fakeServer.ts` in the browser | UI development and tests before A's server exists |
-| real (`--mode real`) | `fetch` same-origin `/v2` with cookies | Integration with A's backend (A-08) |
+| real (`--mode real`) | `fetch` same-origin `/v2` with an in-memory bearer token | Integration with A's backend (A-08) |
 
 The fake backend is a **UI test double**, not A's engine stub or a production engine/catalog. Its text, checks, templates and diagram come from A's canonical synthetic catalog (`contracts/request-fixtures.json`), imported read-only via the `@contracts` alias, and it issues fresh leases, revisions and receipts. Its next-step logic mirrors `scenario-fixtures.json` only so the UI can be exercised.
 
@@ -69,3 +69,36 @@ e2e/journey.mjs           Browser journey (playwright-core, installed Edge/Chrom
 ## Open dependencies
 
 See [J contract review](../docs/ux/J-contract-review.md) and [UX state inventory](../docs/ux/J-01-journey-and-states.md).
+
+## Connect to FastAPI locally
+
+From `D:\vman\mark1`, using the installed backend environment:
+
+```powershell
+.venv/Scripts/python.exe -m mark1.server init
+.venv/Scripts/python.exe -m uvicorn mark1.server.app:create_app --factory --host 127.0.0.1 --port 8000 --workers 1
+```
+
+Keep the generated demo bearer token private. In a second terminal:
+
+```powershell
+cd D:\vman\mark1\web
+npm.cmd ci
+npm.cmd run dev:real
+```
+
+Open `http://localhost:5173`, paste the token into **Demo bearer token**, and select **Use demo token**. The token is never placed in browser storage, the URL, source code or a `VITE_*` build variable. Re-enter it after reload; the session ID in the URL fragment resumes the session. If a token is rejected, reload and enter a valid token. Authentication is checked by the server on each API call.
+
+Start the no-power investigation, type `DEMO-LAPTOP` in **Label text**, then **Look up** and explicitly confirm `DEMO-C1`. The server stub does not read identity photos. Continue with preflight `CLEAR`, upload the supplied fictional `e2e/fictional-frame.png` for the requested investigation view, answer `NO`, observe `OFF`, and continue from the advisory diagram to the summary.
+
+The dev proxy forwards `/v2` to `http://127.0.0.1:8000`; set `MARK1_BACKEND_URL` in a local environment file for another backend address. This is a development connection, not production hosting. Phone camera access needs a secure HTTPS origin; a LAN HTTP URL is not sufficient for the camera test matrix.
+
+To run the browser journey against isolated FastAPI/SQLite automatically (installed Edge/Chrome and the backend `.venv` required):
+
+```powershell
+npm.cmd run e2e:real
+```
+
+The runner starts its own backend and Vite on loopback ports 18761/15173, issues a temporary token, verifies unauthenticated requests are rejected, and checks durable events plus authenticated reload/resume. It shuts down both servers and deletes its temporary database. Override `MARK1_PYTHON`, `E2E_BACKEND_PORT`, `E2E_WEB_PORT`, or `E2E_CHANNEL` when needed. Screenshots go to ignored `e2e/out/` and do not capture the token entry.
+
+This proves a browser-to-backend journey with a deterministic engine. Live AI, phone camera/speech acceptance and pilot gates remain pending. The separately reported prerequisite-withdrawal defect remains open.

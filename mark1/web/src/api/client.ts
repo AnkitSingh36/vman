@@ -59,7 +59,7 @@ export class HttpTransport implements Transport {
   constructor(
     private readonly base = '',
     private readonly timeoutMs = 20_000,
-    /** A-01 chooses cookie+CSRF or tokens; inject the agreed header here. */
+    /** Local backend uses Authorization: Bearer; credentials are supplied in memory. */
     private readonly authHeaders: () => Record<string, string> = () => ({}),
   ) {}
 

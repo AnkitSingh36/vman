@@ -50,3 +50,7 @@ The OpenAPI authentication scheme now records the bearer-token decision allowed 
 The flow-only explanation, typed visual-finding lifecycle and correction/contradiction amendment remain open design work. R0 implements the existing claim-bound explanation schema. Messages are human reports and cannot overwrite confirmed observations; to correct a physical observation, stop and create a new session until a correction contract is agreed. The stub does not understand or diagnose images, free text or speech.
 
 Author-run test and startup results are recorded in [backend verification](backend-verification.md). No independent gate acceptance is implied.
+
+## A-08 frontend connection scope - 19 November 2026
+
+The user explicitly requested frontend-to-backend integration after the A/J PRs merged. This records a limited A-owned integration scope across J's bootstrap/authentication UI, transport handoff, browser integration runner and related documentation/tests. J retains ownership of the remaining UI/camera/voice work; V retains engine/content ownership. No API/schema change is included. The backend's existing opaque bearer token is entered at runtime and held in memory; production authentication is not introduced.
