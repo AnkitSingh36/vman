@@ -38,13 +38,25 @@ def preflight(catalog):
     return values[0]
 
 
-def prerequisites(session, check):
-    for required in check["prerequisites"]:
-        matches = [o for o in session["observations"]
-                   if (o["check_id"], o["check_version"], o["observation_code"]) ==
-                   (required["check_id"], required["check_version"], required["observation_code"])]
-        if not matches or matches[-1]["value"] not in required["allowed_values"]:
-            return False
+def prerequisites(session, check, catalog):
+    """Revalidate the complete dependency chain against current scoped authority."""
+    pending, visited = [check], set()
+    while pending:
+        current = pending.pop()
+        key = (current["check_id"], current["version"])
+        if key in visited:
+            continue
+        visited.add(key)
+        for required in current["prerequisites"]:
+            target = find(catalog, "checks", required["check_id"], required["check_version"])
+            if target["observation_code"] != required["observation_code"]:
+                return False
+            matches = [o for o in session["observations"]
+                       if (o["check_id"], o["check_version"], o["observation_code"]) ==
+                       (required["check_id"], required["check_version"], required["observation_code"])]
+            if not matches or matches[-1]["value"] not in required["allowed_values"]:
+                return False
+            pending.append(target)
     return True
 
 
@@ -58,7 +70,7 @@ def cleared(session, catalog):
 def claim_evidence(session, template, evidence_ids, catalog):
     rule = template["claim_rule"]
     target = find(catalog, "checks", rule["check_id"], rule["check_version"])
-    if target["observation_code"] != rule["observation_code"]:
+    if target["observation_code"] != rule["observation_code"] or not prerequisites(session, target, catalog):
         raise ValueError("Claim prerequisite is no longer applicable")
     matches = [o for o in session["observations"] if o["record_id"] in evidence_ids
                and o["provenance"] == "HUMAN_CONFIRMED"
@@ -91,7 +103,7 @@ def guard(store, db, principal, session):
             selection = session["selection"]
             if selection:
                 record = find(authorized, selection["group"], selection["id"], selection["version"])
-                if selection["group"] == "checks" and not prerequisites(session, record):
+                if selection["group"] == "checks" and not prerequisites(session, record, authorized):
                     raise ValueError("Prerequisite invalid")
                 is_identity_view = selection["group"] == "view_templates" and record["purpose"] == "IDENTITY"
                 is_preflight = selection["group"] == "checks" and record["kind"] == "PREFLIGHT"
@@ -177,7 +189,7 @@ def apply_proposal(session, catalog, request, proposal):
     if payload["sources"] != [source_ref(record)]:
         raise ValueError("Unsupported source mapping")
     if group == "checks":
-        if not prerequisites(session, record) or any(o["check_id"] == identifier and o["check_version"] == version for o in session["observations"]):
+        if not prerequisites(session, record, catalog) or any(o["check_id"] == identifier and o["check_version"] == version for o in session["observations"]):
             raise ValueError("Repeated or ineligible check")
         if kind == "ASK_OBSERVATION" and payload["observation_code"] != record["observation_code"]:
             raise ValueError("Mismatched observation")

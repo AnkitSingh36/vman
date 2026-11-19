@@ -1,5 +1,15 @@
 # Local backend verification
 
+## Prerequisite revocation safety fix
+
+Branch `a/fix-prerequisite-revocation`. A regression test first reproduced the defect: a dependent check remained READY after its completed prerequisite was withdrawn.
+
+Prerequisite validation now walks the entire dependency chain through the current authorized catalog, checking exact check/version and observation-code bindings plus saved values. The same validation is used when serving checks, accepting observations, committing engine proposals and validating explanation claims. Missing or excluded ancestors cannot authorize guidance even when their observations remain in history.
+
+`tests/test_prerequisite_revocation.py` covers direct/transitive dependencies and explanation claims under check withdrawal, source withdrawal and actor/agent source-grant denial. It checks serving and direct submission separately, rejects new writes without deleting original evidence, preserves blocked state across authority restoration, prevents replay from restoring guidance, and rejects dependent engine output after revocation during inference. No public API or schema changes are required.
+
+Verification with the existing Windows Python environment: `mark1/.venv/Scripts/python.exe -m pytest -q tests mark1/tests` passed all 101 tests (74 existing plus 27 new regressions). The 92 contract fixture checks and both canonical-hash fixtures/catalog-schema equality also passed.
+
 11 November 2026 | `a/mark1-backend-r0` | Author-run developer evidence; no product gate closed.
 
 Tested with Windows/Python 3.13.7 and the isolated environment captured in `requirements-dev.lock.txt`. The initial global-environment baseline had two missing-Google-SDK failures in the original Lantern tests. With the declared optional SDK in the isolated environment, the unchanged Lantern suite passes. No Lantern source or original tests were edited.
