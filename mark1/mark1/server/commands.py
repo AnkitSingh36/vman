@@ -86,7 +86,7 @@ def mutate(db, session, operation, data, catalog, record_id, media=None):
     elif operation == "observations":
         if any(data[k] != current[k] for k in ("check_id", "observation_code")) or data["check_version"] != current["version"]:
             raise conflict(session["revision"])
-        if data["value"] not in current["options"] or not prerequisites(session, current):
+        if data["value"] not in current["options"] or not prerequisites(session, current, catalog):
             raise APIError(422, "INVALID_VALUE", "Observation does not match the approved check.")
         if data.get("image_id"):
             owned_image(db, session, data["image_id"], "observation")

@@ -1,5 +1,15 @@
 # Local backend verification
 
+## Prerequisite revocation safety fix
+
+Branch `a/fix-prerequisite-revocation`. A regression test first reproduced the defect: a dependent check remained READY after its completed prerequisite was withdrawn.
+
+Prerequisite validation now walks the entire dependency chain through the current authorized catalog, checking exact check/version and observation-code bindings plus saved values. The same validation is used when serving checks, accepting observations, committing engine proposals and validating explanation claims. Missing or excluded ancestors cannot authorize guidance even when their observations remain in history.
+
+`tests/test_prerequisite_revocation.py` covers direct/transitive dependencies and explanation claims under check withdrawal, source withdrawal and actor/agent source-grant denial. It checks serving and direct submission separately, rejects new writes without deleting original evidence, preserves blocked state across authority restoration, prevents replay from restoring guidance, and rejects dependent engine output after revocation during inference. No public API or schema changes are required.
+
+Verification with the existing Windows Python environment: `mark1/.venv/Scripts/python.exe -m pytest -q tests mark1/tests` passed all 101 tests (74 existing plus 27 new regressions). The 92 contract fixture checks and both canonical-hash fixtures/catalog-schema equality also passed.
+
 ## Browser-to-backend integration - 19 November 2026
 
 Branch `a/frontend-backend-integration`, based on merged A/J work at `f32b2ae`. Tested with Node 22.11.0, the existing Python virtual environment and headless Microsoft Edge at 390 x 844. No backend code or contracts changed.
@@ -9,7 +19,7 @@ Branch `a/frontend-backend-integration`, based on merged A/J work at `f32b2ae`. 
 - `npm.cmd run e2e:real`: real Vite proxy -> FastAPI -> temporary SQLite -> deterministic engine journey passed. Manual fictional label, explicit identity confirmation, preflight CLEAR, generated snapshot, human chat report, enum answer, OFF observation, advisory cutaway and escalation were exercised. 25 durable events appeared in history; API reads confirmed the terminal state and expected command event types. Offline guidance hiding, reconnect and authenticated reload/resume passed. No browser console errors.
 - An unauthenticated request through the proxy returned 401. The runtime credential was captured privately and never included in URLs, committed configuration or screenshots. The runner stopped both servers and removed its temporary database.
 
-This is local A/J integration evidence only. Live V engine integration, phone camera/speech acceptance, pilot gates and the separately reported prerequisite-withdrawal defect remain open. The auth hook is now supplied by the bootstrap UI; J-R3 is resolved for the local bearer-token demo, not production identity management.
+This is local A/J integration evidence only. Live V engine integration, phone camera/speech acceptance and pilot gates remain open. The prerequisite-withdrawal defect was open at the time of this integration; its fix and regression evidence are recorded above. The auth hook is now supplied by the bootstrap UI; J-R3 is resolved for the local bearer-token demo, not production identity management.
 
 11 November 2026 | `a/mark1-backend-r0` | Author-run developer evidence; no product gate closed.
 
