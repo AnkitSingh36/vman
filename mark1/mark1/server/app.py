@@ -60,10 +60,15 @@ async def json_body(request):
         raise APIError(422, "INVALID_REQUEST", "Malformed JSON request.") from None
 
 
-def create_app(settings=None, engine=None):
+def create_app(settings=None, engine=None, *, provider=None):
+    if engine is not None and provider is not None:
+        raise ValueError("Supply an engine or an investigator provider, not both")
     settings = settings or Settings.from_env()
     service = Service(settings)
-    runner = Runner(service, engine or EngineStub())
+    if provider is not None:
+        from ..ai import Investigator
+        engine = Investigator(provider, service.contracts)
+    runner = Runner(service, engine if engine is not None else EngineStub())
 
     @asynccontextmanager
     async def lifespan(app):
@@ -109,7 +114,8 @@ def create_app(settings=None, engine=None):
 
     @app.get("/health")
     async def health():
-        return {"mode": "synthetic-demo-only", "contract_version": "2.0", "engine": "injected" if engine else "deterministic-stub"}
+        return {"mode": "synthetic-demo-only", "contract_version": "2.0",
+                "engine": "structured-investigator" if provider is not None else "injected" if engine is not None else "deterministic-stub"}
 
     @app.get("/v2/sessions/{session_id}")
     async def read_session(session_id: str, request: Request):

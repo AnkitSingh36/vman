@@ -1,5 +1,11 @@
 # Local backend verification
 
+## Provider-neutral investigator integration - 22 November 2026
+
+Branch `v/investigator-engine`. The server accepts an explicitly injected `ProviderAdapter` and passes only a per-inference read-only media callback to the investigator. Existing engine injection and default deterministic-stub startup remain supported. No public schema changed and no live model/provider was selected or called.
+
+`mark1/.venv/Scripts/python.exe -m pytest -q tests mark1/tests` passed all 134 tests, including 33 investigator regressions and a provider-injected synthetic HTTP journey. The 92 contract checks, two canonical-hash fixtures/catalog-schema equality and whitespace checks passed. These results establish adapter/media/validation wiring with scripted responses, not perception or investigation quality. See [AI data and evaluation plan](ai-data-and-evaluation.md) for the remaining model/data gates.
+
 ## Prerequisite revocation safety fix
 
 Branch `a/fix-prerequisite-revocation`. A regression test first reproduced the defect: a dependent check remained READY after its completed prerequisite was withdrawn.
