@@ -120,7 +120,17 @@ class Runner:
             request, principal = bound
             start = time.monotonic()
             LOG.info("inference input images=%d messages=%d", len(request["cleared_images"]), len(request["investigation_context"]["messages"]))
-            proposal = await asyncio.wait_for(self.engine.propose(copy.deepcopy(request)), self.service.settings.inference_timeout)
+
+            async def read_image(handle):
+                # This closure exposes only media from this caller/current inference.
+                # No bearer token, session-wide lookup, URL or write tool reaches V.
+                return await asyncio.to_thread(self.service.resolve_image, token, request["request_id"], handle)
+
+            if getattr(self.engine, "accepts_cleared_media", False):
+                pending = self.engine.propose(copy.deepcopy(request), read_image=read_image)
+            else:
+                pending = self.engine.propose(copy.deepcopy(request))
+            proposal = await asyncio.wait_for(pending, self.service.settings.inference_timeout)
             reason = "INFERENCE_TIMEOUT" if time.monotonic() - start > self.service.settings.inference_timeout else None
             await asyncio.to_thread(finish, self.service, token, request, principal, proposal, reason)
             LOG.info("inference output proposals=1")

@@ -1,5 +1,9 @@
 # Backend baseline and implementation decisions
 
+## V investigator implementation scope - 22 November 2026
+
+The user explicitly requested building Viditya's AI and selected provider-neutral implementation before choosing a live model. This records a limited implementation handoff for `mark1/ai/**`, its tests/data documentation and A-owned provider/media integration. V retains future model selection, production content and evaluation ownership. Existing fictional-data-only restrictions remain in effect. The investigator receives the canonical scoped EngineRequest and a read-only per-inference media callback supplied by A; no token or broader lookup is exposed. The wire contracts remain v2. Default startup still selects the deterministic stub; no hosted/local provider is chosen or called by this work.
+
 11 November 2026 | Branch: `a/mark1-backend-r0`
 
 Implementation began from local main commit `1a537770bd1093a61d8571775ceb245e7f8420f2` and the proposed team specification 2.0. The separate architecture-review PR has not been assumed merged or approved. This record describes the local synthetic backend milestone, not a release-gate acceptance.

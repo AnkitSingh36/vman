@@ -10,7 +10,7 @@ The cutaway is a known machine diagram, not internal camera vision. Continuous s
 
 ## Status
 
-The local A-owned backend is implemented with a deterministic integration stub. It provides authenticated API commands, policy/knowledge checks, durable evidence, safe image handling and an advisory diagram workflow. J's frontend is included, with a verified local browser-to-FastAPI journey using an in-memory demo bearer token; see [web setup](web/README.md#connect-to-fastapi-locally). V's production AI is not included. No product release gate is closed. See [delivery plan](PLAN.md), [contracts](docs/specs/Mark1-Team-Spec/contracts/README.md) and [decision register](docs/specs/Mark1-Team-Spec/11-GATE-AND-DECISION-REGISTER.md).
+The local A-owned backend is implemented with a deterministic integration stub. It provides authenticated API commands, policy/knowledge checks, durable evidence, safe image handling and an advisory diagram workflow. J's frontend is included, with a verified local browser-to-FastAPI journey using an in-memory demo bearer token; see [web setup](web/README.md#connect-to-fastapi-locally). V's provider-neutral investigator and structured provider adapter are implemented with scripted-model integration tests; no live model is selected or called. See [AI implementation and data plan](docs/product/ai-data-and-evaluation.md). No product release gate is closed. See [delivery plan](PLAN.md), [contracts](docs/specs/Mark1-Team-Spec/contracts/README.md) and [decision register](docs/specs/Mark1-Team-Spec/11-GATE-AND-DECISION-REGISTER.md).
 
 ## Work packages
 
